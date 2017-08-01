@@ -11,7 +11,9 @@ namespace PRJ300Rep
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            string SessionCode = Request.QueryString["SessionCode"];
+            tbxCode.Text = SessionCode;
+
         }
     }
 }

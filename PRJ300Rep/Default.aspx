@@ -71,9 +71,11 @@
                 <div class="col-md-6">
                     <div id="createCode">
                         <h2 id="Create" class="jumbotron">Create Group</h2>
-                        <p>Set Timeout (Hours):</p>
+                        <p>Set Timeout (Hours):
+                        </p>
                         <input id="timeout" type="datetime" />
-                        <a id="continue" class="btn btn-success">Continue</a>
+                        <%--<a id="continue" OnClick="continue_Click" class="btn btn-success">Continue</a>--%>
+                        <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Continue" />
                     </div>
 
 

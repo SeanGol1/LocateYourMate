@@ -19,22 +19,50 @@ namespace PRJ300Rep
         {
             Random randGen = new Random();
             int code = randGen.Next(100000, 999999);
+            string username = User.Identity.Name;
 
-            SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            conn.Open();
+            if (username != "")
+            {
 
-            SqlCommand command = new SqlCommand("Insert into Sessions(SessionCode)", conn);
-            command.Parameters.AddWithValue("@zip", "india");
-            // int result = command.ExecuteNonQuery();
-            using (SqlDataReader reader = command.ExecuteReader())
+                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                conn.Open();
+
+                SqlCommand NewSession = new SqlCommand("Insert into Sessions(SessionCode) Values(@pin)", conn);
+                NewSession.Parameters.AddWithValue("@pin", code);
+                int result = NewSession.ExecuteNonQuery();
+
+                SqlCommand getUserID = new SqlCommand("Select Id from AspNetUsers Where UserName = '@username'", conn);
+                getUserID.Parameters.AddWithValue("@username", username);
+                string UserID = Convert.ToString(getUserID.ExecuteNonQuery());
+
+                SqlCommand newGroup = new SqlCommand("Insert into Groups(AdminID) Values (@AdminID)", conn);
+                newGroup.Parameters.AddWithValue("@AdminID",UserID);
+                int result1 = newGroup.ExecuteNonQuery();
+
+                SqlCommand getGroupID = new SqlCommand("Select Id from Groups Where AdminID = '@UserID'", conn);
+                getGroupID.Parameters.AddWithValue("@UserID", UserID);
+                int GroupID = getGroupID.ExecuteNonQuery();
+
+                SqlCommand NewUserGroup = new SqlCommand("Insert into UserGroups(GroupId,UserID) Values (@GroupID,@UserID)", conn);
+                NewUserGroup.Parameters.AddWithValue("@GroupID", GroupID);
+                NewUserGroup.Parameters.AddWithValue("@UserID", UserID);
+                int result2 = NewUserGroup.ExecuteNonQuery();
+
+                conn.Close();
+            }
+
+
+            /*using (SqlDataReader reader = command.ExecuteReader())
             {
                 if (reader.Read())
                 {
                     Console.WriteLine(String.Format("{0}", reader["id"]));
                 }
             }
+            */
 
-            conn.Close();
+
+            Response.Redirect("Session.aspx?SessionCode=" + code);
         }
         protected void codeSubmit_Click(object sender, EventArgs e)
         {

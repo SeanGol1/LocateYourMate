@@ -3,6 +3,12 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link href="Styles/StyleSheetSession.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
    <script>
 
 		// Google Maps
@@ -53,7 +59,8 @@
 
 
     <h1>Festival Friend Finder</h1>
-<h3>Your Session Code:</h3><h3 ><strong id="code"></strong></h3>
+    <asp:Label ID="Label1" runat="server" Text="Your Session Code:"></asp:Label>
+    <asp:Label ID="tbxCode" runat="server" Text="Label"></asp:Label>
 <div id="map"></div>
 
 	
