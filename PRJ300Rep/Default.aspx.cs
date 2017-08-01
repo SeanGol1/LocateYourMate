@@ -31,21 +31,21 @@ namespace PRJ300Rep
                 NewSession.Parameters.AddWithValue("@pin", code);
                 int result = NewSession.ExecuteNonQuery();
 
-                SqlCommand getUserID = new SqlCommand("Select Id from AspNetUsers Where UserName = '@username'", conn);
-                getUserID.Parameters.AddWithValue("@username", username);
-                string UserID = Convert.ToString(getUserID.ExecuteNonQuery());
+                //SqlCommand getUserID = new SqlCommand("Select Id from AspNetUsers Where UserName = '@username'", conn);
+                //getUserID.Parameters.AddWithValue("@username", username);
+                //string UserID = Convert.ToString(getUserID.ExecuteNonQuery());
 
                 SqlCommand newGroup = new SqlCommand("Insert into Groups(AdminID) Values (@AdminID)", conn);
-                newGroup.Parameters.AddWithValue("@AdminID",UserID);
+                newGroup.Parameters.AddWithValue("@AdminID",username);
                 int result1 = newGroup.ExecuteNonQuery();
 
                 SqlCommand getGroupID = new SqlCommand("Select Id from Groups Where AdminID = '@UserID'", conn);
-                getGroupID.Parameters.AddWithValue("@UserID", UserID);
+                getGroupID.Parameters.AddWithValue("@UserID", username);
                 int GroupID = getGroupID.ExecuteNonQuery();
 
                 SqlCommand NewUserGroup = new SqlCommand("Insert into UserGroups(GroupId,UserID) Values (@GroupID,@UserID)", conn);
                 NewUserGroup.Parameters.AddWithValue("@GroupID", GroupID);
-                NewUserGroup.Parameters.AddWithValue("@UserID", UserID);
+                NewUserGroup.Parameters.AddWithValue("@UserID", username);
                 int result2 = NewUserGroup.ExecuteNonQuery();
 
                 conn.Close();
