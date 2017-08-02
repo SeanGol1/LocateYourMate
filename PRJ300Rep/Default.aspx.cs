@@ -36,12 +36,27 @@ namespace PRJ300Rep
                 //string UserID = Convert.ToString(getUserID.ExecuteNonQuery());
 
                 SqlCommand newGroup = new SqlCommand("Insert into Groups(AdminID) Values (@AdminID)", conn);
-                newGroup.Parameters.AddWithValue("@AdminID",username);
+                newGroup.Parameters.AddWithValue("@AdminID", username);
                 int result1 = newGroup.ExecuteNonQuery();
 
-                SqlCommand getGroupID = new SqlCommand("Select Id from Groups Where AdminID = '@UserID'", conn);
-                getGroupID.Parameters.AddWithValue("@UserID", username);
-                int GroupID = getGroupID.ExecuteNonQuery();
+                string GroupID = "";
+                    SqlCommand getGroupID = new SqlCommand("Select Id from [Groups] Where AdminID = @UserID", conn);
+                    getGroupID.Parameters.AddWithValue("@UserID", username);
+
+                    using (SqlDataReader reader = getGroupID.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            GroupID = string.Format("{0}", reader["Id"]);
+                        }
+                    }
+
+
+                        //GroupID = (String)getGroupID.ExecuteScalar();
+                
+
+                
+
 
                 SqlCommand NewUserGroup = new SqlCommand("Insert into UserGroups(GroupId,UserID) Values (@GroupID,@UserID)", conn);
                 NewUserGroup.Parameters.AddWithValue("@GroupID", GroupID);
