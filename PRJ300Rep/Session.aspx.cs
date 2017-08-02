@@ -14,6 +14,8 @@ namespace PRJ300Rep
             string SessionCode = Request.QueryString["SessionCode"];
             tbxCode.Text = SessionCode;
 
+
+
         }
     }
 }

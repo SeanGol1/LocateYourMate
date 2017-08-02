@@ -74,6 +74,7 @@
                         <p>Set Timeout (Hours):
                         </p>
                         <input id="timeout" type="datetime" />
+                        <asp:Calendar ID="calTimeout" runat="server"></asp:Calendar>
                         <%--<a id="continue" OnClick="continue_Click" class="btn btn-success">Continue</a>--%>
                         <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Continue" />
                     </div>
