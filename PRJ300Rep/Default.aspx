@@ -75,7 +75,6 @@
                         </p>
                         <input id="timeout" type="datetime" />
                         <asp:Calendar ID="calTimeout" runat="server"></asp:Calendar>
-                        <%--<a id="continue" OnClick="continue_Click" class="btn btn-success">Continue</a>--%>
                         <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Continue" />
                     </div>
 
@@ -85,8 +84,13 @@
                     <div id="enterLink">
                         <h2 id="Join" class="jumbotron">Join Group</h2>
                         <p>Enter 6 Digit Pin:</p>
-                        <input id="code" type="text" placeholder="Enter 6-Digit Code" />
-                        <button id="codeSubmit"  class="btn btn-success">Join Your Group!</button>
+                        <asp:TextBox ID="inputcode" placeholder="Enter 6-Digit Code" runat="server"></asp:TextBox>
+                        <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success" runat="server" Text="Join Your Group!" />
+                    </div>
+                    <div id="SessionsList">
+                        <h2>Already part of a group?</h2>
+                        <asp:ListBox ID="lbxSessionlist" runat="server" OnSelectedIndexChanged="lbxSessionlist_SelectedIndexChanged"></asp:ListBox>
+                        <asp:BulletedList ID="blst" runat="server"></asp:BulletedList>
                     </div>
                 </div>
 
