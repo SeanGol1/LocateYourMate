@@ -18,41 +18,49 @@ namespace PRJ300Rep
         protected void Page_Load(object sender, EventArgs e)
         {
             SessionCode = Request.QueryString["SessionCode"];
-            tbxCode.Text = SessionCode;
+            tbxCode.Text = "<strong>" + SessionCode + "</strong>";
             CurrentUser = User.Identity.Name;
             string adminID = "";
-            SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            conn.Open();
-            SqlCommand getAdmin = new SqlCommand("Select AdminID from Groups inner join [Sessions] on [Groups].[Id] = [Sessions].[groupID] where SessionCode = @code", conn);
-            getAdmin.Parameters.AddWithValue("@code", SessionCode);
-            using (SqlDataReader reader = getAdmin.ExecuteReader())
+            try
             {
-                if (reader.Read())
+                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                conn.Open();
+                SqlCommand getAdmin = new SqlCommand("Select AdminID from Groups inner join [Sessions] on [Groups].[Id] = [Sessions].[groupID] where SessionCode = @code", conn);
+                getAdmin.Parameters.AddWithValue("@code", SessionCode);
+                using (SqlDataReader reader = getAdmin.ExecuteReader())
                 {
-                    adminID = string.Format("{0}", reader["AdminID"]);
+                    if (reader.Read())
+                    {
+                        adminID = string.Format("{0}", reader["AdminID"]);
+                    }
                 }
+
+                if (adminID == User.Identity.Name)
+                    Close.Visible = true;
+                else
+                    Close.Visible = false;
+
+                conn.Close();
             }
-
-            if (adminID == User.Identity.Name)
-                Close.Visible = true;
-            else
-                Close.Visible = false;
-
-            conn.Close();
+            catch (SqlException sql)
+            {
+                sql.InnerException.ToString();
+            }
         }
 
         protected void leave_Click(object sender, EventArgs e)
-        {           
-            
+        {
+
             SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             conn.Open();
 
-            SqlCommand delete = new SqlCommand("DELETE g FROM [userGroups] g INNER JOIN [Sessions] s on s.[groupID] = g.[groupID] Where g.[UserID] = '@user' AND s.[sessionCode] = @code", conn);
+            SqlCommand delete = new SqlCommand("Delete u1 From usergroups as u1 Inner Join Groups as g on g.Id = u1.groupID Inner Join Sessions as s On s.groupID = g.Id where u1.UserID = @user AND s.SessionCode = @code", conn);
             delete.Parameters.AddWithValue("@user", CurrentUser);
             delete.Parameters.AddWithValue("@code", SessionCode);
             delete.ExecuteNonQuery();
 
             conn.Close();
+            Response.Redirect("Default.aspx");
         }
 
         protected void Close_Click(object sender, EventArgs e)
@@ -60,7 +68,7 @@ namespace PRJ300Rep
             SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             conn.Open();
 
-            SqlCommand deleteQ = new SqlCommand("DELETE g FROM [userGroups] g INNER JOIN [Sessions] s on s.[groupID] = g.[groupID] Where g.[UserID] = '@user' AND s.[sessionCode] = @code" , conn);
+            SqlCommand deleteQ = new SqlCommand("Delete u1 From usergroups as u1 Inner Join Groups as g on g.Id = u1.groupID Inner Join Sessions as s On s.groupID = g.Id where u1.UserID = @user AND s.SessionCode = @code", conn);
             deleteQ.Parameters.AddWithValue("@user", CurrentUser);
             deleteQ.Parameters.AddWithValue("@code", SessionCode);
             deleteQ.ExecuteNonQuery();
@@ -71,7 +79,7 @@ namespace PRJ300Rep
             deleteSession.ExecuteNonQuery();
 
             conn.Close();
-
+            Response.Redirect("Default.aspx");
         }
     }
 }

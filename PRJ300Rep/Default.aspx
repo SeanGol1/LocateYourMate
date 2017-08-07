@@ -87,8 +87,16 @@
                     </div>
                     <div id="SessionsList">
                         <h2>Already part of a group?</h2>
-                        <asp:ListBox ID="lbxSessionlist" runat="server" OnSelectedIndexChanged="lbxSessionlist_SelectedIndexChanged"></asp:ListBox>
-                        <asp:BulletedList ID="blst" runat="server"></asp:BulletedList>
+                        <asp:ListBox ID="lbxSessionlist" runat="server" OnSelectedIndexChanged="lbxSessionlist_SelectedIndexChanged" DataSourceID="SqlDataSource1" DataTextField="sessionCode" DataValueField="sessionCode"></asp:ListBox>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FestivalFriendFinderConnectionString %>" SelectCommand="SELECT s.sessionCode FROM Sessions AS s INNER JOIN Groups AS g ON s.[groupID] = g.[Id] INNER JOIN userGroups AS ug ON ug.[GroupID] = g.[Id] WHERE ug.UserID = @user">
+                            <SelectParameters>
+                                <asp:CookieParameter CookieName="UserId" DefaultValue="null" Name="user" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                        <asp:Literal ID="ListSessions" runat="server"></asp:Literal>
+
+
+
                     </div>
                     <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success" runat="server" Text="Join Your Group!" />
                 </div>
