@@ -10,53 +10,56 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js%22%3E"></script>
     <script src="Scripts/jquery-3.1.1.min.js"></script>
     <link href="Styles/StyleSheetSession.css" rel="stylesheet" />
-
-
-
+    <style>
+        #map{
+            height:600px;
+            width: 70%;
+        }
+    </style>
     <script>
+
 
         // Google Maps
         var map, infoWindow;
         function initMap() {
-            map = new google.maps.Map(document.getElementById('mapDiv'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: -34.397, lng: 150.644 },
                 zoom: 12
             });
-            //infoWindow = new google.maps.InfoWindow;
+            infoWindow = new google.maps.InfoWindow;
         }
 
 
-	  // Get current Location
+        // Get current Location
 
-	 // if(navigator.geolocation) {
-		//  navigator.geolocation.getCurrentPosition(function(position) {
-		//	var pos = {
-		//	  lat: position.coords.latitude,
-		//	  lng: position.coords.longitude
-		//	};
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
 
-		//	infoWindow.setPosition(pos);
-		//	infoWindow.setContent('Your Location');
-		//	infoWindow.open(map);
-		//	map.setCenter(pos);
-		//  }, function() {
-		//	handleLocationError(true, infoWindow, map.getCenter());
-		//  });
-		//} else {
-		//  // Browser doesn't support Geolocation
-		//  handleLocationError(false, infoWindow, map.getCenter());
-		//}
-		//function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-		//infoWindow.setPosition(pos);
-		//infoWindow.setContent(browserHasGeolocation ?
-		//					  'Error: The Geolocation service failed.' :
-		//					  'Error: Your browser doesn\'t support geolocation.');
-		//infoWindow.open(map);
-	  //}
-    </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9pJLBoZZ0LrasUlwgXgyXcTVepaAwPn0&callback=initMap"
-        async defer></script>
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Your Location');
+                infoWindow.open(map);
+                map.setCenter(pos);
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9pJLBoZZ0LrasUlwgXgyXcTVepaAwPn0&callback=initMap"
+	async defer></script>
 
     <h2><%: Title %>.</h2>
 
@@ -65,7 +68,7 @@
     <h1>Festival Friend Finder</h1>
     <asp:Label ID="Label1" runat="server" Text="Your Session Code:"></asp:Label>
     <asp:Label ID="tbxCode" runat="server" Text="Label"></asp:Label>
-    <div id="mapDiv"></div>
+    <div id="map""></div>
 
     <div id="list">
 
