@@ -89,7 +89,10 @@
             </table>
 
         </div>
-        <a id="leave" class="btn btn-danger" href="Index.html">Leave Session</a>
+        <%--<a id="leave" class="btn btn-danger" href="Index.html">Leave Session</a>--%>
+        <asp:Button ID="leave" runat="server" Text="Leave Session" class="btn btn-danger" OnClick="leave_Click" />
+        <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click"  />
+
     </div>
     <script>
 ////https://developers.facebook.com/docs/javascript/quickstart

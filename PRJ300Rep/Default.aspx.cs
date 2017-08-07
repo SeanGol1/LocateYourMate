@@ -10,6 +10,8 @@ namespace PRJ300Rep
 {
     public partial class _Default : Page
     {
+        string selItem = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
@@ -106,47 +108,45 @@ namespace PRJ300Rep
 
             if (code == "")
             {
-                code = lbxSessionlist.SelectedValue;
+                code = selItem;
                 if (code == "")
                 {
-
-                }
-            }
-                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-                conn.Open();
+                    SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                    conn.Open();
 
 
-                SqlCommand checkPin = new SqlCommand("Select * from [Sessions] Where sessionCode = @pin", conn);
-                checkPin.Parameters.AddWithValue("@pin", code);
-                using (SqlDataReader reader = checkPin.ExecuteReader())
-                {
-                    if (reader.Read())
+                    SqlCommand checkPin = new SqlCommand("Select * from [Sessions] Where sessionCode = @pin", conn);
+                    checkPin.Parameters.AddWithValue("@pin", code);
+                    using (SqlDataReader reader = checkPin.ExecuteReader())
                     {
-                        codecheck = string.Format("{0}", reader["sessionCode"]);
-                        if (codecheck == code)
+                        if (reader.Read())
                         {
-                            GroupID = string.Format("{0}", reader["groupID"]);
-                        }
-                        else
-                        {
-                            string script = "<script type=\"text/javascript\">alert('Session Code Not Found!');</script>";
-                            ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
+                            codecheck = string.Format("{0}", reader["sessionCode"]);
+                            if (codecheck == code)
+                            {
+                                GroupID = string.Format("{0}", reader["groupID"]);
+                            }
+                            else
+                            {
+                                string script = "<script type=\"text/javascript\">alert('Session Code Not Found!');</script>";
+                                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
+                            }
                         }
                     }
+
+
+                    if (GroupID != "")
+                    {
+                        SqlCommand joinGroup = new SqlCommand("Insert into userGroups(GroupID,UserID) Values (@groupid,@userid)", conn);
+                        joinGroup.Parameters.AddWithValue("@userid", user);
+                        joinGroup.Parameters.AddWithValue("@groupid", GroupID);
+                        int result1 = joinGroup.ExecuteNonQuery();
+
+                        Response.Redirect("Session.aspx?SessionCode=" + code);
+                    }
+                    conn.Close();
                 }
-
-
-                if (GroupID != "")
-                {
-                    SqlCommand joinGroup = new SqlCommand("Insert into userGroups(GroupID,UserID) Values (@groupid,@userid)", conn);
-                    joinGroup.Parameters.AddWithValue("@userid", user);
-                    joinGroup.Parameters.AddWithValue("@groupid", GroupID);
-                    int result1 = joinGroup.ExecuteNonQuery();
-
-                    Response.Redirect("Session.aspx?SessionCode=" + code);
-                }
-                conn.Close();
-            
+            }
         }
 
 
@@ -160,7 +160,11 @@ namespace PRJ300Rep
 
         protected void lbxSessionlist_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Response.Redirect("Session.aspx?sessionCode=" + lbxSessionlist.SelectedValue);
+            selItem = lbxSessionlist.SelectedValue;
+            //foreach (string item in lbxSessionlist)
+            //{
+
+            //}
         }
     }
 }
