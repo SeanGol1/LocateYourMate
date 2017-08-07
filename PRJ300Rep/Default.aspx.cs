@@ -55,45 +55,52 @@ namespace PRJ300Rep
 
             if (username != "")
             {
-                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-                conn.Open();
-
-                while (codecheck != -1)
+                try
                 {
-                    code = NewSessionCode();
-                    SqlCommand checkPin = new SqlCommand("Select sessionCode from [Sessions] Where sessionCode = @pin", conn);
-                    checkPin.Parameters.AddWithValue("@pin", code);
-                    codecheck = checkPin.ExecuteNonQuery();
-                }
+                    SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                    conn.Open();
 
-                SqlCommand newGroup = new SqlCommand("Insert into Groups(AdminID) Values (@AdminID)", conn);
-                newGroup.Parameters.AddWithValue("@AdminID", username);
-                int result1 = newGroup.ExecuteNonQuery();
-
-                string GroupID = "";
-                SqlCommand getGroupID = new SqlCommand("Select Id from [Groups] Where AdminID = @UserID", conn);
-                getGroupID.Parameters.AddWithValue("@UserID", username);
-
-                using (SqlDataReader reader = getGroupID.ExecuteReader())
-                {
-                    if (reader.Read())
+                    while (codecheck != -1)
                     {
-                        GroupID = string.Format("{0}", reader["Id"]);
+                        code = NewSessionCode();
+                        SqlCommand checkPin = new SqlCommand("Select sessionCode from [Sessions] Where sessionCode = @pin", conn);
+                        checkPin.Parameters.AddWithValue("@pin", code);
+                        codecheck = checkPin.ExecuteNonQuery();
                     }
+
+                    SqlCommand newGroup = new SqlCommand("Insert into Groups(AdminID) Values (@AdminID)", conn);
+                    newGroup.Parameters.AddWithValue("@AdminID", username);
+                    int result1 = newGroup.ExecuteNonQuery();
+
+                    string GroupID = "";
+                    SqlCommand getGroupID = new SqlCommand("Select Id from [Groups] Where AdminID = @UserID", conn);
+                    getGroupID.Parameters.AddWithValue("@UserID", username);
+
+                    using (SqlDataReader reader = getGroupID.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            GroupID = string.Format("{0}", reader["Id"]);
+                        }
+                    }
+
+                    SqlCommand NewUserGroup = new SqlCommand("Insert into UserGroups(GroupId,UserID) Values (@GroupID,@UserID)", conn);
+                    NewUserGroup.Parameters.AddWithValue("@GroupID", GroupID);
+                    NewUserGroup.Parameters.AddWithValue("@UserID", username);
+                    int result2 = NewUserGroup.ExecuteNonQuery();
+
+                    SqlCommand NewSession = new SqlCommand("Insert into Sessions(SessionCode,groupID,timeout) Values(@pin,@groupid,@timeout)", conn);
+                    NewSession.Parameters.AddWithValue("@pin", code);
+                    NewSession.Parameters.AddWithValue("@groupid", GroupID);
+                    NewSession.Parameters.AddWithValue("@timeout", timeout);
+                    int result = NewSession.ExecuteNonQuery();
+
+                    conn.Close();
                 }
-
-                SqlCommand NewUserGroup = new SqlCommand("Insert into UserGroups(GroupId,UserID) Values (@GroupID,@UserID)", conn);
-                NewUserGroup.Parameters.AddWithValue("@GroupID", GroupID);
-                NewUserGroup.Parameters.AddWithValue("@UserID", username);
-                int result2 = NewUserGroup.ExecuteNonQuery();
-
-                SqlCommand NewSession = new SqlCommand("Insert into Sessions(SessionCode,groupID,timeout) Values(@pin,@groupid,@timeout)", conn);
-                NewSession.Parameters.AddWithValue("@pin", code);
-                NewSession.Parameters.AddWithValue("@groupid", GroupID);
-                NewSession.Parameters.AddWithValue("@timeout", timeout);
-                int result = NewSession.ExecuteNonQuery();
-
-                conn.Close();
+                catch(Exception ex)
+                {
+                    ex.InnerException.ToString();
+                }
             }
 
 
