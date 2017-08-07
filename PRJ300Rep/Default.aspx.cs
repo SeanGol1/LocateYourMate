@@ -16,8 +16,17 @@ namespace PRJ300Rep
         {
             try
             {
-                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 conn.Open();
+
+
+                SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout > @date", conn);
+                timeout.Parameters.AddWithValue("@date", DateTime.Now);
+                int result2 = timeout.ExecuteNonQuery();
+
+
+
+
                 string SessionID = "";
                 SqlCommand curSessions = new SqlCommand("Select sessionCode from [Sessions]  Inner JOIN [Groups] on [Groups].[Id] = [Sessions].[groupID] INNER JOIN [userGroups] on [userGroups].GroupID = [Groups].[Id] Where [userGroups].[UserID] = @userid ", conn);
                 curSessions.Parameters.AddWithValue("@userid", User.Identity.Name);
@@ -32,6 +41,7 @@ namespace PRJ300Rep
                     }
                 }
 
+
                 conn.Close();
             }
             catch(Exception ex)
@@ -43,20 +53,6 @@ namespace PRJ300Rep
             UserId.Value = User.Identity.Name;
             Response.Cookies.Add(UserId);
 
-            //lbxSessionlist.DataSource = SessionCodes;
-            //lbxSessionlist.SelectedIndex = -1;
-            //lbxSessionlist.DataBind();
-            int count = 0;
-            string id = "";
-            foreach (string item in SessionCodes)
-            {
-                count++;
-                id = "Session" + count;
-               // ListSessions.Text = @"<asp:Button ID='' runat="server" Text="Button" OnClick="Button1_Click" />"
-            }
-
-            //blst.DataSource = SessionCodes;
-
         }
 
         protected void continue_Click(object sender, EventArgs e)
@@ -65,17 +61,17 @@ namespace PRJ300Rep
             int codecheck = 1;
             string username = User.Identity.Name;
             //default Timeout is set to 24 hours
-            DateTime timeout = DateTime.Now.AddHours(24);
+            DateTime timeout;
 
-            if (tbxTimeout.Text != "")
-            {
-                timeout = DateTime.Now.AddHours(Convert.ToDouble(tbxTimeout.Text));
-            }
+            if (tbxTimeout.Text != "")            
+                timeout = DateTime.Now.AddHours(Convert.ToDouble(tbxTimeout.Text));            
+            else
+                timeout = DateTime.Now.AddHours(24);
 
             if (username != "")
             {
-                try
-                {
+                //try
+                //{
                     SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                     conn.Open();
 
@@ -108,18 +104,18 @@ namespace PRJ300Rep
                     NewUserGroup.Parameters.AddWithValue("@UserID", username);
                     int result2 = NewUserGroup.ExecuteNonQuery();
 
-                    SqlCommand NewSession = new SqlCommand("Insert into Sessions(SessionCode,groupID,timeout) Values(@pin,@groupid,@timeout)", conn);
+                    SqlCommand NewSession = new SqlCommand("Insert into Sessions(SessionCode,groupID,Timeout) Values(@pin,@groupid,@timeout)", conn);
                     NewSession.Parameters.AddWithValue("@pin", code);
                     NewSession.Parameters.AddWithValue("@groupid", GroupID);
                     NewSession.Parameters.AddWithValue("@timeout", timeout);
                     int result = NewSession.ExecuteNonQuery();
 
                     conn.Close();
-                }
-                catch(Exception ex)
-                {
-                    ex.InnerException.ToString();
-                }
+                //}
+                //catch(Exception ex)
+                //{
+                //    ex.InnerException.ToString();
+                //}
             }
 
 

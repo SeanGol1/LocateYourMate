@@ -93,7 +93,6 @@
                                 <asp:CookieParameter CookieName="UserId" DefaultValue="null" Name="user" />
                             </SelectParameters>
                         </asp:SqlDataSource>
-                        <asp:Literal ID="ListSessions" runat="server"></asp:Literal>
 
 
 

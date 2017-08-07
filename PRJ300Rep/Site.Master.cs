@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 namespace PRJ300Rep
 {
     public partial class SiteMaster : MasterPage
-    {
+    {       
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
@@ -70,7 +70,14 @@ namespace PRJ300Rep
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            conn.Open();
+
+
+            SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout > @date", conn);
+            timeout.Parameters.AddWithValue("@date", DateTime.Now);
+            int result2 = timeout.ExecuteNonQuery();
+            conn.Close();
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
