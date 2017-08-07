@@ -1,15 +1,15 @@
-﻿#map {
-    height: 80px;
-    width: 70px;
+﻿#mapDiv {
+    height: 400px;
+    width: 70%;
     float: left;
 }
 
-#list {
+/*#list {
     height: 80%;
     width: 30%;
     float: right;
     background-color: white;
-}
+}*/
 
 /*html, body {
     height: 100%;
