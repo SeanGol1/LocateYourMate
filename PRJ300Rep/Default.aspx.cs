@@ -14,23 +14,30 @@ namespace PRJ300Rep
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            conn.Open();
-            string SessionID = "";
-            SqlCommand curSessions = new SqlCommand("Select sessionCode from [Sessions]  Inner JOIN [Groups] on [Groups].[Id] = [Sessions].[groupID] INNER JOIN [userGroups] on [userGroups].GroupID = [Groups].[Id] Where [userGroups].[UserID] = @userid ", conn);
-            curSessions.Parameters.AddWithValue("@userid", User.Identity.Name);
-
-            List<string> SessionCodes = new List<string>();
-            using (SqlDataReader reader = curSessions.ExecuteReader())
+            try
             {
-                while (reader.Read())
-                {
-                    SessionID = string.Format("{0}", reader["sessionCode"]);
-                    SessionCodes.Add(SessionID);
-                }
-            }
+                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                conn.Open();
+                string SessionID = "";
+                SqlCommand curSessions = new SqlCommand("Select sessionCode from [Sessions]  Inner JOIN [Groups] on [Groups].[Id] = [Sessions].[groupID] INNER JOIN [userGroups] on [userGroups].GroupID = [Groups].[Id] Where [userGroups].[UserID] = @userid ", conn);
+                curSessions.Parameters.AddWithValue("@userid", User.Identity.Name);
 
-            conn.Close();
+                List<string> SessionCodes = new List<string>();
+                using (SqlDataReader reader = curSessions.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SessionID = string.Format("{0}", reader["sessionCode"]);
+                        SessionCodes.Add(SessionID);
+                    }
+                }
+
+                conn.Close();
+            }
+            catch(Exception ex)
+            {
+                ex.InnerException.ToString();
+            }
 
             HttpCookie UserId = new HttpCookie("UserID");
             UserId.Value = User.Identity.Name;
@@ -129,7 +136,8 @@ namespace PRJ300Rep
             {
                 code = selItem;                
             }
-           
+            try
+            {
                 SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 conn.Open();
 
@@ -161,13 +169,17 @@ namespace PRJ300Rep
                     joinGroup.Parameters.AddWithValue("@groupid", GroupID);
                     int result1 = joinGroup.ExecuteNonQuery();
 
-                    
+
                 }
                 conn.Close();
-           Response.Redirect("Session.aspx?SessionCode=" + code);
+
+                Response.Redirect("Session.aspx?SessionCode=" + code);
+            }
+            catch(Exception ex)
+            {
+                ex.InnerException.ToString();
+            }
         }
-
-
 
         public int NewSessionCode()
         {
@@ -178,16 +190,7 @@ namespace PRJ300Rep
 
         protected void lbxSessionlist_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selItem = lbxSessionlist.SelectedValue;
-            //foreach (string item in lbxSessionlist)
-            //{
-
-            //}
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-
+            selItem = lbxSessionlist.SelectedValue;           
         }
     }
 }

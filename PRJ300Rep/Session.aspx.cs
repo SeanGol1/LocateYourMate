@@ -20,6 +20,7 @@ namespace PRJ300Rep
             SessionCode = Request.QueryString["SessionCode"];
             tbxCode.Text = "<strong>" + SessionCode + "</strong>";
             CurrentUser = User.Identity.Name;
+
             string adminID = "";
             try
             {
@@ -35,6 +36,7 @@ namespace PRJ300Rep
                     }
                 }
 
+                //Show Close Session button only for an admin
                 if (adminID == User.Identity.Name)
                     Close.Visible = true;
                 else
@@ -50,21 +52,28 @@ namespace PRJ300Rep
 
         protected void leave_Click(object sender, EventArgs e)
         {
+            try
+            {
+                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                conn.Open();
 
-            SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            conn.Open();
+                SqlCommand delete = new SqlCommand("Delete u1 From usergroups as u1 Inner Join Groups as g on g.Id = u1.groupID Inner Join Sessions as s On s.groupID = g.Id where u1.UserID = @user AND s.SessionCode = @code", conn);
+                delete.Parameters.AddWithValue("@user", CurrentUser);
+                delete.Parameters.AddWithValue("@code", SessionCode);
+                delete.ExecuteNonQuery();
 
-            SqlCommand delete = new SqlCommand("Delete u1 From usergroups as u1 Inner Join Groups as g on g.Id = u1.groupID Inner Join Sessions as s On s.groupID = g.Id where u1.UserID = @user AND s.SessionCode = @code", conn);
-            delete.Parameters.AddWithValue("@user", CurrentUser);
-            delete.Parameters.AddWithValue("@code", SessionCode);
-            delete.ExecuteNonQuery();
-
-            conn.Close();
-            Response.Redirect("Default.aspx");
+                conn.Close();
+                Response.Redirect("Default.aspx");
+            }
+            catch(Exception ex)
+            {
+                ex.InnerException.ToString();
+            }
         }
 
         protected void Close_Click(object sender, EventArgs e)
         {
+            try { 
             SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             conn.Open();
 
@@ -80,6 +89,11 @@ namespace PRJ300Rep
 
             conn.Close();
             Response.Redirect("Default.aspx");
+            }
+            catch (Exception ex)
+            {
+                ex.InnerException.ToString();
+            }
         }
     }
 }

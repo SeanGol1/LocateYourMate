@@ -14,6 +14,7 @@
         #map{
             height:600px;
             width: 70%;
+            float:left;
         }
     </style>
     <script>
@@ -73,21 +74,16 @@
     <div id="list">
 
         <h3>List of Members in the Session</h3>
-        <div id="memberList">
+        <asp:ListBox ID="ListBox1" runat="server" DataSourceID="SqlDataSource1" DataTextField="UserId" DataValueField="UserId"></asp:ListBox>
+<%--        <div id="memberList">
             <table>
-
                 <tr>
-                    <th>Name</th>
-                    <th></th>
+                    <th>Name</th>                    
                 </tr>
-
-                <tr>
+                <tr>                    
                     <td id="pname"></td>
                 </tr>
-
-
-            </table>
-
+            </table>--%>
         </div>
         <%--<a id="leave" class="btn btn-danger" href="Index.html">Leave Session</a>--%>
         <asp:Button ID="leave" runat="server" Text="Leave Session" class="btn btn-danger" OnClick="leave_Click" />
@@ -122,4 +118,9 @@
 
 
 
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FestivalFriendFinderConnectionString %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
+        <SelectParameters>
+            <asp:QueryStringParameter Name="code" QueryStringField="SessionCode" />
+        </SelectParameters>
+    </asp:SqlDataSource>
 </asp:Content>
