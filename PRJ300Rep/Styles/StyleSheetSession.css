@@ -1,6 +1,6 @@
 ﻿#map {
-    height: 80%;
-    width: 70%;
+    height: 80px;
+    width: 70px;
     float: left;
 }
 
@@ -11,29 +11,29 @@
     background-color: white;
 }
 
-html, body {
+/*html, body {
     height: 100%;
     margin: 0;
     padding-left: 2%;
     padding-right: 2%;
     text-align: center;
-}
+}*/
 
-input {
+/*input {
     text-align: center;
     margin: auto;
     float: left;
     width: 200%;
-}
+}*/
 
-#divBackground {
+/*#divBackground {
     background: white;
     height: 100%;
     filter: alpha(opacity=30);
     -moz-opacity: 0.8;
     -khtml-opacity: 0.8;
     opacity: 0.8;
-}
+}*/
 
 body {
     font-family: 'Josefin Slab', serif;
@@ -46,9 +46,9 @@ body {
     background-size: cover;
 }
 
-#memberList {
-    height: 100%;
-}
+/*#memberList {
+    height:80%;
+}*/
 
 table {
     font-family: arial, sans-serif;

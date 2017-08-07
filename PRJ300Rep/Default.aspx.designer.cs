@@ -13,13 +13,13 @@ namespace PRJ300Rep {
     public partial class _Default {
         
         /// <summary>
-        /// calTimeout control.
+        /// tbxTimeout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar calTimeout;
+        protected global::System.Web.UI.WebControls.TextBox tbxTimeout;
         
         /// <summary>
         /// continue control.
@@ -40,15 +40,6 @@ namespace PRJ300Rep {
         protected global::System.Web.UI.WebControls.TextBox inputcode;
         
         /// <summary>
-        /// codeSubmit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button codeSubmit;
-        
-        /// <summary>
         /// lbxSessionlist control.
         /// </summary>
         /// <remarks>
@@ -65,5 +56,14 @@ namespace PRJ300Rep {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.BulletedList blst;
+        
+        /// <summary>
+        /// codeSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button codeSubmit;
     }
 }

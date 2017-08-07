@@ -71,10 +71,8 @@
                 <div class="col-md-6">
                     <div id="createCode">
                         <h2 id="Create" class="jumbotron">Create Group</h2>
-                        <p>Set Timeout (Hours):
-                        </p>
-                        <input id="timeout" type="datetime" />
-                        <asp:Calendar ID="calTimeout" runat="server"></asp:Calendar>
+                        <p>Set Timeout (Hours):</p>
+                        <asp:TextBox ID="tbxTimeout" runat="server"></asp:TextBox>
                         <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Continue" />
                     </div>
 
@@ -85,13 +83,14 @@
                         <h2 id="Join" class="jumbotron">Join Group</h2>
                         <p>Enter 6 Digit Pin:</p>
                         <asp:TextBox ID="inputcode" placeholder="Enter 6-Digit Code" runat="server"></asp:TextBox>
-                        <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success" runat="server" Text="Join Your Group!" />
+                        
                     </div>
                     <div id="SessionsList">
                         <h2>Already part of a group?</h2>
                         <asp:ListBox ID="lbxSessionlist" runat="server" OnSelectedIndexChanged="lbxSessionlist_SelectedIndexChanged"></asp:ListBox>
                         <asp:BulletedList ID="blst" runat="server"></asp:BulletedList>
                     </div>
+                    <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success" runat="server" Text="Join Your Group!" />
                 </div>
 
             </div>

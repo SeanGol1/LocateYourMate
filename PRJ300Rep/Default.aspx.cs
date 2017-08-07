@@ -22,18 +22,18 @@ namespace PRJ300Rep
             using (SqlDataReader reader = curSessions.ExecuteReader())
             {
                 while (reader.Read())
-                {                    
+                {
                     SessionID = string.Format("{0}", reader["sessionCode"]);
                     SessionCodes.Add(SessionID);
                 }
             }
-                       
+
             conn.Close();
 
             lbxSessionlist.DataSource = SessionCodes;
             lbxSessionlist.SelectedIndex = -1;
             lbxSessionlist.DataBind();
-      
+
             //blst.DataSource = SessionCodes;
 
         }
@@ -43,7 +43,14 @@ namespace PRJ300Rep
             int code = 0;
             int codecheck = 1;
             string username = User.Identity.Name;
-            DateTime timeout = calTimeout.SelectedDate;
+            //default Timeout is set to 24 hours
+            DateTime timeout = DateTime.Now.AddHours(24);
+
+            if (tbxTimeout.Text != "")
+            {
+                timeout = DateTime.Now.AddHours(Convert.ToDouble(tbxTimeout.Text));
+            }
+
             if (username != "")
             {
                 SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
@@ -96,40 +103,50 @@ namespace PRJ300Rep
             string user = User.Identity.Name;
             string GroupID = "";
             string codecheck = "";
-            SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            conn.Open();
 
-
-            SqlCommand checkPin = new SqlCommand("Select * from [Sessions] Where sessionCode = @pin", conn);
-            checkPin.Parameters.AddWithValue("@pin", code);
-            using (SqlDataReader reader = checkPin.ExecuteReader())
+            if (code == "")
             {
-                if (reader.Read())
+                code = lbxSessionlist.SelectedValue;
+                if (code == "")
                 {
-                    codecheck = string.Format("{0}", reader["sessionCode"]);
-                    if (codecheck == code)
-                    {
-                        GroupID = string.Format("{0}", reader["groupID"]);
-                    }
-                    else
-                    {
-                        string script = "<script type=\"text/javascript\">alert('Session Code Not Found!');</script>";
-                        ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
-                    }
+
                 }
             }
+                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                conn.Open();
 
 
-            if (GroupID != "")
-            {
-                SqlCommand joinGroup = new SqlCommand("Insert into userGroups(GroupID,UserID) Values (@groupid,@userid)", conn);
-                joinGroup.Parameters.AddWithValue("@userid", user);
-                joinGroup.Parameters.AddWithValue("@groupid", GroupID);
-                int result1 = joinGroup.ExecuteNonQuery();
+                SqlCommand checkPin = new SqlCommand("Select * from [Sessions] Where sessionCode = @pin", conn);
+                checkPin.Parameters.AddWithValue("@pin", code);
+                using (SqlDataReader reader = checkPin.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        codecheck = string.Format("{0}", reader["sessionCode"]);
+                        if (codecheck == code)
+                        {
+                            GroupID = string.Format("{0}", reader["groupID"]);
+                        }
+                        else
+                        {
+                            string script = "<script type=\"text/javascript\">alert('Session Code Not Found!');</script>";
+                            ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
+                        }
+                    }
+                }
 
-                Response.Redirect("Session.aspx?SessionCode=" + code);
-            }
-            conn.Close();
+
+                if (GroupID != "")
+                {
+                    SqlCommand joinGroup = new SqlCommand("Insert into userGroups(GroupID,UserID) Values (@groupid,@userid)", conn);
+                    joinGroup.Parameters.AddWithValue("@userid", user);
+                    joinGroup.Parameters.AddWithValue("@groupid", GroupID);
+                    int result1 = joinGroup.ExecuteNonQuery();
+
+                    Response.Redirect("Session.aspx?SessionCode=" + code);
+                }
+                conn.Close();
+            
         }
 
 
