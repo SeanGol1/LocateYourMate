@@ -103,7 +103,7 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
                     NewUserGroup.Parameters.AddWithValue("@GroupID", GroupID);
                     NewUserGroup.Parameters.AddWithValue("@UserID", username);
                     int result2 = NewUserGroup.ExecuteNonQuery();
-
+                
                     SqlCommand NewSession = new SqlCommand("Insert into Sessions(SessionCode,groupID,Timeout) Values(@pin,@groupid,@timeout)", conn);
                     NewSession.Parameters.AddWithValue("@pin", code);
                     NewSession.Parameters.AddWithValue("@groupid", GroupID);

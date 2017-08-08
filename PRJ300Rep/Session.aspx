@@ -18,8 +18,8 @@
         }
     </style>
     <script>
-        var users = document.getElementById("ListBox1");
-        document.addEventListener("load", users.forEach(showLocation()));
+        //var users = document.getElementById("ListBox1");
+        //document.addEventListener("load", users.forEach(showLocation()));
 
 
         var User = '<%=CurrentUser%>';
@@ -50,15 +50,15 @@
                 infoWindow.open(map);
                 map.setCenter(pos);                
                 
-                setInterval(function showLocation(item, index) {
+                //setInterval(function showLocation(item, index) {
 
-                    var marker = new google.maps.Marker({
-                        position: localStorage.getItem(item),
-                        map: map,
-                        title: item
-                    });
+                //    var marker = new google.maps.Marker({
+                //        position: localStorage.getItem(item),
+                //        map: map,
+                //        title: item
+                //    });
 
-                }, 60 * 1000);
+                //}, 60 * 1000);
 
 
             }, function () {
