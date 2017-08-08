@@ -11,14 +11,18 @@
     <script src="Scripts/jquery-3.1.1.min.js"></script>
     <link href="Styles/StyleSheetSession.css" rel="stylesheet" />
     <style>
-        #map{
-            height:600px;
+        #map {
+            height: 600px;
             width: 70%;
-            float:left;
+            float: left;
         }
     </style>
     <script>
+        var users = document.getElementById("ListBox1");
+        document.addEventListener("load", users.forEach(showLocation()));
 
+
+        var User = '<%=CurrentUser%>';
 
         // Google Maps
         var map, infoWindow;
@@ -39,11 +43,24 @@
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
+                localStorage.setItem(user, pos);
 
                 infoWindow.setPosition(pos);
                 infoWindow.setContent('Your Location');
                 infoWindow.open(map);
-                map.setCenter(pos);
+                map.setCenter(pos);                
+                
+                setInterval(function showLocation(item, index) {
+
+                    var marker = new google.maps.Marker({
+                        position: localStorage.getItem(item),
+                        map: map,
+                        title: item
+                    });
+
+                }, 60 * 1000);
+
+
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
@@ -75,17 +92,6 @@
 
         <h3>List of Members in the Session</h3>
         <asp:ListBox ID="ListBox1" runat="server" DataSourceID="SqlDataSource1" DataTextField="UserId" DataValueField="UserId"></asp:ListBox>
-<%--        <div id="memberList">
-            <table>
-                <tr>
-                    <th>Name</th>                    
-                </tr>
-                <tr>                    
-                    <td id="pname"></td>
-                </tr>
-            </table>--%>
-        </div>
-        <%--<a id="leave" class="btn btn-danger" href="Index.html">Leave Session</a>--%>
         <asp:Button ID="leave" runat="server" Text="Leave Session" class="btn btn-danger" OnClick="leave_Click" />
         <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click"  />
 

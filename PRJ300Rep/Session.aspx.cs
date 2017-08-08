@@ -21,6 +21,7 @@ namespace PRJ300Rep
             tbxCode.Text = "<strong>" + SessionCode + "</strong>";
             CurrentUser = User.Identity.Name;
 
+
             string adminID = "";
             try
             {
