@@ -16,16 +16,12 @@ namespace PRJ300Rep
         {
             try
             {
-SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 conn.Open();
 
-
-                SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout > @date", conn);
+                SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout < @date", conn);
                 timeout.Parameters.AddWithValue("@date", DateTime.Now);
                 int result2 = timeout.ExecuteNonQuery();
-
-
-
 
                 string SessionID = "";
                 SqlCommand curSessions = new SqlCommand("Select sessionCode from [Sessions]  Inner JOIN [Groups] on [Groups].[Id] = [Sessions].[groupID] INNER JOIN [userGroups] on [userGroups].GroupID = [Groups].[Id] Where [userGroups].[UserID] = @userid ", conn);
@@ -40,11 +36,9 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
                         SessionCodes.Add(SessionID);
                     }
                 }
-
-
                 conn.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.InnerException.ToString();
             }
@@ -52,7 +46,6 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
             HttpCookie UserId = new HttpCookie("UserID");
             UserId.Value = User.Identity.Name;
             Response.Cookies.Add(UserId);
-
         }
 
         protected void continue_Click(object sender, EventArgs e)
@@ -60,18 +53,17 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
             int code = 0;
             int codecheck = 1;
             string username = User.Identity.Name;
-            //default Timeout is set to 24 hours
             DateTime timeout;
 
-            if (tbxTimeout.Text != "")            
-                timeout = DateTime.Now.AddHours(Convert.ToDouble(tbxTimeout.Text));            
+            if (tbxTimeout.Text != "")
+                timeout = DateTime.Now.AddHours(Convert.ToDouble(tbxTimeout.Text));
             else
-                timeout = DateTime.Now.AddHours(24);
+                timeout = DateTime.Now.AddHours(24); //set default timeout to 24 hours
 
             if (username != "")
             {
-                //try
-                //{
+                try
+                {
                     SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                     conn.Open();
 
@@ -83,27 +75,15 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
                         codecheck = checkPin.ExecuteNonQuery();
                     }
 
-                    SqlCommand newGroup = new SqlCommand("Insert into Groups(AdminID) Values (@AdminID)", conn);
+                    SqlCommand newGroup = new SqlCommand("Insert into Groups(AdminID) output INSERTED.Id Values (@AdminID)", conn);
                     newGroup.Parameters.AddWithValue("@AdminID", username);
-                    int result1 = newGroup.ExecuteNonQuery();
-
-                    string GroupID = "";
-                    SqlCommand getGroupID = new SqlCommand("Select Id from [Groups] Where AdminID = @UserID", conn);
-                    getGroupID.Parameters.AddWithValue("@UserID", username);
-
-                    using (SqlDataReader reader = getGroupID.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            GroupID = string.Format("{0}", reader["Id"]);
-                        }
-                    }
+                    int GroupID = (int)newGroup.ExecuteScalar();
 
                     SqlCommand NewUserGroup = new SqlCommand("Insert into UserGroups(GroupId,UserID) Values (@GroupID,@UserID)", conn);
                     NewUserGroup.Parameters.AddWithValue("@GroupID", GroupID);
                     NewUserGroup.Parameters.AddWithValue("@UserID", username);
                     int result2 = NewUserGroup.ExecuteNonQuery();
-                
+
                     SqlCommand NewSession = new SqlCommand("Insert into Sessions(SessionCode,groupID,Timeout) Values(@pin,@groupid,@timeout)", conn);
                     NewSession.Parameters.AddWithValue("@pin", code);
                     NewSession.Parameters.AddWithValue("@groupid", GroupID);
@@ -111,11 +91,11 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
                     int result = NewSession.ExecuteNonQuery();
 
                     conn.Close();
-                //}
-                //catch(Exception ex)
-                //{
-                //    ex.InnerException.ToString();
-                //}
+                }
+                catch (Exception ex)
+                {
+                    ex.InnerException.ToString();
+                }
             }
 
 
@@ -130,7 +110,7 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
             selItem = lbxSessionlist.SelectedValue;
             if (code == "")
             {
-                code = selItem;                
+                code = selItem;
             }
             try
             {
@@ -171,7 +151,7 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
 
                 Response.Redirect("Session.aspx?SessionCode=" + code);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.InnerException.ToString();
             }
@@ -186,7 +166,7 @@ SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows
 
         protected void lbxSessionlist_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selItem = lbxSessionlist.SelectedValue;           
+            selItem = lbxSessionlist.SelectedValue;
         }
     }
 }

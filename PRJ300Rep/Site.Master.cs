@@ -74,7 +74,7 @@ namespace PRJ300Rep
             conn.Open();
 
 
-            SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout > @date", conn);
+            SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout < @date", conn);
             timeout.Parameters.AddWithValue("@date", DateTime.Now);
             int result2 = timeout.ExecuteNonQuery();
             conn.Close();
