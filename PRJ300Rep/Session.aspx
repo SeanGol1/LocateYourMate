@@ -18,8 +18,6 @@
         }
     </style>
     <script>
-        //var users = document.getElementById("ListBox1");
-        //document.addEventListener("load", users.forEach(showLocation()));
 
 
         var User = '<%=CurrentUser%>';
