@@ -72,7 +72,7 @@
                     <div id="createCode">
                         <h2 id="Create" class="jumbotron">Create Group</h2>
                         <p>Set Timeout (Hours):</p>
-                        <asp:TextBox ID="tbxTimeout" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbxTimeout" runat="server" placeholder="Defaults to 24 hours"></asp:TextBox>
                         <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Continue" />
                     </div>
 

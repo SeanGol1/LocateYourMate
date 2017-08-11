@@ -14,6 +14,7 @@ namespace PRJ300Rep
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             try
             {
                 SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
@@ -28,6 +29,7 @@ namespace PRJ300Rep
                 curSessions.Parameters.AddWithValue("@userid", User.Identity.Name);
 
                 List<string> SessionCodes = new List<string>();
+                SessionCodes.Clear();
                 using (SqlDataReader reader = curSessions.ExecuteReader())
                 {
                     while (reader.Read())
@@ -116,8 +118,7 @@ namespace PRJ300Rep
             {
                 SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 conn.Open();
-
-
+                
                 SqlCommand checkPin = new SqlCommand("Select * from [Sessions] Where sessionCode = @pin", conn);
                 checkPin.Parameters.AddWithValue("@pin", code);
                 using (SqlDataReader reader = checkPin.ExecuteReader())
@@ -137,15 +138,12 @@ namespace PRJ300Rep
                     }
                 }
 
-
                 if (GroupID != "" && selItem == "")
                 {
                     SqlCommand joinGroup = new SqlCommand("Insert into userGroups(GroupID,UserID) Values (@groupid,@userid)", conn);
                     joinGroup.Parameters.AddWithValue("@userid", user);
                     joinGroup.Parameters.AddWithValue("@groupid", GroupID);
                     int result1 = joinGroup.ExecuteNonQuery();
-
-
                 }
                 conn.Close();
 
