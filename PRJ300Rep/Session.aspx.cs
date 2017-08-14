@@ -53,8 +53,8 @@ namespace PRJ300Rep
 
         protected void leave_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 conn.Open();
 
@@ -65,11 +65,11 @@ namespace PRJ300Rep
 
                 conn.Close();
                 Response.Redirect("Default.aspx");
-            }
-            catch(Exception ex)
-            {
-                ex.InnerException.ToString();
-            }
+            //}
+            //catch(Exception ex)
+            //{
+            //    ex.InnerException.ToString();
+            //}
         }
 
         protected void Close_Click(object sender, EventArgs e)

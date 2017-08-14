@@ -46,17 +46,16 @@
                 infoWindow.setPosition(pos);
                 infoWindow.setContent('Your Location');
                 infoWindow.open(map);
-                map.setCenter(pos);                
-                
-                //setInterval(function showLocation(item, index) {
+                map.setCenter(pos);
 
-                //    var marker = new google.maps.Marker({
-                //        position: localStorage.getItem(item),
-                //        map: map,
-                //        title: item
-                //    });
+                function showLocation(item, index) {
 
-                //}, 60 * 1000);
+                    var marker = new google.maps.Marker({
+                        position: localStorage.getItem(item),
+                        map: map,
+                        title: item
+                    });
+                };
 
 
             }, function () {
@@ -76,10 +75,6 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9pJLBoZZ0LrasUlwgXgyXcTVepaAwPn0&callback=initMap"
 	async defer></script>
-
-    <h2><%: Title %>.</h2>
-
-
 
     <h1>Festival Friend Finder</h1>
     <asp:Label ID="Label1" runat="server" Text="Your Session Code:"></asp:Label>

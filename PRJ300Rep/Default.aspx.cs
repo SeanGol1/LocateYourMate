@@ -114,8 +114,8 @@ namespace PRJ300Rep
             {
                 code = selItem;
             }
-            try
-            {
+            //try
+            //{
                 SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 conn.Open();
                 
@@ -148,11 +148,11 @@ namespace PRJ300Rep
                 conn.Close();
 
                 Response.Redirect("Session.aspx?SessionCode=" + code);
-            }
-            catch (Exception ex)
-            {
-                ex.InnerException.ToString();
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    ex.InnerException.ToString();
+            //}
         }
 
         public int NewSessionCode()
