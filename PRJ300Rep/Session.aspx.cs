@@ -72,7 +72,7 @@ namespace PRJ300Rep
             deleteQ.Parameters.AddWithValue("@user", CurrentUser);
             deleteQ.Parameters.AddWithValue("@code", SessionCode);
             int GroupID = (int)deleteQ.ExecuteScalar();
-            //deleteQ.ExecuteNonQuery();
+            deleteQ.ExecuteNonQuery();
 
 
             SqlCommand deleteSession = new SqlCommand("DELETE SessionCode From Sessions where SessionCode = @code");
