@@ -51,7 +51,7 @@
                 function showLocation(item, index) {
 
                     var marker = new google.maps.Marker({
-                        position: localStorage.getItem(item),
+                        position: pos,///localStorage.getItem(item), ////////-----fix
                         map: map,
                         title: item
                     });
