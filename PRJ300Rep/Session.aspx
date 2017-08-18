@@ -21,6 +21,8 @@
 
 
         var User = '<%=CurrentUser%>';
+        var Users = new Array();
+        Users = '<%=JSArray%>';
 
         // Google Maps
         var map, infoWindow;
@@ -50,7 +52,12 @@
                 infoWindow.open(map);
                 map.setCenter(pos);
 
-                function showLocation(item, index) {
+
+                ///////////////// Place array in here ///////////////////
+
+
+                function showLocation(item, index) {                 
+
 
                     var marker = new google.maps.Marker({
                         position: JSON.parse(localStorage.getItem(item)), ////////-----fix

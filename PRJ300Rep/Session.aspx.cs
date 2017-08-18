@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -14,13 +15,15 @@ namespace PRJ300Rep
     {
         public string CurrentUser = "";
         public string SessionCode = "";
+        public List<string> group = new List<string>();
+        public string JSArray = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             SessionCode = Request.QueryString["SessionCode"];
             tbxCode.Text = "<strong>" + SessionCode + "</strong>";
             CurrentUser = User.Identity.Name;
-
+            
 
             string adminID = "";
           
@@ -36,8 +39,23 @@ namespace PRJ300Rep
                     }
                 }
 
-                //Show Close Session button only for an admin
-                if (adminID == User.Identity.Name)
+                //send users in group  to javascript 
+            SqlCommand GetUsers = new SqlCommand("Select UserID from Usergroups inner join [Groups] on [Groups].[Id] = [UserGroups].[GroupId] Inner Join [Sessions] on [Groups].[Id] = [Sessions].[groupID] where SessionCode = @code");
+            GetUsers.Parameters.AddWithValue("@code", SessionCode);
+            using (SqlDataReader reader = GetUsers.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    group.Add( string.Format("{0}", reader["UserID"]));
+                }
+            }
+
+            JSArray = JsonConvert.SerializeObject(group);
+            
+
+
+            //Show Close Session button only for an admin
+            if (adminID == User.Identity.Name)
                     Close.Visible = true;
                 else
                     Close.Visible = false;
