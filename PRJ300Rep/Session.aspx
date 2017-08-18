@@ -41,7 +41,9 @@
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                localStorage.setItem(user, pos);
+
+                //add the users location to local storage for other users to see
+                localStorage.setItem('user', JSON.stringify(pos));
 
                 infoWindow.setPosition(pos);
                 infoWindow.setContent('Your Location');
@@ -51,7 +53,7 @@
                 function showLocation(item, index) {
 
                     var marker = new google.maps.Marker({
-                        position: pos,///localStorage.getItem(item), ////////-----fix
+                        position: JSON.parse(localStorage.getItem(item)), ////////-----fix
                         map: map,
                         title: item
                     });
