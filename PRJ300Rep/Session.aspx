@@ -19,7 +19,7 @@
     </style>
     <script>
 
-
+        var ipAddress = "";
         var User = '<%=CurrentUser%>';
         var Users = new Array();
         Users = '<%=JSArray%>';
@@ -33,8 +33,7 @@
             });
             infoWindow = new google.maps.InfoWindow;
         }
-
-
+        
         // Get current Location
 
         if (navigator.geolocation) {
@@ -45,7 +44,7 @@
                 };
 
                 //add the users location to local storage for other users to see
-                localStorage.setItem('user', JSON.stringify(pos));
+                //localStorage.setItem('user', JSON.stringify(pos));
 
                 infoWindow.setPosition(pos);
                 infoWindow.setContent('Your Location');
@@ -55,15 +54,20 @@
 
                 ///////////////// Place array in here ///////////////////
 
+                $.getJSON('https://ipinfo.io/ ', function (data) {
+                    //console.log(data);
+                    ipAddress = data;
+                });
+
 
                 function showLocation(item, index) {                 
 
 
-                    var marker = new google.maps.Marker({
-                        position: JSON.parse(localStorage.getItem(item)), ////////-----fix
-                        map: map,
-                        title: item
-                    });
+                    //var marker = new google.maps.Marker({
+                    //    position: ,
+                    //    map: map,
+                    //    title: item
+                    //});
                 };
 
 
