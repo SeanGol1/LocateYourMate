@@ -17,7 +17,7 @@ namespace PRJ300Rep
     {
         public string CurrentUser = "";
         public string SessionCode = "";
-        public List<string> group = new List<string>();
+        public List<IpInfo> group = new List<IpInfo>();
         public string JSArray = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -41,19 +41,19 @@ namespace PRJ300Rep
                 }
             }
 
-            //send users in group  to javascript 
-            SqlCommand GetUsers = new SqlCommand("Select UserID from Usergroups inner join [Groups] on [Groups].[Id] = [UserGroups].[GroupId] Inner Join [Sessions] on [Groups].[Id] = [Sessions].[groupID] where SessionCode = @code",conn);
-            GetUsers.Parameters.AddWithValue("@code", SessionCode);
-            using (SqlDataReader reader = GetUsers.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    group.Add(string.Format("{0}", reader["UserID"]));
-                }
-            }
+            ////send users in group  to javascript 
+            //SqlCommand GetUsers = new SqlCommand("Select UserID from Usergroups inner join [Groups] on [Groups].[Id] = [UserGroups].[GroupId] Inner Join [Sessions] on [Groups].[Id] = [Sessions].[groupID] where SessionCode = @code", conn);
+            //GetUsers.Parameters.AddWithValue("@code", SessionCode);
+            //using (SqlDataReader reader = GetUsers.ExecuteReader())
+            //{
+            //    if (reader.Read())
+            //    {
+            //        group.Add(string.Format("{0}", reader["UserID"]));
+            //    }
+            //}
 
-            JSArray = JsonConvert.SerializeObject(group);
-                    
+            
+
 
             // Get the IP  and insert it into a database
 
@@ -64,7 +64,23 @@ namespace PRJ300Rep
             AddIp.Parameters.AddWithValue("@name", CurrentUser);
             int result2 = AddIp.ExecuteNonQuery();
 
+            SqlCommand GetIp = new SqlCommand("select [UserName], [IPAddress] FROM [AspNetUsers] WHERE [UserName] = @name", conn);
+            GetIp.Parameters.AddWithValue("@name", CurrentUser);
+            using (SqlDataReader reader = GetIp.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    foreach (var item in reader)
+                    {
+                        string Name = string.Format("{0}", reader["Name"]);
+                        string IPAddress = string.Format("{1}", reader["IPAddress"]);
+                        IpInfo ipuser = new IpInfo(Name, IPAddress);
+                        group.Add(ipuser);
+                    }
 
+                }
+            }
+JSArray = JsonConvert.SerializeObject(group);
             //Show Close Session button only for an admin
             if (adminID == User.Identity.Name)
                 Close.Visible = true;
@@ -104,11 +120,11 @@ namespace PRJ300Rep
             deleteQ.ExecuteNonQuery();
 
 
-            SqlCommand deleteSession = new SqlCommand("DELETE SessionCode From Sessions where SessionCode = @code",conn);
+            SqlCommand deleteSession = new SqlCommand("DELETE SessionCode From Sessions where SessionCode = @code", conn);
             deleteSession.Parameters.AddWithValue("@code", SessionCode);
             deleteSession.ExecuteNonQuery();
 
-            SqlCommand deleteGroup = new SqlCommand("DELETE From Groups where Id = @gid",conn);
+            SqlCommand deleteGroup = new SqlCommand("DELETE From Groups where Id = @gid", conn);
             deleteSession.Parameters.AddWithValue("@gid", GroupID);
             deleteSession.ExecuteNonQuery();
 
@@ -119,14 +135,14 @@ namespace PRJ300Rep
 
         public static string GetUserIP()
         {
-           
+
             // gets the ip in Json format to send back to load function
             IpInfo ipInfo = new IpInfo();
 
             try
             {
                 string info = new WebClient().DownloadString("http://ipinfo.io/");
-                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);             
+                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
 
             }
             catch (Exception)
@@ -135,7 +151,7 @@ namespace PRJ300Rep
             }
 
             return ipInfo.Ip;
-        }  
+        }
 
     }
 }

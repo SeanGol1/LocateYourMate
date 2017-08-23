@@ -33,7 +33,7 @@
             });
             infoWindow = new google.maps.InfoWindow;
         }
-        
+
         // Get current Location
 
         if (navigator.geolocation) {
@@ -42,6 +42,8 @@
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
+
+
 
                 //add the users location to local storage for other users to see
                 //localStorage.setItem('user', JSON.stringify(pos));
@@ -52,22 +54,23 @@
                 map.setCenter(pos);
 
 
-                ///////////////// Place array in here ///////////////////
-
-                $.getJSON('https://ipinfo.io/ ', function (data) {
-                    //console.log(data);
-                    ipAddress = data;
-                });
+                //get the users location in Json format using their IP address. 
+                for (var i = 0; i < Users.length; i++) {
 
 
-                function showLocation(item, index) {                 
+                    $.getJSON('https://ipinfo.io/' + item[1], function (data) {
+                        //console.log(data);
+                        //Address = data.ip;
+                        showLocation(item[0], data.loc);
+                    });
+                }
 
-
-                    //var marker = new google.maps.Marker({
-                    //    position: ,
-                    //    map: map,
-                    //    title: item
-                    //});
+                function showLocation(item, location) {
+                    var marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        title: item
+                    });
                 };
 
 

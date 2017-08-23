@@ -12,6 +12,9 @@ namespace PRJ300Rep
         [JsonProperty("ip")]
         public string Ip { get; set; }
 
+        [JsonProperty("username")]
+        public string UserName { get; set; }
+
         [JsonProperty("hostname")]
         public string Hostname { get; set; }
 
@@ -32,5 +35,16 @@ namespace PRJ300Rep
 
         [JsonProperty("postal")]
         public string Postal { get; set; }
+
+        public IpInfo()
+        {
+
+        }
+        public IpInfo(string name, string ip)
+        {
+            UserName = name;
+            Ip = ip;
+        }
+        
     }
 }
