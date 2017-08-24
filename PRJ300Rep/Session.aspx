@@ -43,6 +43,11 @@
                     lng: position.coords.longitude
                 };
 
+                //send location to the server side to be placed safely in the database
+                document.getElementById('<%= hdnLat.ClientID %>').value = lat;
+                document.getElementById('<%= hdnLong.ClientID %>').value = long;
+
+
 
 
                 //add the users location to local storage for other users to see
@@ -105,6 +110,7 @@
         <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click"  />
 
     </div>
+    
     <script>
 ////https://developers.facebook.com/docs/javascript/quickstart
 //  window.fbAsyncInit = function() {
@@ -132,7 +138,7 @@
     </script>
 
 
-
+<asp:HiddenField id="hdnLat" runat="server"></asp:HiddenField><asp:HiddenField id="hdnLong" runat="server"></asp:HiddenField>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FestivalFriendFinderConnectionString %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
         <SelectParameters>
             <asp:QueryStringParameter Name="code" QueryStringField="SessionCode" />

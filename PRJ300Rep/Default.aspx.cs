@@ -93,8 +93,6 @@ namespace PRJ300Rep
 
                 conn.Close();
 
-
-
                 Response.Redirect("Session.aspx?SessionCode=" + code);
             }
         }
