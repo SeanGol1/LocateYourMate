@@ -307,7 +307,6 @@ C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\bin\Microsoft.AI.Depen
 C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\bin\Microsoft.AI.Web.xml
-C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\obj\Debug\PRJ300Rep.csprojResolveAssemblyReference.cache
 C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\obj\Debug\PRJ300Rep.dll
 C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\obj\Debug\PRJ300Rep.pdb
 C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\bin\PRJ300Rep.dll.config
