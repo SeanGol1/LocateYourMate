@@ -22,10 +22,10 @@
         var ipAddress = "";
         var User = '<%=CurrentUser%>';
         var Users = new Array();
-        Users = '<%=JSArray%>';
+        Users = JSON.parse('<%=JSArray%>');
 
-
-        $(document).on("Load", function () {
+        //send location to the server side to be placed safely in the database
+        $(document).on("load", function () {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var pos = {
                     lat: position.coords.latitude,
@@ -35,7 +35,7 @@
             document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;
             });
         });
-        //send location to the server side to be placed safely in the database
+        
 
 
 
@@ -58,24 +58,28 @@
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-
-
-
-
-                //add the users location to local storage for other users to see
-                //localStorage.setItem('user', JSON.stringify(pos));
-
                 infoWindow.setPosition(pos);
                 infoWindow.setContent('Your Location');
                 infoWindow.open(map);
                 map.setCenter(pos);
 
-
-                //get the users location in Json format using their IP address. 
+//add the users location to local storage for other users to see
+                //localStorage.setItem('user', JSON.stringify(pos));
+               
                 //get the location and name from array and display as marker
-                /*  for (var i = 0; i < Users.length; i++) {
+                for (var i = 0; i < Users.length; i++) {
+                    var pos = {
+                        lat: Users[i].lat,
+                        lng: Users[i].lng
+                    };
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        title: Users[i].Name
+                    });
 
-
+ //get the users location in Json format using their IP address. || only getting location of the router
+/*  
                       $.getJSON('https://ipinfo.io/' + item[1], function (data) {
                           ////console.log(data);
                           ////Address = data.ip;
@@ -85,16 +89,11 @@
                               map: map,
                               title: Users[i].Name
                           });
-                      });
-                  }*/
+                      });*/
+                  }
 
-                function showLocation(item, location) {
-                    var marker = new google.maps.Marker({
-                        position: location,
-                        map: map,
-                        title: item
-                    });
-                };
+                
+                
 
 
             }, function () {
@@ -159,7 +158,7 @@
 
 
 <asp:HiddenField id="hdnLat" runat="server"></asp:HiddenField><asp:HiddenField id="hdnLong" runat="server"></asp:HiddenField>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FestivalFriendFinderConnectionString %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:AzureConnectionString %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
         <SelectParameters>
             <asp:QueryStringParameter Name="code" QueryStringField="SessionCode" />
         </SelectParameters>

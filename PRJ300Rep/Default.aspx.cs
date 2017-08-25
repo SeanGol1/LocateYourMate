@@ -157,6 +157,7 @@ namespace PRJ300Rep
         {
             selItem = lbxSessionlist.SelectedValue;
         }
+
     }
 }
 

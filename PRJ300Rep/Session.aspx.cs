@@ -21,19 +21,23 @@ namespace PRJ300Rep
         public string CurrentUser = "";
         public string SessionCode = "";
         public List<User> group = new List<User>();
+        public List<string> users = new List<string>();
         public string JSArray = "";
+        public string JSUserArray = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //get sessioncode from querystring and display 
             SessionCode = Request.QueryString["SessionCode"];
             tbxCode.Text = "<strong>" + SessionCode + "</strong>";
-            CurrentUser = User.Identity.Name;
 
+            CurrentUser = User.Identity.Name;
 
             string adminID = "";
 
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AzureConnectionString"].ToString());
             conn.Open();
+
             SqlCommand getAdmin = new SqlCommand("Select AdminID from Groups inner join [Sessions] on [Groups].[Id] = [Sessions].[groupID] where SessionCode = @code", conn);
             getAdmin.Parameters.AddWithValue("@code", SessionCode);
             using (SqlDataReader reader = getAdmin.ExecuteReader())
@@ -44,29 +48,23 @@ namespace PRJ300Rep
                 }
             }
 
-            ////send users in group  to javascript 
-            //SqlCommand GetUsers = new SqlCommand("Select UserID from Usergroups inner join [Groups] on [Groups].[Id] = [UserGroups].[GroupId] Inner Join [Sessions] on [Groups].[Id] = [Sessions].[groupID] where SessionCode = @code", conn);
-            //GetUsers.Parameters.AddWithValue("@code", SessionCode);
-            //using (SqlDataReader reader = GetUsers.ExecuteReader())
-            //{
-            //    if (reader.Read())
-            //    {
-            //        group.Add(string.Format("{0}", reader["UserID"]));
-            //    }
-            //}
-
-
             //insert location(lat,long) into database
 
-           // string script = "<script type=\"text/javascript\"> navigator.geolocation.getCurrentPosition(function(position) {var pos = {lat: position.coords.latitude, lng: position.coords.longitude}; }document.getElementById('<%= hdnLat.ClientID %>').value = pos.lat;document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;</script>";
-           // ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
-            //take lat lng
+            //tried to run the javascript (getting user location) before the C# code is ran. 
+            // string script = "<script type=\"text/javascript\"> navigator.geolocation.getCurrentPosition(function(position) {var pos = {lat: position.coords.latitude, lng: position.coords.longitude}; }document.getElementById('<%= hdnLat.ClientID %>').value = pos.lat;document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;</script>";
+            // ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
+           
+            
+            
+            
+            //take lat lng out of client side || javascript code runs after C# 
             string lat = hdnLat.Value;
             string lng = hdnLong.Value;
             /*
             double lng;
             double lat;
 
+            //Get the location using C# || It is not recognise the keywords GeoCoordinateWatcher
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
             watcher.Start(); //started watcher
             GeoCoordinate coord = watcher.Position.Location;
@@ -75,7 +73,8 @@ namespace PRJ300Rep
                 lat = coord.Latitude; //latitude
                 lng = coord.Longitude;  //logitude
             }*/
-            
+
+
             SqlCommand AddLocal = new SqlCommand("Update [AspNetUsers] set [lat] = @lat, [lng] = @lng where [Username] = @name", conn);
             AddLocal.Parameters.AddWithValue("@name", CurrentUser);
             AddLocal.Parameters.AddWithValue("@lat", lat);
@@ -91,7 +90,6 @@ namespace PRJ300Rep
 
 
             //get the location from the database and send it to the client side
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
 
             SqlCommand GetLocal = new SqlCommand("select [UserName], [lat], [lng] FROM [AspNetUsers] WHERE [UserName] = @name", conn);
             GetLocal.Parameters.AddWithValue("@name", CurrentUser);

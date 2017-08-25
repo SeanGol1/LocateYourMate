@@ -85,7 +85,7 @@
                     <div id="SessionsList">
                         <h2>Already part of a group?</h2>
                         <asp:ListBox ID="lbxSessionlist" runat="server" OnSelectedIndexChanged="lbxSessionlist_SelectedIndexChanged" DataSourceID="SqlDataSource1" DataTextField="sessionCode" DataValueField="sessionCode"></asp:ListBox>
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:FestivalFriendFinderConnectionString %>" SelectCommand="SELECT s.sessionCode FROM Sessions AS s INNER JOIN Groups AS g ON s.[groupID] = g.[Id] INNER JOIN userGroups AS ug ON ug.[GroupID] = g.[Id] WHERE ug.UserID = @user">
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:AzureConnectionString %>" SelectCommand="SELECT s.sessionCode FROM Sessions AS s INNER JOIN Groups AS g ON s.[groupID] = g.[Id] INNER JOIN userGroups AS ug ON ug.[GroupID] = g.[Id] WHERE ug.UserID = @user" OnSelecting="SqlDataSource1_Selecting">
                             <SelectParameters>
                                 <asp:CookieParameter CookieName="UserId" DefaultValue="null" Name="user" />
                             </SelectParameters>
