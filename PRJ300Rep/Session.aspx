@@ -32,7 +32,7 @@
                     lng: position.coords.longitude
                 };
                 document.getElementById('<%= hdnLat.ClientID %>').value = pos.lat;
-            document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;
+                document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;
             });
         });
         
@@ -158,7 +158,7 @@
 
 
 <asp:HiddenField id="hdnLat" runat="server"></asp:HiddenField><asp:HiddenField id="hdnLong" runat="server"></asp:HiddenField>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:AzureConnectionString %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
         <SelectParameters>
             <asp:QueryStringParameter Name="code" QueryStringField="SessionCode" />
         </SelectParameters>
