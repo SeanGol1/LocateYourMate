@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -14,10 +15,11 @@ namespace PRJ300Rep
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            lbxSessionlist.DataBind();
+            
             try
             {
-                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
                 conn.Open();
 
                 SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout < @date", conn);
@@ -48,6 +50,7 @@ namespace PRJ300Rep
             HttpCookie UserId = new HttpCookie("UserID");
             UserId.Value = User.Identity.Name;
             Response.Cookies.Add(UserId);
+            lbxSessionlist.DataBind();
         }
 
         protected void continue_Click(object sender, EventArgs e)
@@ -65,7 +68,7 @@ namespace PRJ300Rep
             if (username != "")
             {
 
-                SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
                 conn.Open();
 
                 while (codecheck != -1)
@@ -108,7 +111,7 @@ namespace PRJ300Rep
                 code = selItem;
             }
 
-            SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
             conn.Open();
 
             SqlCommand checkPin = new SqlCommand("Select * from [Sessions] Where sessionCode = @pin", conn);
