@@ -14,7 +14,7 @@ namespace PRJ300Rep
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lbxSessionlist.DataBind();
             try
             {
                 SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");

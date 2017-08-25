@@ -22,7 +22,7 @@
             });
         });
 
-        //https://developers.facebook.com/docs/javascript/quickstart
+        //https://developers.facebook.com/docs/javascript/quickstart  facebook login
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '450204495362227',
@@ -66,7 +66,6 @@
                 <br />
                 Begin Partying.<br />
                 THAT EASY!</p>
-
             <div class="row">
                 <div class="col-md-6">
                     <div id="createCode">
@@ -75,8 +74,6 @@
                         <asp:TextBox ID="tbxTimeout" runat="server" placeholder="Defaults to 24 hours"></asp:TextBox>
                         <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Continue" />
                     </div>
-
-
                 </div>
                 <div class="col-md-6">
                     <div id="enterLink">
