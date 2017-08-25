@@ -22,9 +22,11 @@ namespace PRJ300Rep
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AzureConnectionString"].ToString());
                 conn.Open();
 
+                //delete all sessions that have timed out
                 SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout < @date", conn);
                 timeout.Parameters.AddWithValue("@date", DateTime.Now);
                 int result2 = timeout.ExecuteNonQuery();
+
 
                 string SessionID = "";
                 SqlCommand curSessions = new SqlCommand("Select sessionCode from [Sessions]  Inner JOIN [Groups] on [Groups].[Id] = [Sessions].[groupID] INNER JOIN [userGroups] on [userGroups].GroupID = [Groups].[Id] Where [userGroups].[UserID] = @userid ", conn);
@@ -41,6 +43,7 @@ namespace PRJ300Rep
                     }
                 }
                 conn.Close();
+                lbxSessionlist.DataSource = SessionCodes;
             }
             catch (Exception ex)
             {
@@ -50,7 +53,7 @@ namespace PRJ300Rep
             HttpCookie UserId = new HttpCookie("UserID");
             UserId.Value = User.Identity.Name;
             Response.Cookies.Add(UserId);
-            lbxSessionlist.DataBind();
+            
         }
 
         protected void continue_Click(object sender, EventArgs e)
