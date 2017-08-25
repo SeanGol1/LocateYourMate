@@ -19,7 +19,7 @@ namespace PRJ300Rep
             try
             {
 
-                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AzureConnectionString"].ToString());
                 conn.Open();
 
                 SqlCommand timeout = new SqlCommand("delete from Sessions where Timeout < @date", conn);
@@ -68,7 +68,7 @@ namespace PRJ300Rep
             if (username != "")
             {
 
-                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AzureConnectionString"].ToString());
                 conn.Open();
 
                 while (codecheck != -1)
@@ -111,7 +111,7 @@ namespace PRJ300Rep
                 code = selItem;
             }
 
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AzureConnectionString"].ToString());
             conn.Open();
 
             SqlCommand checkPin = new SqlCommand("Select * from [Sessions] Where sessionCode = @pin", conn);
