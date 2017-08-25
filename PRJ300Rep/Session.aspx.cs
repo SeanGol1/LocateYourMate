@@ -7,9 +7,11 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 
 namespace PRJ300Rep
 {
@@ -54,9 +56,25 @@ namespace PRJ300Rep
 
 
             //insert location(lat,long) into database
+
+           // string script = "<script type=\"text/javascript\"> navigator.geolocation.getCurrentPosition(function(position) {var pos = {lat: position.coords.latitude, lng: position.coords.longitude}; }document.getElementById('<%= hdnLat.ClientID %>').value = pos.lat;document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;</script>";
+           // ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
+            //take lat lng
             string lat = hdnLat.Value;
             string lng = hdnLong.Value;
+            /*
+            double lng;
+            double lat;
 
+            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
+            watcher.Start(); //started watcher
+            GeoCoordinate coord = watcher.Position.Location;
+            if (!watcher.Position.Location.IsUnknown)
+            {
+                lat = coord.Latitude; //latitude
+                lng = coord.Longitude;  //logitude
+            }*/
+            
             SqlCommand AddLocal = new SqlCommand("Update [AspNetUsers] set [lat] = @lat, [lng] = @lng where [Username] = @name", conn);
             AddLocal.Parameters.AddWithValue("@name", CurrentUser);
             AddLocal.Parameters.AddWithValue("@lat", lat);
@@ -72,6 +90,8 @@ namespace PRJ300Rep
 
 
             //get the location from the database and send it to the client side
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+
             SqlCommand GetLocal = new SqlCommand("select [UserName], [lat], [lng] FROM [AspNetUsers] WHERE [UserName] = @name", conn);
             GetLocal.Parameters.AddWithValue("@name", CurrentUser);
             using (SqlDataReader reader = GetLocal.ExecuteReader())
@@ -86,10 +106,10 @@ namespace PRJ300Rep
                         //IpInfo ipuser = new IpInfo(Name, IPAddress);
                         group.Add(new User(Name1,lat1,lng1));
                     }
-
                 }
             }
            
+            
 
             JSArray = JsonConvert.SerializeObject(group);
 
@@ -102,6 +122,23 @@ namespace PRJ300Rep
 
             conn.Close();
 
+        }
+
+        [WebMethod]
+        public void SaveLocations()
+        {
+            /*SqlConnection conn = new SqlConnection("Server=tcp:prj300repeat.database.windows.net,1433;Initial Catalog=FestivalFriendFinder;Persist Security Info=False;User ID=Sean;Password=P@ssword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            conn.Open();
+            string lat = hdnLat.Value;
+            string lng = hdnLong.Value;
+            CurrentUser = User.Identity.Name;
+
+            SqlCommand AddLocal = new SqlCommand("Update [AspNetUsers] set [lat] = @lat, [lng] = @lng where [Username] = @name", conn);
+            AddLocal.Parameters.AddWithValue("@name", CurrentUser);
+            AddLocal.Parameters.AddWithValue("@lat", lat);
+            AddLocal.Parameters.AddWithValue("@lng", lng);
+            int result3 = AddLocal.ExecuteNonQuery();
+            conn.Close();*/
         }
 
         protected void leave_Click(object sender, EventArgs e)

@@ -98,6 +98,8 @@
 
                     </div>
                     <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success" runat="server" Text="Join Your Group!" />
+                    <asp:HiddenField ID="HdnLat" runat="server" />
+                    <asp:HiddenField ID="HdnLng" runat="server" />
                 </div>
 
             </div>

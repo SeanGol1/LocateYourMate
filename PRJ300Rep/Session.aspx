@@ -24,6 +24,22 @@
         var Users = new Array();
         Users = '<%=JSArray%>';
 
+
+        $(document).on("Load", function () {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                document.getElementById('<%= hdnLat.ClientID %>').value = pos.lat;
+            document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;
+            });
+        });
+        //send location to the server side to be placed safely in the database
+
+
+
+
         // Google Maps
         var map, infoWindow;
         function initMap() {
@@ -43,10 +59,6 @@
                     lng: position.coords.longitude
                 };
 
-                //send location to the server side to be placed safely in the database
-                document.getElementById('<%= hdnLat.ClientID %>').value = lat;
-                document.getElementById('<%= hdnLong.ClientID %>').value = long;
-
 
 
 
@@ -60,15 +72,21 @@
 
 
                 //get the users location in Json format using their IP address. 
-                for (var i = 0; i < Users.length; i++) {
+                //get the location and name from array and display as marker
+                /*  for (var i = 0; i < Users.length; i++) {
 
 
-                    $.getJSON('https://ipinfo.io/' + item[1], function (data) {
-                        //console.log(data);
-                        //Address = data.ip;
-                        showLocation(item[0], data.loc);
-                    });
-                }
+                      $.getJSON('https://ipinfo.io/' + item[1], function (data) {
+                          ////console.log(data);
+                          ////Address = data.ip;
+                          //showLocation(item[0], data.loc);
+                          var marker = new google.maps.Marker({
+                              position: new google.maps.LatLng(Users[i].Lat, Users[i].Lng),
+                              map: map,
+                              title: Users[i].Name
+                          });
+                      });
+                  }*/
 
                 function showLocation(item, location) {
                     var marker = new google.maps.Marker({
@@ -93,6 +111,8 @@
                 'Error: Your browser doesn\'t support geolocation.');
             infoWindow.open(map);
         }
+
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9pJLBoZZ0LrasUlwgXgyXcTVepaAwPn0&callback=initMap"
 	async defer></script>
