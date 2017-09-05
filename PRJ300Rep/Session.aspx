@@ -24,7 +24,7 @@
         var Users = new Array();
         Users = JSON.parse('<%=JSArray%>');
 
-        //send location to the server side to be placed safely in the database
+<%--        //send location to the server side to be placed safely in the database
         $(document).on("load", function () {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var pos = {
@@ -35,7 +35,7 @@
                 document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;
             });
         });
-        
+        --%>
 
 
 
@@ -77,7 +77,7 @@
                         map: map,
                         title: Users[i].Name
                     });
-
+                    
  //get the users location in Json format using their IP address. || only getting location of the router
 /*  
                       $.getJSON('https://ipinfo.io/' + item[1], function (data) {
