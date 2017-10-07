@@ -48,38 +48,14 @@ namespace PRJ300Rep
                 }
             }
 
-            //insert location(lat,long) into database
-
-            //tried to run the javascript (getting user location) before the C# code is ran. 
-            // string script = "<script type=\"text/javascript\"> navigator.geolocation.getCurrentPosition(function(position) {var pos = {lat: position.coords.latitude, lng: position.coords.longitude}; }document.getElementById('<%= hdnLat.ClientID %>').value = pos.lat;document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;</script>";
-            // ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
+            
            
-            
-            
-            
-            //take lat lng out of client side || javascript code runs after C# 
-            string lat = hdnLat.Value;
-            string lng = hdnLong.Value;
-            /*
-            double lng;
-            double lat;
 
-            //Get the location using C# || It is not recognise the keywords GeoCoordinateWatcher
-            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
-            watcher.Start(); //started watcher
-            GeoCoordinate coord = watcher.Position.Location;
-            if (!watcher.Position.Location.IsUnknown)
-            {
-                lat = coord.Latitude; //latitude
-                lng = coord.Longitude;  //logitude
-            }
-            */
-
-            SqlCommand AddLocal = new SqlCommand("Update [AspNetUsers] set [lat] = @lat, [lng] = @lng where [Username] = @name", conn);
+           /* SqlCommand AddLocal = new SqlCommand("Update [AspNetUsers] set [lat] = @lat, [lng] = @lng where [Username] = @name", conn);
             AddLocal.Parameters.AddWithValue("@name", CurrentUser);
             AddLocal.Parameters.AddWithValue("@lat", lat);
             AddLocal.Parameters.AddWithValue("@lng", lng);
-            int result3 = AddLocal.ExecuteNonQuery();
+            int result3 = AddLocal.ExecuteNonQuery();*/
 
             // Get the IP  and insert it into a database
             string userIP = GetUserIP();
@@ -124,20 +100,11 @@ namespace PRJ300Rep
         }
 
         [WebMethod]
-        public void SaveLocations()
+        public static void StoreLocation(string[] locals)
         {
-            /*SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AzureConnectionString"].ToString());
-            conn.Open();
-            string lat = hdnLat.Value;
-            string lng = hdnLong.Value;
-            CurrentUser = User.Identity.Name;
-
-            SqlCommand AddLocal = new SqlCommand("Update [AspNetUsers] set [lat] = @lat, [lng] = @lng where [Username] = @name", conn);
-            AddLocal.Parameters.AddWithValue("@name", CurrentUser);
-            AddLocal.Parameters.AddWithValue("@lat", lat);
-            AddLocal.Parameters.AddWithValue("@lng", lng);
-            int result3 = AddLocal.ExecuteNonQuery();
-            conn.Close();*/
+            String[] local = locals;
+            string lat = local[0];
+            string lng = local[1];
         }
 
         protected void leave_Click(object sender, EventArgs e)

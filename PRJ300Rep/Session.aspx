@@ -24,22 +24,6 @@
         var Users = new Array();
         Users = JSON.parse('<%=JSArray%>');
 
-<%--        //send location to the server side to be placed safely in the database
-        $(document).on("load", function () {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                document.getElementById('<%= hdnLat.ClientID %>').value = pos.lat;
-                document.getElementById('<%= hdnLong.ClientID %>').value = pos.lng;
-            });
-        });
-        --%>
-
-
-
-
         // Google Maps
         var map, infoWindow;
         function initMap() {
@@ -63,37 +47,29 @@
                 infoWindow.open(map);
                 map.setCenter(pos);
 
-//add the users location to local storage for other users to see
-                //localStorage.setItem('user', JSON.stringify(pos));
-               
-                //get the location and name from array and display as marker
-                for (var i = 0; i < Users.length; i++) {
-                    var pos = {
-                        lat: Users[i].lat,
-                        lng: Users[i].lng
-                    };
-                    var marker = new google.maps.Marker({
-                        position: pos,
-                        map: map,
-                        title: Users[i].Name
-                    });
-                    
- //get the users location in Json format using their IP address. || only getting location of the router
-/*  
-                      $.getJSON('https://ipinfo.io/' + item[1], function (data) {
-                          ////console.log(data);
-                          ////Address = data.ip;
-                          //showLocation(item[0], data.loc);
-                          var marker = new google.maps.Marker({
-                              position: new google.maps.LatLng(Users[i].Lat, Users[i].Lng),
-                              map: map,
-                              title: Users[i].Name
-                          });
-                      });*/
-                  }
+                var JsonValues = Json.stringify(pos);
 
-                
-                
+                $ajax({
+                    url: "Session.aspx/StoreLocation",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: { locals: JsonValues },
+                    dataType: "json"
+                });
+
+
+
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    title: "Position"
+
+                });
+
+
+
+
+
 
 
             }, function () {
@@ -129,6 +105,9 @@
         <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click"  />
 
     </div>
+
+    <asp:HiddenField ID="hdnLocalLat" runat="server" />
+    <asp:HiddenField ID="hdnLocalLong" runat="server" />
     
     <script>
 ////https://developers.facebook.com/docs/javascript/quickstart
