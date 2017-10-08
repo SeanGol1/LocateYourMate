@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -16,6 +17,7 @@ using System.Web.UI.WebControls;
 
 namespace PRJ300Rep
 {
+    //[ScriptService]
     public partial class Session : Page
     {
         public string CurrentUser = "";
@@ -98,7 +100,7 @@ namespace PRJ300Rep
             conn.Close();
 
         }
-
+        
         [WebMethod]
         public static void StoreLocation(string[] locals)
         {

@@ -18,11 +18,13 @@
         }
     </style>
     <script>
-        $(document).ready(function () { 
+
         var ipAddress = "";
         var User = '<%=CurrentUser%>';
-        var Users = new Array();
-        Users = JSON.parse('<%=JSArray%>');
+            var Users = new Array();
+            Users = JSON.parse('<%=JSArray%>');
+
+
 
         // Google Maps
         var map, infoWindow;
@@ -48,14 +50,18 @@
                 map.setCenter(pos);
 
                 var JsonValues = Json.stringify(pos);
+                /* $(document).ready(function () {
+                     $ajax({
+                         url: "Session.aspx/StoreLocation",
+                         type: "POST",
+                         contentType: 'application/json; charset=utf-8',
+                         data: { locals: JsonValues },
+                         dataType: "json"
+                     });
+                 });*/
 
-                $ajax({
-                    url: "Session.aspx/StoreLocation",
-                    type: "POST",
-                    contentType: 'application/json; charset=utf-8',
-                    data: { locals: JsonValues },
-                    dataType: "json"
-                });
+
+                PageMethods.MyMethod("Paul Hayman");
 
 
 
@@ -86,6 +92,12 @@
                 'Error: Your browser doesn\'t support geolocation.');
             infoWindow.open(map);
         }
+        $(document).ready(function () {
+            $(Users).each(function () {
+                var i = 0;
+                $(UserList).append('<li class="list-group-item">' + Users[i] + '</li>');
+                i++;
+            });
         });
 
 </script>
@@ -100,7 +112,12 @@
     <div id="list">
 
         <h3>List of Members in the Session</h3>
-        <asp:ListBox ID="ListBox1" runat="server" DataSourceID="SqlDataSource1" DataTextField="UserId" DataValueField="UserId"></asp:ListBox><br />
+        <!--<asp:ListBox ID="ListBox1" class="list-group" runat="server" DataSourceID="SqlDataSource1" DataTextField="UserId" DataValueField="UserId"></asp:ListBox><br />-->
+        <ul id="UserList" class="list-group">
+            <%--<li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Cras justo odio</li>--%>
+        </ul>
         <asp:Button ID="leave" runat="server" Text="Leave Session" class="btn btn-danger" OnClick="leave_Click" />
         <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click"  />
 
@@ -108,31 +125,31 @@
 
     <asp:HiddenField ID="hdnLocalLat" runat="server" />
     <asp:HiddenField ID="hdnLocalLong" runat="server" />
-    
+   
     <script>
-////https://developers.facebook.com/docs/javascript/quickstart
-//  window.fbAsyncInit = function() {
-//	FB.init({
-//	  appId            : '720598181452614',
-//	  autoLogAppEvents : true,
-//	  xfbml            : true,
-//	  version          : 'v2.9'
-//	});
-//	FB.AppEvents.logPageView();
-//	FB.ui(
-// {
-//  method: 'share',
-//  href: 'https://developers.facebook.com/docs/'
-//}, function(response){});
-//  };
+        ////https://developers.facebook.com/docs/javascript/quickstart
+        //  window.fbAsyncInit = function() {
+        //	FB.init({
+        //	  appId            : '720598181452614',
+        //	  autoLogAppEvents : true,
+        //	  xfbml            : true,
+        //	  version          : 'v2.9'
+        //	});
+        //	FB.AppEvents.logPageView();
+        //	FB.ui(
+        // {
+        //  method: 'share',
+        //  href: 'https://developers.facebook.com/docs/'
+        //}, function(response){});
+        //  };
 
-//  (function(d, s, id){
-//	 var js, fjs = d.getElementsByTagName(s)[0];
-//	 if (d.getElementById(id)) {return;}
-//	 js = d.createElement(s); js.id = id;
-//	 js.src = "//connect.facebook.net/en_US/sdk.js";
-//	 fjs.parentNode.insertBefore(js, fjs);
-//   }(document, 'script', 'facebook-jssdk'));
+        //  (function(d, s, id){
+        //	 var js, fjs = d.getElementsByTagName(s)[0];
+        //	 if (d.getElementById(id)) {return;}
+        //	 js = d.createElement(s); js.id = id;
+        //	 js.src = "//connect.facebook.net/en_US/sdk.js";
+        //	 fjs.parentNode.insertBefore(js, fjs);
+        //   }(document, 'script', 'facebook-jssdk'));
     </script>
 
 
