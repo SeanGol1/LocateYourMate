@@ -18,7 +18,7 @@
         }
     </style>
     <script>
-
+        $(document).ready(function () { 
         var ipAddress = "";
         var User = '<%=CurrentUser%>';
         var Users = new Array();
@@ -86,7 +86,7 @@
                 'Error: Your browser doesn\'t support geolocation.');
             infoWindow.open(map);
         }
-
+        });
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9pJLBoZZ0LrasUlwgXgyXcTVepaAwPn0&callback=initMap"
