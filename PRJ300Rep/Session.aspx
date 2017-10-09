@@ -110,20 +110,27 @@
         async defer></script>
     <div id="divBackground">
         <div class="container">
-            <h1 class="heading">Festival Friend Finder</h1>
-            <asp:Label ID="Label1" runat="server" CssClass="textFont" Text="Your Session Code:"></asp:Label>
-            <asp:Label ID="tbxCode" runat="server" CssClass="textFont" Text="Label"></asp:Label>
-            <div id="map"></div>
+            <div class="row">
+                <h1 class="heading">Festival Friend Finder</h1>
+            </div>
 
-            <div id="list" >
+            <div class="row">
 
-                <p class="textFont">List of Members in the Session</p>
-                <ul id="UserList" class="list-group textFont">
-                    <!--List is populated in Javascript -->
-                </ul>
-                <asp:Button ID="leave" runat="server" Text="Leave Session" class="btn btn-danger" OnClick="leave_Click" />
-                <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click" />
+                <div id="map" class="col-lg-8"></div>
 
+                <div id="list" class="col-lg-4">
+                    <div style="padding-bottom:1%;">
+                    <asp:Label ID="Label1" runat="server" CssClass="textFont label" Text="Your Session Code:"></asp:Label>
+                    <asp:Label ID="tbxCode" runat="server" CssClass=" label" Text=""></asp:Label>
+                        </div>
+                    <p class="textFont">List of Members in the Session</p>
+                    <ul id="UserList" class="list-group textFont">
+                        <!--List is populated in Javascript -->
+                    </ul>
+                    <asp:Button ID="leave" runat="server" Text="Leave Session" class="btn btn-danger" OnClick="leave_Click" />
+                    <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click" />
+
+                </div>
             </div>
         </div>
     </div>
