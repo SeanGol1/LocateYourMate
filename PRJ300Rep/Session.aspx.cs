@@ -24,6 +24,7 @@ namespace PRJ300Rep
         public string SessionCode = "";       
         public List<string> users = new List<string>();
         public string JSArray = "";
+        public string adminID = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,9 +32,7 @@ namespace PRJ300Rep
             SessionCode = Request.QueryString["SessionCode"];
             tbxCode.Text = "<strong>" + SessionCode + "</strong>";
 
-            CurrentUser = User.Identity.Name;
-
-            string adminID = "";
+            CurrentUser = User.Identity.Name;            
 
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["AzureConnectionString"].ToString());
             conn.Open();

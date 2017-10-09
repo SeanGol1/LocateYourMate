@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="PRJ300Rep._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <link href="StyleSheet1.css" rel="stylesheet" />
+    <link href="Styles/StyleSheetHome.css" rel="stylesheet" />
     <script> 
         //set to only show on first load
         $(document).one('ready', function () {
@@ -16,7 +16,7 @@
             var i = 0;
             for (var i = 0; i < list.length; i++) {
                 //set href to redirect to page with the chosen code
-                $('#SessionsList').append("<a href='Session.aspx?SessionCode=" + list[i] + "' class='list-group-item'>" + list[i] + "</a>");
+                $('#SessionsList').append("<a href='Session.aspx?SessionCode=" + list[i] + "' class='list-group-item lists'>" + list[i] + "</a>");
             }
 
 
@@ -96,9 +96,9 @@
 
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 groups">
                     <div id="createCode" class="form-group" style="text-align: center; align-content: center;">
-                        <h2 id="Create" class="jumbotron">Create Group</h2>
+                        <h2 id="Create" class="jumbotron title">Create Group</h2>
                         <p>Set Timeout (Hours):</p>
                         <asp:TextBox ID="tbxTimeout" CssClass="form-control input-lg" runat="server" placeholder="Defaults to 24 hours"></asp:TextBox>
                     </div>
@@ -106,15 +106,15 @@
                     <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success btn-lg" Text="Create a Group" />
 
                 </div>
-                <div class="col-md-6">
-                    <div id="enterLink" class="form-group" style="text-align: center; align-content: center;">
-                        <h2 id="Join" class="jumbotron">Join Group</h2>
+                <div class="col-md-6 groups">
+                    <div id="enterLink" class="form-group " style="text-align: center; align-content: center;">
+                        <h2 id="Join" class="jumbotron title">Join Group</h2>
                         <p>Enter 6 Digit Pin:</p>
                         <asp:TextBox ID="inputcode" CssClass="form-control input-lg" placeholder="Enter 6-Digit Code" runat="server"></asp:TextBox>
 
                     </div>
 
-                    <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success btn-lg" runat="server" Text="Join Your Group!" />
+                    <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success btn-lg" runat="server" Text="Join Your Group!"/>
 
                     <div>
                         <h2>Already part of a group?</h2>

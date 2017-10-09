@@ -239,7 +239,7 @@ th {
     page-break-after: avoid;
   }
   .navbar {
-    display: none;
+    display: none;      
   }
   .btn > .caret,
   .dropup > .btn > .caret {
