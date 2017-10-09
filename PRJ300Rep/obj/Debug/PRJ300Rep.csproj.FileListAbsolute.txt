@@ -313,4 +313,3 @@ C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\bin\PRJ300Rep.dll.conf
 C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\bin\PRJ300Rep.dll
 C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\bin\PRJ300Rep.pdb
 C:\Users\sean.golden\Desktop\FestivalFriendFinder\PRJ300Rep\obj\Debug\PRJ300Rep.csproj.CoreCompileInputs.cache
-C:\Users\Sean's PC\Desktop\FestivalFriendFinder\PRJ300Rep\obj\Debug\PRJ300Rep.csprojResolveAssemblyReference.cache

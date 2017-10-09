@@ -24,6 +24,8 @@ body {
 .title{
     background-color:#e50505 !important;
     color: white;
+    font-family: Rockit;
+    font-size:20px;
 }
 
 .form-control{
@@ -45,5 +47,35 @@ body {
     align-content: center;
 }
 
+body.modal-open div.modal-backdrop { 
+    z-index: 0; 
+}
 
+@font-face {
+    font-family: 'Rockit';
+    src: url('../Content/Rockit.ttf') format('truetype');
+}
 
+#titleMain{
+    font-family: Rockit;
+}
+
+#titleSec{
+    font-family: Rockit;
+    font-size:20px;
+}
+
+@font-face {
+    font-family: 'URANIA CZECH';
+    src: url('../Content/URANIA CZECH.ttf') format('truetype');
+}
+
+p{
+    font-family: 'URANIA CZECH';
+    font-size:18px;
+}
+
+.heading{
+    font-family: 'URANIA CZECH';
+    font-size:25px;
+}

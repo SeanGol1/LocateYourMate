@@ -37,3 +37,21 @@ body {
     border-radius: 5%;
     padding-bottom:2%;
 }
+@font-face {
+    font-family: 'URANIA CZECH';
+    src: url('../Content/URANIA CZECH.ttf') format('truetype');
+}
+
+.textFont{
+    font-family:'URANIA CZECH';
+}
+@font-face {
+    font-family: 'Rockit';
+    src: url('../Content/Rockit.ttf') format('truetype');
+}
+
+.heading{
+    font-family:Rockit;
+    font-size:25px;
+    padding:1%;
+}

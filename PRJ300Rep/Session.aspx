@@ -94,7 +94,7 @@
             //$(Users).each(function () {
             for (var i = 0; i < Users.length; i++) {
                 if (adminID == Users[i]) {
-                    $(UserList).append('<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">' + Users[i] + '</span></li>');
+                    $(UserList).append('<li class="list-group-item"><span class="glyphicon glyphicon-asterisk"></span>' + Users[i] + '</li>');
                 }
                 else {
                     $(UserList).append('<li class="list-group-item">' + Users[i] + '</li>');
@@ -110,19 +110,16 @@
         async defer></script>
     <div id="divBackground">
         <div class="container">
-            <h1>Festival Friend Finder</h1>
-            <asp:Label ID="Label1" runat="server" Text="Your Session Code:"></asp:Label>
-            <asp:Label ID="tbxCode" runat="server" Text="Label"></asp:Label>
+            <h1 class="heading">Festival Friend Finder</h1>
+            <asp:Label ID="Label1" runat="server" CssClass="textFont" Text="Your Session Code:"></asp:Label>
+            <asp:Label ID="tbxCode" runat="server" CssClass="textFont" Text="Label"></asp:Label>
             <div id="map"></div>
 
-            <div id="list">
+            <div id="list" >
 
-                <h3>List of Members in the Session</h3>
-                <!--<asp:ListBox ID="ListBox1" class="list-group" runat="server" DataSourceID="SqlDataSource1" DataTextField="UserId" DataValueField="UserId"></asp:ListBox><br />-->
-                <ul id="UserList" class="list-group">
-                    <%--<li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Cras justo odio</li>--%>
+                <p class="textFont">List of Members in the Session</p>
+                <ul id="UserList" class="list-group textFont">
+                    <!--List is populated in Javascript -->
                 </ul>
                 <asp:Button ID="leave" runat="server" Text="Leave Session" class="btn btn-danger" OnClick="leave_Click" />
                 <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click" />
