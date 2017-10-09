@@ -20,6 +20,11 @@
             $("#Join").click(function () {
                 $("#enterLink").show();
             });
+
+
+            //MODAL SETTINGS
+            $('#HowToModal').modal('toggle');
+
         });
 
         //https://developers.facebook.com/docs/javascript/quickstart  facebook login
@@ -52,27 +57,53 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+
+
+
+
     </script>
     <div id="divBackground">
-        <div id="Content">
-            <h1 class="Jumbotron">Festival Friend Finder </h1>
-            <p>Welcome to festival friend finder.<br />
-                Creating a group will begin a session.<br />
-                You will recieve a code.
-                <br />
-                Then click join group.
-                <br />
-                You and your friends pop in the code.
-                <br />
-                Begin Partying.<br />
-                THAT EASY!</p>
+        <div class="container" id="Content">
+            
+            <!------------ MODAL TUTORIAL ------------>
+            <div id="HowToModal" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-md">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">How To Connect</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div style="text-align:center;">
+                                <h2><strong>Welcome to Festival Friend Finder.</strong></h2><br />
+                                <h4><strong>Want to create a new group?</strong></h4>
+                                <p>Clicking on <strong>Create a Group</strong> will begin a session.</p>
+                                <p>(Optional to enter a timeout to set when the connection will end)</p>
+                                <p>You will recieve a code that you can give to others to join your group easily.</p><br />
+                                <h4><strong>Recieved a code from a friend?</strong></h4>
+                                <p>Simply pop it into the box that says <strong>Enter 6-Digit Code</strong> </p>
+                                <p>and click on <strong>Join Your Group</strong> to join your friends </p><br />
+                                <h4><strong>ReJoining a group you were already part of?</strong></h4>
+                                <p>Choose the Session number from the box below the 6 digit pin and click <strong>Join Your Group!</strong> button. </p>   <br />                     
+                                <h3>THAT EASY!</h3>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="row">
                 <div class="col-md-6">
                     <div id="createCode">
                         <h2 id="Create" class="jumbotron">Create Group</h2>
                         <p>Set Timeout (Hours):</p>
                         <asp:TextBox ID="tbxTimeout" runat="server" placeholder="Defaults to 24 hours"></asp:TextBox>
-                        <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Continue" />
+                        <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Create a Group" />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -80,7 +111,7 @@
                         <h2 id="Join" class="jumbotron">Join Group</h2>
                         <p>Enter 6 Digit Pin:</p>
                         <asp:TextBox ID="inputcode" placeholder="Enter 6-Digit Code" runat="server"></asp:TextBox>
-                        
+
                     </div>
                     <div id="SessionsList">
                         <h2>Already part of a group?</h2>
