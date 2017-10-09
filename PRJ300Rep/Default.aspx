@@ -81,7 +81,7 @@
                         <p>If you are already part of a session(s), they should appear on the screen in a listbox</p>
                         <p>Simply click on your session listed by the <strong>Session Code</strong></p>
                         <br />
-                        <h3>THAT EASY!</h3>
+                        <p>THAT EASY!</p>
                     </div>
                 </div>
                 <div class="modal-footer">
