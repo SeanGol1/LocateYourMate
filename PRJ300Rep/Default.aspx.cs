@@ -12,7 +12,7 @@ namespace PRJ300Rep
     public partial class _Default : Page
     {
         string selItem = "";
-
+        public List<string> SessionCodes = new List<string>();
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -27,12 +27,10 @@ namespace PRJ300Rep
                 timeout.Parameters.AddWithValue("@date", DateTime.Now);
                 int result2 = timeout.ExecuteNonQuery();
 
-                /*
+                
                 string SessionID = "";
                 SqlCommand curSessions = new SqlCommand("Select sessionCode from [Sessions]  Inner JOIN [Groups] on [Groups].[Id] = [Sessions].[groupID] INNER JOIN [userGroups] on [userGroups].GroupID = [Groups].[Id] Where [userGroups].[UserID] = @userid ", conn);
-                curSessions.Parameters.AddWithValue("@userid", User.Identity.Name);
-
-                List<string> SessionCodes = new List<string>();
+                curSessions.Parameters.AddWithValue("@userid", User.Identity.Name);                
                 SessionCodes.Clear();
                 using (SqlDataReader reader = curSessions.ExecuteReader())
                 {
@@ -43,8 +41,10 @@ namespace PRJ300Rep
                     }
                 }
                 conn.Close();
-                lbxSessionlist.DataSource = SessionCodes;
-                */
+
+
+               
+               
             }
             catch (Exception ex)
             {

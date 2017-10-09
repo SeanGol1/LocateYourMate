@@ -21,56 +21,59 @@
 
         var ipAddress = "";
         var User = '<%=CurrentUser%>';
-            var Users = new Array();
-            Users = JSON.parse('<%=JSArray%>');
+        var Users = new Array();
+        Users = JSON.parse('<%=JSArray%>');
 
 
 
-        // Google Maps
-        var map, infoWindow;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -34.397, lng: 150.644 },
-                zoom: 12
-            });
-            infoWindow = new google.maps.InfoWindow;
-        }
-
-        // Get current Location
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                infoWindow.setPosition(pos);
-                infoWindow.setContent('Your Location');
-                infoWindow.open(map);
-                map.setCenter(pos);
-
-                var JsonValues = Json.stringify(pos);
-                /* $(document).ready(function () {
-                     $ajax({
-                         url: "Session.aspx/StoreLocation",
-                         type: "POST",
-                         contentType: 'application/json; charset=utf-8',
-                         data: { locals: JsonValues },
-                         dataType: "json"
-                     });
-                 });*/
-
-
-                PageMethods.MyMethod("Paul Hayman");
-
-
-
-                var marker = new google.maps.Marker({
-                    position: pos,
-                    map: map,
-                    title: "Position"
-
+            // Google Maps
+            var map, infoWindow;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: -34.397, lng: 150.644 },
+                    zoom: 17
                 });
+                infoWindow = new google.maps.InfoWindow;
+            }
+
+            // Get current Location
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    
+
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Your Location');
+                    infoWindow.open(map);
+                    map.setCenter(pos);
+
+                    var JsonValues = Json.stringify(pos);
+                    $(document).ready(function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "Session.aspx/StoreLocation",                             
+                            contentType: 'application/json; charset=utf-8',
+                            data: { locals: JsonValues },
+                            dataType: "json"
+                         });
+                     });
+
+
+                    //PageMethods.MyMethod("Paul Hayman");
+
+
+
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        title: "Position"
+
+                    });
 
 
 
@@ -78,27 +81,32 @@
 
 
 
-            }, function () {
-                handleLocationError(true, infoWindow, map.getCenter());
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+            function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                infoWindow.setPosition(pos);
+                infoWindow.setContent(browserHasGeolocation ?
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\'t support geolocation.');
+                infoWindow.open(map);
+            }
+
+
+            $(document).ready(function () {
+                //$(Users).each(function () {
+                for (var i = 0; i < Users.length; i++) {
+                    $(UserList).append('<li class="list-group-item">' + Users[i] + '</li>');
+                    i++;
+                }
+
+
+                //});
             });
-        } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-        }
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(browserHasGeolocation ?
-                'Error: The Geolocation service failed.' :
-                'Error: Your browser doesn\'t support geolocation.');
-            infoWindow.open(map);
-        }
-        $(document).ready(function () {
-            $(Users).each(function () {
-                var i = 0;
-                $(UserList).append('<li class="list-group-item">' + Users[i] + '</li>');
-                i++;
-            });
-        });
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9pJLBoZZ0LrasUlwgXgyXcTVepaAwPn0&callback=initMap"

@@ -21,11 +21,9 @@ namespace PRJ300Rep
     public partial class Session : Page
     {
         public string CurrentUser = "";
-        public string SessionCode = "";
-        public List<User> group = new List<User>();
+        public string SessionCode = "";       
         public List<string> users = new List<string>();
         public string JSArray = "";
-        public string JSUserArray = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -50,45 +48,23 @@ namespace PRJ300Rep
                 }
             }
 
-            
-           
-
-           /* SqlCommand AddLocal = new SqlCommand("Update [AspNetUsers] set [lat] = @lat, [lng] = @lng where [Username] = @name", conn);
-            AddLocal.Parameters.AddWithValue("@name", CurrentUser);
-            AddLocal.Parameters.AddWithValue("@lat", lat);
-            AddLocal.Parameters.AddWithValue("@lng", lng);
-            int result3 = AddLocal.ExecuteNonQuery();*/
-
-            // Get the IP  and insert it into a database
-            string userIP = GetUserIP();
-            SqlCommand AddIp = new SqlCommand("Update [AspNetUsers] set [IPAddress] = @ip  WHERE [UserName] = @name", conn);
-            AddIp.Parameters.AddWithValue("@ip", userIP);
-            AddIp.Parameters.AddWithValue("@name", CurrentUser);
-            int result2 = AddIp.ExecuteNonQuery();
-
-
-            //get the location from the database and send it to the client side
-
-            SqlCommand GetLocal = new SqlCommand("select [UserName], [lat], [lng] FROM [AspNetUsers] WHERE [UserName] = @name", conn);
-            GetLocal.Parameters.AddWithValue("@name", CurrentUser);
-            using (SqlDataReader reader = GetLocal.ExecuteReader())
+            //get users from the database and send it to the client side 
+            SqlCommand GetUsers = new SqlCommand("select UserID from UserGroups join Sessions on UserGroups.GroupID = Sessions.groupID where SessionCode = @code", conn);
+            GetUsers.Parameters.AddWithValue("@code", SessionCode);
+            users.Clear();
+            using (SqlDataReader reader = GetUsers.ExecuteReader())
             {
-                if (reader.Read())
+                while (reader.Read())
                 {
-                    foreach (var item in reader)
-                    {
-                        string Name1 = string.Format("{0}", reader["UserName"]);
-                        string lat1 = string.Format("{1}", reader["lat"]);
-                        string lng1 = string.Format("{2}", reader["lng"]);
-                        //IpInfo ipuser = new IpInfo(Name, IPAddress);
-                        group.Add(new User(Name1,lat1,lng1));
-                    }
+                    string Name = string.Format("{0}", reader["UserID"]);
+                    users.Add(Name);
                 }
             }
-           
+                
+                 
             
 
-            JSArray = JsonConvert.SerializeObject(group);
+            JSArray = JsonConvert.SerializeObject(users);
 
 
             //Show Close Session button only for an admin
@@ -102,6 +78,7 @@ namespace PRJ300Rep
         }
         
         [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]        
         public static void StoreLocation(string[] locals)
         {
             String[] local = locals;
@@ -150,26 +127,5 @@ namespace PRJ300Rep
             Response.Redirect("Default.aspx");
 
         }
-
-        public static string GetUserIP()
-        {
-
-            // gets the ip in Json format to send back to load function
-            IpInfo ipInfo = new IpInfo();
-
-            try
-            {
-                string info = new WebClient().DownloadString("http://ipinfo.io/");
-                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
-
-            }
-            catch (Exception)
-            {
-                ipInfo.Ip = null;
-            }
-
-            return ipInfo.Ip;
-        }
-
     }
 }
