@@ -109,7 +109,7 @@ namespace PRJ300Rep
             string user = User.Identity.Name;
             string GroupID = "";
             string codecheck = "";
-            selItem = lbxSessionlist.SelectedValue;
+           // selItem = lbxSessionlist.SelectedValue;
             if (code == "")
             {
                 code = selItem;
@@ -159,7 +159,7 @@ namespace PRJ300Rep
 
         protected void lbxSessionlist_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selItem = lbxSessionlist.SelectedValue;
+            //selItem = lbxSessionlist.SelectedValue;
         }
 
     }

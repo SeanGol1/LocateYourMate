@@ -99,35 +99,45 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div id="createCode">
+                    <div id="createCode" class="form-group">
                         <h2 id="Create" class="jumbotron">Create Group</h2>
                         <p>Set Timeout (Hours):</p>
-                        <asp:TextBox ID="tbxTimeout" runat="server" placeholder="Defaults to 24 hours"></asp:TextBox>
-                        <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Create a Group" />
+                        <asp:TextBox ID="tbxTimeout" CssClass="form-control" runat="server" placeholder="Defaults to 24 hours"></asp:TextBox>                        
                     </div>
+
+                    <asp:Button ID="continue" OnClick="continue_Click" runat="server" class="btn btn-success" Text="Create a Group" />
+
                 </div>
                 <div class="col-md-6">
-                    <div id="enterLink">
+                    <div id="enterLink" class="form-group">
                         <h2 id="Join" class="jumbotron">Join Group</h2>
                         <p>Enter 6 Digit Pin:</p>
-                        <asp:TextBox ID="inputcode" placeholder="Enter 6-Digit Code" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="inputcode" CssClass="form-control" placeholder="Enter 6-Digit Code" runat="server"></asp:TextBox>
 
                     </div>
-                    <div id="SessionsList">
+                    
+                    <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success" runat="server" Text="Join Your Group!" />
+
+                    <div>
                         <h2>Already part of a group?</h2>
-                        <asp:ListBox ID="lbxSessionlist" runat="server" OnSelectedIndexChanged="lbxSessionlist_SelectedIndexChanged" DataSourceID="SqlDataSource1" DataTextField="sessionCode" DataValueField="sessionCode" AutoPostBack="True"></asp:ListBox>
+                        
+                        <div id="SessionsList" class="list-group">
+                            <a href="#" class="list-group-item">Group 1</a>
+                            <a href="#" class="list-group-item">Group 2</a>
+                            <a href="#" class="list-group-item">Group 3</a>
+                        </div>
+
+
+                        <%--<asp:ListBox ID="lbxSessionlist" runat="server" OnSelectedIndexChanged="lbxSessionlist_SelectedIndexChanged" DataSourceID="SqlDataSource1" DataTextField="sessionCode" DataValueField="sessionCode" AutoPostBack="True"></asp:ListBox>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings: AzureConnectionString %>" SelectCommand="SELECT s.sessionCode FROM Sessions AS s INNER JOIN Groups AS g ON s.[groupID] = g.[Id] INNER JOIN userGroups AS ug ON ug.[GroupID] = g.[Id] WHERE ug.UserID = @user">
                             <SelectParameters>
                                 <asp:CookieParameter CookieName="UserId" DefaultValue="null" Name="user" />
                             </SelectParameters>
-                        </asp:SqlDataSource>
-
-
-
+                        </asp:SqlDataSource>      --%>                  
                     </div>
-                    <asp:Button ID="codeSubmit" OnClick="codeSubmit_Click" class="btn btn-success" runat="server" Text="Join Your Group!" />
-                    <asp:HiddenField ID="HdnLat" runat="server" />
-                    <asp:HiddenField ID="HdnLng" runat="server" />
+
+                    
+                    
                 </div>
 
             </div>
