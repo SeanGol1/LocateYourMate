@@ -380,7 +380,6 @@
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="IpInfo.cs" />
     <Compile Include="Session.aspx.cs">
       <DependentUpon>Session.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

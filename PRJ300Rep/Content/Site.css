@@ -22,6 +22,10 @@ body {
     src: url('../fonts/URANIA CZECH.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Rockit';
+    src: url('../fonts/Rockit.ttf') format('truetype');
+}
 body {
     font-family: 'URANIA CZECH';
     font-size: 18px;
@@ -41,6 +45,13 @@ form {
     background-color: #001514 !important;
     color: #fff !important;
     font-family: 'URANIA CZECH';
+    font-size: medium;
+    padding:15px;
+}
+
+#navTitle{
+    font-family:Rockit;
+    font-size:larger;
 }
 
 /* Wrapping element */
