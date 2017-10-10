@@ -1,5 +1,5 @@
 ﻿#Content {
-    padding: 10%;
+    /*padding: 10%;*/
 }
 #divBackground {
     background: white;
@@ -8,6 +8,9 @@
     -khtml-opacity: 0.9;
     opacity: 0.9;*/
     background-color: #CFDEE7;
+    padding-bottom:2%;
+    padding-left:2%;
+    padding-right:5%;
 }
 
 body {
@@ -31,15 +34,15 @@ body {
 #list {
     height: 80%;
     width: 25%;
-    float: right;
     background-color: white;
     margin:2%;
     border-radius: 5%;
     padding-bottom:2%;
 }
+
 @font-face {
     font-family: 'URANIA CZECH';
-    src: url('../Content/URANIA CZECH.ttf') format('truetype');
+    src: url('../fonts/URANIA CZECH.ttf') format('truetype');
 }
 
 .textFont{
@@ -47,7 +50,7 @@ body {
 }
 @font-face {
     font-family: 'Rockit';
-    src: url('../Content/Rockit.ttf') format('truetype');
+    src: url('../fonts/Rockit.ttf') format('truetype');
 }
 
 .heading{

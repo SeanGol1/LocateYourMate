@@ -53,7 +53,7 @@ body.modal-open div.modal-backdrop {
 
 @font-face {
     font-family: 'Rockit';
-    src: url('../Content/Rockit.ttf') format('truetype');
+    src: url('../fonts/Rockit.ttf') format('truetype');
 }
 
 #titleMain{
@@ -67,15 +67,15 @@ body.modal-open div.modal-backdrop {
 
 @font-face {
     font-family: 'URANIA CZECH';
-    src: url('../Content/URANIA CZECH.ttf') format('truetype');
+    src: url('../fonts/URANIA CZECH.ttf') format('truetype');
 }
 
 p{
-    font-family: 'URANIA CZECH';
+    font-family: URANIA CZECH;
     font-size:18px;
 }
 
 .heading{
-    font-family: 'URANIA CZECH';
+    font-family: URANIA CZECH;
     font-size:25px;
 }
