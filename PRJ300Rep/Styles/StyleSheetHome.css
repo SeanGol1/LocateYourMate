@@ -11,12 +11,8 @@
     color:black !important;
 }
 
-.form-control:hover{
-    background-color: #5DA9E9;
-}
-
-.lists:hover{
-    background-color: #5DA9E9 !important;
+.lists:hover {
+    background-color: #a8d2f4 !important;
 }
 
 .groups{

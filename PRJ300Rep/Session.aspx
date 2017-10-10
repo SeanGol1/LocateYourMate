@@ -109,7 +109,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9pJLBoZZ0LrasUlwgXgyXcTVepaAwPn0&callback=initMap"
         async defer></script>
     <div id="divBackground">
-        <div class="container">
+        <div class="container" id="content">
             <div class="row">
                 <h1 class="heading">Festival Friend Finder</h1>
             </div>

@@ -91,7 +91,7 @@
         </div>
     </div>
     <div id="divBackground">
-        <div class="container" id="Content">
+        <div class="container" id="content">
             <h1 id="titleMain">Festival Friend Finder</h1>
             <div class="row">
                 <div class="col-md-6 groups">

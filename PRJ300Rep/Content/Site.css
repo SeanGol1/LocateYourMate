@@ -11,17 +11,17 @@ body {
     -khtml-opacity: 0.9;
     opacity: 0.9;
     background-color: #CFDEE7;
-    padding:5%;
 }
 
-#Content {
-    padding: 10%;
+#content{
+    padding:5%;
 }
 
 @font-face {
     font-family: 'URANIA CZECH';
     src: url('../fonts/URANIA CZECH.ttf') format('truetype');
 }
+
 body {
     font-family: 'URANIA CZECH';
     font-size: 18px;
@@ -33,14 +33,14 @@ body {
     background-size: cover;
 }
 
-form{
-    font-family:URANIA CZECH;
+form {
+    font-family: URANIA CZECH;
 }
-.navbar{
+
+.navbar {
     background-color: #001514 !important;
     color: #fff !important;
     font-family: 'URANIA CZECH';
-    
 }
 
 /* Wrapping element */
@@ -63,14 +63,23 @@ input[type="password"],
 input[type="email"],
 input[type="tel"],
 input[type="select"] {
-    max-width: 280px; 
+    max-width: 280px;
 }
+
+    input[type="text"]:hover,
+    input[type="password"]:hover,
+    input[type="email"]:hover,
+    input[type="tel"]:hover,
+    input[type="select"]:hover{
+        background-color: #a8d2f4;
+    }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
         margin-top: 20px;
     }
+
     .body-content {
         padding: 0;
     }
