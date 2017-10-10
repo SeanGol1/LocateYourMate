@@ -3,14 +3,43 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
+
+#divBackground {
+    background: white;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+    background-color: #CFDEE7;
+    padding:5%;
+}
+
+#Content {
+    padding: 10%;
+}
+
 @font-face {
     font-family: 'URANIA CZECH';
-    src: url('URANIA CZECH.ttf') format('truetype');
+    src: url('../fonts/URANIA CZECH.ttf') format('truetype');
+}
+body {
+    font-family: 'URANIA CZECH';
+    font-size: 18px;
+    /* background-color: #028090 !important;*/
+    background-image: url('../images/Festival-background.jpg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+form{
+    font-family:URANIA CZECH;
 }
 .navbar{
     background-color: #001514 !important;
     color: #fff !important;
-    font-family: 'URANIA CZECH';s
+    font-family: 'URANIA CZECH';
     
 }
 
@@ -34,7 +63,7 @@ input[type="password"],
 input[type="email"],
 input[type="tel"],
 input[type="select"] {
-    max-width: 280px;
+    max-width: 280px; 
 }
 
 /* Responsive: Portrait tablets and up */

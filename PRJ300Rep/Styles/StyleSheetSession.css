@@ -1,34 +1,6 @@
-﻿#Content {
-    /*padding: 10%;*/
-}
-#divBackground {
-    background: white;
-    /*filter: alpha(opacity=70);
-    -moz-opacity: 0.9;
-    -khtml-opacity: 0.9;
-    opacity: 0.9;*/
-    background-color: #CFDEE7;
-    padding-bottom:2%;
-    padding-left:2%;
-    padding-right:5%;
-}
-
-body {
-    font-family: 'Josefin Slab', serif;
-    font-size: 18px;
-   /* background-color: #028090 !important;*/
-    background-image: url('../images/Festival-background.jpg');
-    background-repeat: no-repeat;
-    background-position: right top;
-    background-attachment: fixed;
-    background-size: cover;
-    text-align:center;
-    align-content:center;
-}
-
-#map {
+﻿#map {
      border-radius: 5%;
-     opacity: 1 !important;
+     opacity: 1;
 }
 
 #list {
