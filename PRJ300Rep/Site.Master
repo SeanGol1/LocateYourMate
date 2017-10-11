@@ -49,10 +49,9 @@
                     <a class="navbar-brand" id="navTitle" runat="server" href="~/">Festival Friend Finder</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">                       
-                        <li><a runat="server" href="~/">Home</a></li>                        
-                        <li><a runat="server" href="~/Contact">Session</a></li>
-                    </ul>
+                    <%--<ul class="nav navbar-nav">                       
+                        <li><a runat="server" href="~/">Home</a></li>           
+                    </ul>--%>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">

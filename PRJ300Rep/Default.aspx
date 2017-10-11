@@ -19,6 +19,11 @@
                 $('#SessionsList').append("<a href='Session.aspx?SessionCode=" + list[i] + "' class='list-group-item lists'>" + list[i] + "</a>");
             }
 
+            if (list.length < 1)
+            {
+                $('#SessionsList').append("<a href='#' class='list-group-item lists'>You Have No Active Sessions Yet</a>");
+            }
+
 
         });
 

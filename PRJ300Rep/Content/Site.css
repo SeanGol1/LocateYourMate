@@ -11,6 +11,7 @@ body {
     -khtml-opacity: 0.9;
     opacity: 0.9;
     background-color: #CFDEE7;
+    padding:2%;
 }
 
 #content{
