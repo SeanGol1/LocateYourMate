@@ -75,14 +75,21 @@ namespace PRJ300Rep
             conn.Close();
 
         }
-        
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]        
-        public static void StoreLocation(string[] locals)
+
+
+        [WebMethod]        
+        //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]        
+        public static void StoreLocation(string local)
         {
-            String[] local = locals;
-            string lat = local[0];
-            string lng = local[1];
+            
+           // var location = new JavaScriptSerializer().Deserialize<object>(local);
+
+        }
+
+        public static void Store()
+        {
+            string lat = txtlat.Text;
+            string lng = txtlng.Text;
         }
 
         protected void leave_Click(object sender, EventArgs e)

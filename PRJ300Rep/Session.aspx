@@ -52,7 +52,8 @@
                 infoWindow.open(map);
                 map.setCenter(pos);
 
-                var JsonValues = Json.stringify(pos);
+                var JsonValues = JSON.stringify(pos);
+
                 $(document).ready(function () {
                     $.ajax({
                         type: "POST",
@@ -62,6 +63,9 @@
                         dataType: "json"
                     });
                 });
+
+                $('body').append("<form id='form'> <input type='text' id='txtlat'> " + pos.lat + "</input> <input type='text' id='txtlng'>" + pos.lng + "</input></form > ");
+                $('#form').submit();
 
 
                 //PageMethods.MyMethod("Paul Hayman");
@@ -161,6 +165,7 @@
         //   }(document, 'script', 'facebook-jssdk'));
     </script>
 
+    
 
     <asp:HiddenField ID="hdnLat" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hdnLong" runat="server"></asp:HiddenField>
