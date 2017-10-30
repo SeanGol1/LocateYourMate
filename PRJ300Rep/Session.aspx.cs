@@ -88,8 +88,8 @@ namespace PRJ300Rep
 
         public static void Store()
         {
-            string lat = txtlat.Text;
-            string lng = txtlng.Text;
+            //string lat = hdnlat.Text;
+            //string lng = hdnlng.Text;
         }
 
         protected void leave_Click(object sender, EventArgs e)

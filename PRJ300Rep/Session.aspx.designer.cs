@@ -58,13 +58,13 @@ namespace PRJ300Rep {
         protected global::System.Web.UI.WebControls.HiddenField hdnLat;
         
         /// <summary>
-        /// hdnLong control.
+        /// hdnLng control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnLong;
+        protected global::System.Web.UI.WebControls.HiddenField hdnLng;
         
         /// <summary>
         /// SqlDataSource1 control.
