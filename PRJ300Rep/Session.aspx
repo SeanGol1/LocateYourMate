@@ -6,8 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <%--<script type="text/javascript" src="js/bootstrap.min.js"></script>--%>
-    
+    <%--<script type="text/javascript" src="js/bootstrap.min.js"></script>--%>    
     <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js%22%3E"></script>--%>
     <script src="Scripts/jquery-3.1.1.min.js"></script>
     <link href="Styles/StyleSheetSession.css" rel="stylesheet" />
@@ -24,15 +23,14 @@
         var User = '<%=CurrentUser%>';
         var Users = new Array();
         Users = JSON.parse('<%=JSArray%>');
-
-
+        var pos = {};
 
         // Google Maps
         var map, infoWindow;
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: -34.397, lng: 150.644 },
-                zoom: 17
+                zoom: 16
             });
             infoWindow = new google.maps.InfoWindow;
         }
@@ -43,22 +41,18 @@
             navigator.geolocation.getCurrentPosition(function (position) {
 
                 //get the position of the client user
-                var pos = {
+                pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-
-                //save location in a hidden field 
-                if (pos.lat != null && pos.lng != null) {
-                    document.getElementById("hdnLat").Value = pos.lat;
-                    document.getElementById("hdnLng").Value = pos.lng;
-                }
+               
 
                 infoWindow.setPosition(pos);
                 infoWindow.setContent('Your Location');
                 infoWindow.open(map);
                 map.setCenter(pos);
 
+                
 
                 var marker = new google.maps.Marker({
                     position: pos,
@@ -83,9 +77,10 @@
         }
 
 
-        $(document).ready(function () {
+        $(document).ready(function () {            
+
+
             var adminID = '<%=adminID%>';
-            //$(Users).each(function () {
             for (var i = 0; i < Users.length; i++) {
                 if (adminID == Users[i]) {
                     $(UserList).append('<li class="list-group-item"><span class="glyphicon glyphicon-asterisk"></span>' + Users[i] + '</li>');
@@ -94,12 +89,20 @@
                     $(UserList).append('<li class="list-group-item">' + Users[i] + '</li>');
                 }
             }
-        });
 
-        //set timer to submit form
-        setInterval(function () {
+
+            //set timer to submit form
+            setInterval(function () {
+                //save location in a hidden field 
+                if (pos.lat != null && pos.lng != null) {
+                    $("#hdnLat").val(pos.lat);
+                    $("#hdnLat").val(pos.lng);
+                }
             document.getElementById("mainForm").submit();
         }, 10000);
+        });
+
+        
 
 
     </script>
@@ -116,7 +119,7 @@
                 <div id="map" class="col-lg-8"></div>
 
                 <div id="list" class="col-lg-4">
-                    <div style="padding-bottom: 1%;">
+                    <div>
                         <asp:Label ID="Label1" runat="server" CssClass="textFont label" Text="Your Session Code:"></asp:Label>
                         <asp:Label ID="tbxCode" runat="server" CssClass=" label" Text=""></asp:Label>
                     </div>
@@ -131,6 +134,9 @@
             </div>
         </div>
     </div>
+    
+    <asp:HiddenField ID="hdnLat"  runat="server" ClientIDMode="Static"></asp:HiddenField>
+    <asp:HiddenField ID="hdnLng"  runat="server" ClientIDMode="Static"></asp:HiddenField>
 
     <script>
         ////https://developers.facebook.com/docs/javascript/quickstart
@@ -160,8 +166,7 @@
 
 
 
-    <asp:HiddenField ID="hdnLat" runat="server"></asp:HiddenField>
-    <asp:HiddenField ID="hdnLng" runat="server"></asp:HiddenField>
+    
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:AzureConnectionString %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
         <SelectParameters>
             <asp:QueryStringParameter Name="code" QueryStringField="SessionCode" />
