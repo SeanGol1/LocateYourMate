@@ -52,17 +52,29 @@
                 infoWindow.open(map);
                 map.setCenter(pos);
 
-                
+                var markericon = {
+                    url: 'Images/ManIcon.png',
+                    scaledSize: new google.maps.Size(40, 40),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(15, 40),
+                    labelOrigin: new google.maps.Point(17, 50)
+                }
 
                 for (var i = 0; i < Users.length; i++) {
-                    if (Users[i].Username != User) {
-                    
+                    if (Users[i].Username != User) {                    
                         latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
                         var marker = new google.maps.Marker({
                             position: latLng,                            
                             title: Users[i].Username,
-                            label: Users[i].Username,
-                            visible:true
+                            animation: google.maps.Animation.DROP,
+                            label: {
+                                text: Users[i].Username,
+                                color: '#000000',
+                                fontsize: '20px',
+                                fontweight: 'bold'
+                            },
+                            visible: true,
+                            icon: markericon
                         });
 
                         marker.setMap(map);
