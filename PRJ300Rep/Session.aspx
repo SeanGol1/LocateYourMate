@@ -61,6 +61,7 @@
                         var marker = new google.maps.Marker({
                             position: latLng,                            
                             title: Users[i].Username,
+                            label: Users[i].Username,
                             visible:true
                         });
 
