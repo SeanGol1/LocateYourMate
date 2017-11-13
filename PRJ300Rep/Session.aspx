@@ -56,12 +56,10 @@
 
                 for (var i = 0; i < Users.length; i++) {
                     if (Users[i].Username != User) {
-                        var posGroup = {
-                            lat: Users[i].Lat,
-                            lng: Users[i].Lng
-                        };
+                    
+                        latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
                         var marker = new google.maps.Marker({
-                            position: posGroup,                            
+                            position: latLng,                            
                             title: Users[i].Username,
                             visible:true
                         });
