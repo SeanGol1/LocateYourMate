@@ -54,12 +54,24 @@
 
                 
 
-                var marker = new google.maps.Marker({
-                    position: pos,
-                    map: map,
-                    title: "Position"
+                for (var i = 0; i < Users.length; i++) {
+                    if (Users[i].Username != User) {
+                        var posGroup = {
+                            lat: Users[i].Lat,
+                            lng: Users[i].Lng
+                        };
+                        var marker = new google.maps.Marker({
+                            position: posGroup,                            
+                            title: Users[i].Username,
+                            visible:true
+                        });
 
-                });
+                        marker.setMap(map);
+                    }
+                    else {
+
+                    }
+                }
 
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -83,10 +95,10 @@
             var adminID = '<%=adminID%>';
             for (var i = 0; i < Users.length; i++) {
                 if (adminID == Users[i]) {
-                    $(UserList).append('<li class="list-group-item"><span class="glyphicon glyphicon-asterisk"></span>' + Users[i] + '</li>');
+                    $(UserList).append('<li class="list-group-item"><span class="glyphicon glyphicon-asterisk"></span>' + Users[i].Username + '</li>');
                 }
                 else {
-                    $(UserList).append('<li class="list-group-item">' + Users[i] + '</li>');
+                    $(UserList).append('<li class="list-group-item">' + Users[i].Username + '</li>');
                 }
             }
 
@@ -96,7 +108,7 @@
                 //save location in a hidden field 
                 if (pos.lat != null && pos.lng != null) {
                     $("#hdnLat").val(pos.lat);
-                    $("#hdnLat").val(pos.lng);
+                    $("#hdnLng").val(pos.lng);
                 }
             document.getElementById("mainForm").submit();
         }, 10000);

@@ -22,7 +22,7 @@ namespace PRJ300Rep
     {
         public string CurrentUser = "";
         public string SessionCode = "";       
-        public List<string> users = new List<string>();
+        public List<UserLocation> users = new List<UserLocation>();
         public string JSArray = "";
         public string adminID = "";
 
@@ -47,7 +47,7 @@ namespace PRJ300Rep
                 }
             }
 
-            //get users from the database and send it to the client side 
+            /*//get users from the database and send it to the client side 
             SqlCommand GetUsers = new SqlCommand("select UserID from UserGroups join Sessions on UserGroups.GroupID = Sessions.groupID where SessionCode = @code", conn);
             GetUsers.Parameters.AddWithValue("@code", SessionCode);
             users.Clear();
@@ -58,12 +58,11 @@ namespace PRJ300Rep
                     string Name = string.Format("{0}", reader["UserID"]);
                     users.Add(Name);
                 }
-            }
+            }*/
                 
                  
             
 
-            JSArray = JsonConvert.SerializeObject(users);
 
 
             //Show Close Session button only for an admin
@@ -72,24 +71,50 @@ namespace PRJ300Rep
             else
                 Close.Visible = false;
 
+            
+
+
+            //Save Location in the database
+            string lat;
+            string lng;
+            lat = hdnLat.Value;            
+            lng = hdnLng.Value;
+            
+            SqlCommand UpdateLocation = new SqlCommand("UPDATE [AspNetUsers] SET [lat] = @latit, [lng] = @lngit WHERE [AspNetUsers].[Username] = @currentUser", conn);
+            UpdateLocation.Parameters.AddWithValue("@currentUser", CurrentUser);
+            UpdateLocation.Parameters.AddWithValue("@latit", lat);
+            UpdateLocation.Parameters.AddWithValue("@lngit", lng);
+            int result2 = UpdateLocation.ExecuteNonQuery();
+
+            //get users (name and Local) from the database
+            string slat = "";
+            string slng = "";
+
+            SqlCommand GetGroupLocation = new SqlCommand("select Username, lat, lng from [AspNetUsers] join [userGroups] on UserID = AspNetUsers.Username join Sessions on UserGroups.GroupID = Sessions.groupID where SessionCode = @code", conn);
+            GetGroupLocation.Parameters.AddWithValue("@code", SessionCode);
+            users.Clear();
+            using (SqlDataReader reader = GetGroupLocation.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string Name = string.Format("{0}", reader["Username"]);
+                    if (lat != "" && lng != "")
+                    {
+                        slat = string.Format("{0}", reader["lat"]);
+                        slng = string.Format("{0}", reader["lng"]);
+                    }
+
+                    users.Add(new UserLocation(Name,slat,slng));
+                }
+            }
+
+            JSArray = JsonConvert.SerializeObject(users);
+
+
             conn.Close();
 
         }
 
-
-        [WebMethod]        
-        //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]        
-        public static void StoreLocation(string local)
-        {
-            
-           // var location = new JavaScriptSerializer().Deserialize<object>(local);
-
-        }
-
-        public static void Store()
-        {
-            //String strValue = Request.Params["hdnLat"];
-        }
 
         protected void leave_Click(object sender, EventArgs e)
         {
