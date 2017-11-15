@@ -53,20 +53,21 @@
                 map.setCenter(pos);
 
                 var markericon = {
-                    url: 'Images/ManIcon.png',
+                    url: 'Images/dancer.png',
                     scaledSize: new google.maps.Size(40, 40),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(15, 40),
                     labelOrigin: new google.maps.Point(17, 50)
                 }
 
+                setInterval(function () {
                 for (var i = 0; i < Users.length; i++) {
                     if (Users[i].Username != User) {                    
                         latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
                         var marker = new google.maps.Marker({
                             position: latLng,                            
                             title: Users[i].Username,
-                            animation: google.maps.Animation.DROP,
+                            //animation: google.maps.Animation.DROP,
                             label: {
                                 text: Users[i].Username,
                                 color: '#000000',
@@ -82,7 +83,8 @@
                     else {
 
                     }
-                }
+                    }
+                }, 10000);
 
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -114,7 +116,7 @@
             }
 
 
-            //set timer to submit form
+           /* //set timer to submit form
             setInterval(function () {
                 //save location in a hidden field 
                 if (pos.lat != null && pos.lng != null) {
@@ -122,7 +124,7 @@
                     $("#hdnLng").val(pos.lng);
                 }
             document.getElementById("mainForm").submit();
-        }, 10000);
+        }, 10000);*/
         });
 
         
