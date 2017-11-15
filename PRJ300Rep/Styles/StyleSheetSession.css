@@ -6,6 +6,17 @@
      opacity: 1;
 }
 
+#legendList {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align:left;
+    margin-top:5px;
+}
+#legendList > li {
+    display: inline;    
+}
 #list {
     height: 80%;
     width: 25%;

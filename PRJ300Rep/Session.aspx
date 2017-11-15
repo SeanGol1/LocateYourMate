@@ -11,11 +11,13 @@
     <script src="Scripts/jquery-3.1.1.min.js"></script>
     <link href="Styles/StyleSheetSession.css" rel="stylesheet" />
     <style>
-        #map {
+       #map {
             height: 600px;
             width: 70%;
             float: left;
         }
+
+      
     </style>
     <script>
 
@@ -159,7 +161,8 @@
 
             <div class="row">
 
-                <div id="map" class="col-lg-8"></div>
+                <div id="map" class="col-lg-8">
+                </div>
 
                 <div id="list" class="col-lg-4">
                     <div>
@@ -174,6 +177,14 @@
                     <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click" />
 
                 </div>
+            </div>
+            <div class="row">
+                <ul id="legendList" class="col-md-6">
+                    <li><strong>Legend:</strong></li>
+                    <li><img src="Images/dancer.png" alt="User" width="30" height="30" /> - Other User |</li>
+                    <li><img src="Images/dj.png" alt="dj" width="30" height="30" /> - Stage Area |</li>
+                    <li><img src="Images/event-tent.png" alt="tent" width="30" height="30" /> - Tent |</li>
+                </ul>
             </div>
         </div>
     </div>
