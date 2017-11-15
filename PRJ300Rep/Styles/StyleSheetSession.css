@@ -1,4 +1,7 @@
-﻿#map {
+﻿body{
+    text-align:center;
+}
+#map {
      border-radius: 5%;
      opacity: 1;
 }

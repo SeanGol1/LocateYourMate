@@ -60,6 +60,22 @@
                     labelOrigin: new google.maps.Point(17, 50)
                 }
 
+                var homeicon = {
+                    url: 'Images/event-tent.png',
+                    scaledSize: new google.maps.Size(40, 40),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(15, 40),
+                    labelOrigin: new google.maps.Point(17, 50)
+                }
+
+                var Stage = {
+                    url: 'Images/dj.png',
+                    scaledSize: new google.maps.Size(40, 40),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(15, 40),
+                    labelOrigin: new google.maps.Point(17, 50)
+                }
+
                 setInterval(function () {
                 for (var i = 0; i < Users.length; i++) {
                     if (Users[i].Username != User) {                    
@@ -116,15 +132,17 @@
             }
 
 
-           /* //set timer to submit form
+            //set timer to submit form
             setInterval(function () {
                 //save location in a hidden field 
                 if (pos.lat != null && pos.lng != null) {
                     $("#hdnLat").val(pos.lat);
                     $("#hdnLng").val(pos.lng);
                 }
-            document.getElementById("mainForm").submit();
-        }, 10000);*/
+               // $("#hdnLat").serialize();
+                //$("#hdnLng").serialize();
+            //document.getElementById("mainForm").submit();
+        }, 5000);
         });
 
         
@@ -188,8 +206,6 @@
         //	 fjs.parentNode.insertBefore(js, fjs);
         //   }(document, 'script', 'facebook-jssdk'));
     </script>
-
-
 
     
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:AzureConnectionString %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
