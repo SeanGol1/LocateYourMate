@@ -78,6 +78,19 @@
                     labelOrigin: new google.maps.Point(17, 50)
                 }
 
+                var currentposition = {
+                    url: 'Images/currentposition.png',
+                    scaledSize: new google.maps.Size(40, 40),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(15, 40),
+                    labelOrigin: new google.maps.Point(17, 50)
+                }
+
+
+                $('#TentIcon').addEventListener("click", function () {
+
+                });
+
                 setInterval(function () {
                 for (var i = 0; i < Users.length; i++) {
                     if (Users[i].Username != User) {                    
@@ -141,10 +154,16 @@
                     $("#hdnLat").val(pos.lat);
                     $("#hdnLng").val(pos.lng);
                 }
-               // $("#hdnLat").serialize();
-                //$("#hdnLng").serialize();
+                $("#hdnLat").serialize();
+                $("#hdnLng").serialize();
             //document.getElementById("mainForm").submit();
-        }, 5000);
+            }, 5000);
+
+
+            $("#markers").click(function () {
+                $('#modalMarker').modal('toggle');
+            });
+
         });
 
         
@@ -175,15 +194,16 @@
                     </ul>
                     <asp:Button ID="leave" runat="server" Text="Leave Session" class="btn btn-danger" OnClick="leave_Click" />
                     <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click" />
-
+                    <br />
+                    <div id="markers" class="btn btn-success">Markers</div>
                 </div>
             </div>
             <div class="row">
                 <ul id="legendList" class="col-md-6">
                     <li><strong>Legend:</strong></li>
-                    <li><img src="Images/dancer.png" alt="User" width="30" height="30" /> - Other User |</li>
-                    <li><img src="Images/dj.png" alt="dj" width="30" height="30" /> - Stage Area |</li>
-                    <li><img src="Images/event-tent.png" alt="tent" width="30" height="30" /> - Tent |</li>
+                    <li><a id="Usericon"><img src="Images/dancer.png" alt="User" width="30" height="30" /> - Other User |</a></li>
+                    <li><a id="Stageicon"><img src="Images/dj.png" alt="dj" width="30" height="30" /> - Stage Area |</a></li>
+                    <li><a id="TentIcon"><img src="Images/event-tent.png" alt="tent" width="30" height="30" /> - Tent |</a></li>
                 </ul>
             </div>
         </div>
@@ -191,6 +211,29 @@
     
     <asp:HiddenField ID="hdnLat"  runat="server" ClientIDMode="Static"></asp:HiddenField>
     <asp:HiddenField ID="hdnLng"  runat="server" ClientIDMode="Static"></asp:HiddenField>
+
+
+    	<div id="modalMarker" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Markers</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>                    
+				</div>
+				<div class="modal-body">
+					<div style="text-align:center;">
+						<p></p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+
 
     <script>
         ////https://developers.facebook.com/docs/javascript/quickstart

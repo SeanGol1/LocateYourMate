@@ -14,8 +14,13 @@
     text-align:left;
     margin-top:5px;
 }
+
+#markers{
+    margin-top:5%;
+}
+
 #legendList > li {
-    display: inline;    
+    display: inline-block;    
 }
 #list {
     height: 80%;
