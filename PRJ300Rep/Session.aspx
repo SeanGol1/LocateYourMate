@@ -18,7 +18,7 @@
         }
     </style>
     <script>
-
+        
         var ipAddress = "";
         var User = '<%=CurrentUser%>';
         var Users = new Array();
@@ -96,17 +96,8 @@
 
 
 
-                document.getElementById('TentIcon').addEventListener("click", TentMarker(),false);
-                function TentMarker() {
-
-                    var marker = new google.maps.Marker({
-                        icon: homeicon,
-                        position: map.getCenter(),
-                        visible: true
-                    });
-                    marker.setMap(map);
-
-                }
+               
+                
 
                 /*setInterval(function () {     
 
@@ -120,7 +111,7 @@
                     marker.setMap(map);
 
                 }, 100);*/
-                setInterval(function () {
+                /*setInterval(function () {
                     for (var i = 0; i < Users.length; i++) {
                         if (Users[i].Username != User) {
                             latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
@@ -144,7 +135,7 @@
 
                         }
                     }
-                }, 10000);
+                }, 10000);*/
 
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -162,8 +153,27 @@
         }
 
 
+        /*document.getElementById("TentIcon").addEventListener("click", TentMarker, false);
+        function TentMarker() {
+            var marker = new google.maps.Marker({
+                icon: homeicon,
+                position: map.getCenter(),
+                visible: true
+            });
+            marker.setMap(map);
+        }*/
+
+
         $(document).ready(function () {
 
+            $('#TentIcon').onClick(function () {
+                var marker = new google.maps.Marker({
+                    icon: homeicon,
+                    position: map.getCenter(),
+                    visible: true
+                });
+                marker.setMap(map);
+            })
 
             var adminID = '<%=adminID%>';
             for (var i = 0; i < Users.length; i++) {
@@ -241,9 +251,9 @@
                     <li><a id="Stageicon">
                         <img src="Images/dj.png" alt="dj" width="30" height="30" />
                         - Stage Area |</a></li>
-                    <li><div id="TentIcon">
+                    <li><a id="TentIcon">
                         <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
-                        - Tent |</div></li>
+                        - Tent |</a></li>
                 </ul>
             </div>
         </div>
