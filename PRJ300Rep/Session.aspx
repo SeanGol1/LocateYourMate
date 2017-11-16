@@ -6,18 +6,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <%--<script type="text/javascript" src="js/bootstrap.min.js"></script>--%>    
+    <%--<script type="text/javascript" src="js/bootstrap.min.js"></script>--%>
     <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js%22%3E"></script>--%>
     <script src="Scripts/jquery-3.1.1.min.js"></script>
     <link href="Styles/StyleSheetSession.css" rel="stylesheet" />
     <style>
-       #map {
+        #map {
             height: 600px;
             width: 70%;
             float: left;
         }
-
-      
     </style>
     <script>
 
@@ -47,7 +45,7 @@
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-               
+
 
                 infoWindow.setPosition(pos);
                 infoWindow.setContent('Your Location');
@@ -57,6 +55,14 @@
                 var markericon = {
                     url: 'Images/dancer.png',
                     scaledSize: new google.maps.Size(40, 40),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(15, 40),
+                    labelOrigin: new google.maps.Point(17, 50)
+                }
+
+                var centericon = {
+                    url: 'Images/currentposition.png',
+                    scaledSize: new google.maps.Size(20, 20),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(15, 40),
                     labelOrigin: new google.maps.Point(17, 50)
@@ -87,33 +93,56 @@
                 }
 
 
-                $('#TentIcon').addEventListener("click", function () {
 
-                });
 
+
+                document.getElementById('TentIcon').addEventListener("click", TentMarker(),false);
+                function TentMarker() {
+
+                    var marker = new google.maps.Marker({
+                        icon: homeicon,
+                        position: map.getCenter(),
+                        visible: true
+                    });
+                    marker.setMap(map);
+
+                }
+
+                /*setInterval(function () {     
+
+                    var marker = new google.maps.Marker({
+                        icon: centericon,
+                        position: map.getCenter(),
+                        visible: true
+                        
+                    });
+                    marker.setMap(null);
+                    marker.setMap(map);
+
+                }, 100);*/
                 setInterval(function () {
-                for (var i = 0; i < Users.length; i++) {
-                    if (Users[i].Username != User) {                    
-                        latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
-                        var marker = new google.maps.Marker({
-                            position: latLng,                            
-                            title: Users[i].Username,
-                            //animation: google.maps.Animation.DROP,
-                            label: {
-                                text: Users[i].Username,
-                                color: '#000000',
-                                fontsize: '20px',
-                                fontweight: 'bold'
-                            },
-                            visible: true,
-                            icon: markericon
-                        });
+                    for (var i = 0; i < Users.length; i++) {
+                        if (Users[i].Username != User) {
+                            latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
+                            var marker = new google.maps.Marker({
+                                position: latLng,
+                                title: Users[i].Username,
+                                //animation: google.maps.Animation.DROP,
+                                label: {
+                                    text: Users[i].Username,
+                                    color: '#000000',
+                                    fontsize: '20px',
+                                    fontweight: 'bold'
+                                },
+                                visible: true,
+                                icon: markericon
+                            });
 
-                        marker.setMap(map);
-                    }
-                    else {
+                            marker.setMap(map);
+                        }
+                        else {
 
-                    }
+                        }
                     }
                 }, 10000);
 
@@ -133,7 +162,7 @@
         }
 
 
-        $(document).ready(function () {            
+        $(document).ready(function () {
 
 
             var adminID = '<%=adminID%>';
@@ -154,9 +183,9 @@
                     $("#hdnLat").val(pos.lat);
                     $("#hdnLng").val(pos.lng);
                 }
-                $("#hdnLat").serialize();
-                $("#hdnLng").serialize();
-            //document.getElementById("mainForm").submit();
+                /*$("#hdnLat").serialize();
+                $("#hdnLng").serialize();*/
+                document.getElementById("mainForm").submit();
             }, 5000);
 
 
@@ -166,7 +195,7 @@
 
         });
 
-        
+
 
 
     </script>
@@ -180,13 +209,18 @@
 
             <div class="row">
 
-                <div id="map" class="col-lg-8">
+                <div id="wrapper" style="position: relative">
+                    <div id="map" class="col-lg-8" style="z-index: 1;">
+                    </div>
+                    <div id="centerimg" style="position: absolute; z-index: 99;">
+                        <img src="Images/currentposition.png" style="max-height: 10%; display: block; margin: auto; position: absolute;" />
+                    </div>
                 </div>
 
                 <div id="list" class="col-lg-4">
                     <div>
                         <asp:Label ID="Label1" runat="server" CssClass="textFont label" Text="Your Session Code:"></asp:Label>
-                        <asp:Label ID="tbxCode" runat="server" CssClass=" label" Text=""></asp:Label>
+                        <asp:Label ID="tbxCode" runat="server" CssClass="label" Text=""></asp:Label>
                     </div>
                     <p class="textFont">List of Members in the Session</p>
                     <ul id="UserList" class="list-group textFont">
@@ -201,37 +235,43 @@
             <div class="row">
                 <ul id="legendList" class="col-md-6">
                     <li><strong>Legend:</strong></li>
-                    <li><a id="Usericon"><img src="Images/dancer.png" alt="User" width="30" height="30" /> - Other User |</a></li>
-                    <li><a id="Stageicon"><img src="Images/dj.png" alt="dj" width="30" height="30" /> - Stage Area |</a></li>
-                    <li><a id="TentIcon"><img src="Images/event-tent.png" alt="tent" width="30" height="30" /> - Tent |</a></li>
+                    <li><a id="Usericon">
+                        <img src="Images/dancer.png" alt="User" width="30" height="30" />
+                        - Other User |</a></li>
+                    <li><a id="Stageicon">
+                        <img src="Images/dj.png" alt="dj" width="30" height="30" />
+                        - Stage Area |</a></li>
+                    <li><div id="TentIcon">
+                        <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
+                        - Tent |</div></li>
                 </ul>
             </div>
         </div>
     </div>
-    
-    <asp:HiddenField ID="hdnLat"  runat="server" ClientIDMode="Static"></asp:HiddenField>
-    <asp:HiddenField ID="hdnLng"  runat="server" ClientIDMode="Static"></asp:HiddenField>
+
+    <asp:HiddenField ID="hdnLat" runat="server" ClientIDMode="Static"></asp:HiddenField>
+    <asp:HiddenField ID="hdnLng" runat="server" ClientIDMode="Static"></asp:HiddenField>
 
 
-    	<div id="modalMarker" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-md">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Markers</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>                    
-				</div>
-				<div class="modal-body">
-					<div style="text-align:center;">
-						<p></p>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
+    <div id="modalMarker" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Markers</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center;">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 
@@ -261,7 +301,7 @@
         //   }(document, 'script', 'facebook-jssdk'));
     </script>
 
-    
+
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:AzureConnectionString %>" SelectCommand="Select UserId from userGroups as ug Inner Join Groups as g on ug.groupID = g.Id Inner Join Sessions as s on  s.groupID = g.Id Where SessionCode = @code">
         <SelectParameters>
             <asp:QueryStringParameter Name="code" QueryStringField="SessionCode" />
