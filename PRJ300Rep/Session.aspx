@@ -29,6 +29,15 @@
         // Google Maps
         var map, infoWindow;
         function initMap() {
+
+            var theCookies = document.cookie.split(';');
+            var mapcenter = '';
+            var mapzoom = '';
+            /*for (var i = 1 ; i <= theCookies.length; i++) {
+                aString += i + ' ' + theCookies[i - 1] + "\n";
+                mapcenter = theCookies[i];
+                mapzoom = theCookies[i]
+            }*/
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: -34.397, lng: 150.644 },
                 zoom: 16
@@ -78,9 +87,15 @@
                     anchor: new google.maps.Point(15, 40),
                     labelOrigin: new google.maps.Point(17, 50)
                 }
-                
+
                 $(document).ready(function () {
 
+                    //Stop modal from firing if map if dragged
+                    google.maps.event.addListener(map, 'dragend', function () {
+                        $('#modalPlaceMarker').on('shown.bs.modal', function (e) {
+                            e.stopPropagation();
+                        });
+                    });
 
                     /*
                         THIS EVENT FIRES FOR EVERY CLICK THAT WAS PREVIOSLY CLICKED ON THE MAP. 
@@ -88,13 +103,13 @@
                     */
 
                     google.maps.event.addListener(map, "click", function (event) {
-                        placeMarker(event.latLng);                        
+                        placeMarker(event.latLng);
                     });
-                    
-                    
+
+
                     function placeMarker(location) {
 
-                        $('#Stageiconmodal').one("click",function () {
+                        $('#Stageiconmodal').one("click", function () {
 
                             var Stage = {
                                 url: 'Images/dj.png',
@@ -107,12 +122,13 @@
                             var marker = new google.maps.Marker({
                                 position: location,
                                 //map: map,
+                                animation: google.maps.Animation.DROP,
                                 icon: Stage
                             });
                             marker.setMap(map);
                         });
 
-                        $('#TentIconmodal').one("click",function () {
+                        $('#TentIconmodal').one("click", function () {
 
                             var Tenticon = {
                                 url: 'Images/event-tent.png',
@@ -125,13 +141,13 @@
                             var marker = new google.maps.Marker({
                                 position: location,
                                 //map: map,
+                                animation: google.maps.Animation.DROP,
                                 icon: Tenticon
                             });
 
                             marker.setMap(map);
                         });
                     }
-
                 });
 
 
@@ -142,8 +158,7 @@
                     var marker = new google.maps.Marker({
                         icon: centericon,
                         position: map.getCenter(),
-                        visible: true
-                        
+                        visible: true                        
                     });
                     marker.setMap(null);
                     marker.setMap(map);
@@ -173,6 +188,10 @@
 
                         }
                     }
+                    var center = map.getCenter();
+                    var zoom = map.getZoom();
+                    document.cookie = "MapPosition= " + center + "; MapZoom= " + zoom + ";";
+                    $("#mainForm").submit();
                 }, 10000);
 
             }, function () {
