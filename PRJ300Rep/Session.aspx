@@ -259,7 +259,7 @@
     <div id="divBackground">
         <div class="container" id="content">
             <div class="row">
-                <h1 class="heading">Festival Friend Finder</h1>
+                <h1 class="heading">Locate Your Mate!</h1>
             </div>
 
             <div class="row">

@@ -97,7 +97,7 @@
     </div>
     <div id="divBackground">
         <div class="container" id="content">
-            <h1 id="titleMain">Locate Your Mate</h1>
+            <h1 id="titleMain">Locate Your Mate!</h1>
             <div class="row">
                 <div class="col-md-6 groups">
                     <div id="createCode" class="form-group" style="text-align: center; align-content: center;">
