@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-body">
                     <div style="text-align: center;">
-                        <h2 id="titleSec">Welcome to Festival Friend Finder.</h2>
+                        <h2 id="titleSec">Welcome to Locate Your Mate.</h2>
                         <br />
                         <h4><strong>Want to create a new group?</strong></h4>
                         <p>Clicking on the <strong>Create a Group</strong> button will begin a session.</p>
@@ -97,7 +97,7 @@
     </div>
     <div id="divBackground">
         <div class="container" id="content">
-            <h1 id="titleMain">Festival Friend Finder</h1>
+            <h1 id="titleMain">Locate Your Mate</h1>
             <div class="row">
                 <div class="col-md-6 groups">
                     <div id="createCode" class="form-group" style="text-align: center; align-content: center;">

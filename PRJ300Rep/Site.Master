@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Festival Friend Finder</title>
+    <title><%: Page.Title %> - Locate Your Mate</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -46,7 +46,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" id="navTitle" runat="server" href="~/">Festival Friend Finder</a>
+                    <a class="navbar-brand" id="navTitle" runat="server" href="~/">Locate Your Mate!</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <%--<ul class="nav navbar-nav">                       
