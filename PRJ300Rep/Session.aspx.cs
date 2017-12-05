@@ -23,7 +23,9 @@ namespace PRJ300Rep
         public string CurrentUser = "";
         public string SessionCode = "";       
         public List<UserLocation> users = new List<UserLocation>();
+        public List<MarkerLocation> markers = new List<MarkerLocation>();
         public string JSArray = "";
+        public string JSMarkerArray = "";
         public string adminID = "";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -74,7 +76,7 @@ namespace PRJ300Rep
             
 
 
-            //Save Location in the database
+            //Save Locations in the database
             string lat;
             string lng;
             lat = hdnLat.Value;            
@@ -85,6 +87,29 @@ namespace PRJ300Rep
             UpdateLocation.Parameters.AddWithValue("@latit", lat);
             UpdateLocation.Parameters.AddWithValue("@lngit", lng);
             int result2 = UpdateLocation.ExecuteNonQuery();
+
+            //InsertStageLocation
+            string stagelat;
+            string stagelng;
+            stagelat = hdnlatStage.Value;
+            stagelng = hdnlngStage.Value;
+            if (stagelat != "" && stagelng !="")
+            {
+                SqlCommand GetMarkers = new SqlCommand("select type from [Markers] where [type] = 'stage'", conn);
+                int result = GetMarkers.ExecuteNonQuery();
+                if (result == 0){
+                    SqlCommand InsertStageLocation = new SqlCommand("Insert into Markers(lat,lng,type) Values (@lats,@lngs,'stage')", conn);
+                    InsertStageLocation.Parameters.AddWithValue("@lats", stagelat);
+                    InsertStageLocation.Parameters.AddWithValue("@lngs", stagelng);
+                    int result3 = InsertStageLocation.ExecuteNonQuery();
+                }
+                else
+                {
+                    //UPDATE
+                }
+            }
+
+
 
             //get users (name and Local) from the database
             string slat = "";
@@ -109,6 +134,26 @@ namespace PRJ300Rep
             }
 
             JSArray = JsonConvert.SerializeObject(users);
+
+            //Read Marker Locations
+            SqlCommand GetMarkerLocations = new SqlCommand("select type, lat, lng from [Markers]", conn);
+            using (SqlDataReader reader = GetMarkerLocations.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string type = string.Format("{0}", reader["type"]);
+                    if (lat != "" && lng != "")
+                    {
+                        slat = string.Format("{0}", reader["lat"]);
+                        slng = string.Format("{0}", reader["lng"]);
+                    }
+
+                    markers.Add(new MarkerLocation(type, slat, slng));
+                }
+            }
+
+            JSArray = JsonConvert.SerializeObject(markers);
+
 
 
             conn.Close();

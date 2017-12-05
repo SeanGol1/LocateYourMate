@@ -24,6 +24,8 @@
         var User = '<%=CurrentUser%>';
         var Users = new Array();
         Users = JSON.parse('<%=JSArray%>');
+        var Markers = new Array();
+        Markers = JSON.parse('<%=JSMarkerArray%>');
         var pos = {};
 
         // Google Maps
@@ -62,7 +64,7 @@
                 infoWindow.open(map);
                 map.setCenter(pos);
 
-                var markericon = {
+               /* var markericon = {
                     url: 'Images/dancer.png',
                     scaledSize: new google.maps.Size(40, 40),
                     origin: new google.maps.Point(0, 0),
@@ -86,9 +88,17 @@
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(15, 40),
                     labelOrigin: new google.maps.Point(17, 50)
-                }
+                }*/
 
                 $(document).ready(function () {
+                    //Create Marker Icons
+                    var stage = {
+                        url: 'Images/dj.png',
+                        scaledSize: new google.maps.Size(40, 40),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(15, 40),
+                        labelOrigin: new google.maps.Point(17, 50)
+                    }
 
                     //Stop modal from firing if map if dragged
                     google.maps.event.addListener(map, 'dragend', function () {
@@ -97,10 +107,24 @@
                         });
                     });
 
+                    //Read all markers and display
+                    for (var i = 0; i < Markers.length; i++) {                        
+                            latLng = new google.maps.LatLng(Markers[i].Lat, Markers[i].Lng);
+                            var marker = new google.maps.Marker({
+                                position: latLng,
+                                visible: true,
+                                icon: Markers[i].type
+                            });
+                            marker.setMap(map);
+                    }
+
                     /*
+                        [BUG REPORT]
                         THIS EVENT FIRES FOR EVERY CLICK THAT WAS PREVIOSLY CLICKED ON THE MAP. 
                         EVENTS STORING IN ARRAY AND RUNNING THROUGH THEM ALL.
                     */
+
+
 
                     google.maps.event.addListener(map, "click", function (event) {
                         placeMarker(event.latLng);
@@ -109,23 +133,19 @@
 
                     function placeMarker(location) {
 
-                        $('#Stageiconmodal').one("click", function () {
-
-                            var Stage = {
-                                url: 'Images/dj.png',
-                                scaledSize: new google.maps.Size(40, 40),
-                                origin: new google.maps.Point(0, 0),
-                                anchor: new google.maps.Point(15, 40),
-                                labelOrigin: new google.maps.Point(17, 50)
-                            }
+                        $('#Stageiconmodal').one("click", function () {                         
 
                             var marker = new google.maps.Marker({
                                 position: location,
                                 //map: map,
                                 animation: google.maps.Animation.DROP,
-                                icon: Stage
+                                icon: stage
                             });
+
                             marker.setMap(map);
+                            $("#hdnlatStage").val(location.lat);
+                            $("#hdnlngStage").val(location.lng);
+
                         });
 
                         $('#TentIconmodal').one("click", function () {
@@ -147,11 +167,97 @@
 
                             marker.setMap(map);
                         });
+                        $('#Starticonmodal').one("click", function () {
+
+                            var Start = {
+                                url: 'Images/start.png',
+                                scaledSize: new google.maps.Size(40, 40),
+                                origin: new google.maps.Point(0, 0),
+                                anchor: new google.maps.Point(15, 40),
+                                labelOrigin: new google.maps.Point(17, 50),
+                                label: {
+                                    text: 'Start',
+                                    color: '#000000',
+                                    fontsize: '20px',
+                                    fontweight: 'bold'
+                                },
+                            }
+
+                            var marker = new google.maps.Marker({
+                                position: location,
+                                //map: map,
+                                animation: google.maps.Animation.DROP,
+                                icon: Start
+                            });
+
+                            marker.setMap(map);
+                        });
+                        $('#FinishIconmodal').one("click", function () {
+
+                            var Finish = {
+                                url: 'Images/start.png',
+                                scaledSize: new google.maps.Size(40, 40),
+                                origin: new google.maps.Point(0, 0),
+                                anchor: new google.maps.Point(15, 40),
+                                labelOrigin: new google.maps.Point(17, 50),
+                                label: {
+                                    text: 'Finish',
+                                    color: '#000000',
+                                    fontsize: '20px',
+                                    fontweight: 'bold'
+                                },
+                            }
+
+                            var marker = new google.maps.Marker({
+                                position: location,
+                                //map: map,
+                                animation: google.maps.Animation.DROP,
+                                icon: Finish
+                            });
+
+                            marker.setMap(map);
+                        });
+                        $('#cariconmodal').one("click", function () {
+
+
+                            var Car = {
+                                url: 'Images/car.png',
+                                scaledSize: new google.maps.Size(40, 40),
+                                origin: new google.maps.Point(0, 0),
+                                anchor: new google.maps.Point(15, 40),
+                                labelOrigin: new google.maps.Point(17, 50)
+                            }
+
+                            var marker = new google.maps.Marker({
+                                position: location,
+                                //map: map,
+                                animation: google.maps.Animation.DROP,
+                                icon: Car
+                            });
+
+                            marker.setMap(map);
+                        });
+                        $('#cabinIconmodal').one("click", function () {
+
+                            var Cabin = {
+                                url: 'Images/cabin.png',
+                                scaledSize: new google.maps.Size(40, 40),
+                                origin: new google.maps.Point(0, 0),
+                                anchor: new google.maps.Point(15, 40),
+                                labelOrigin: new google.maps.Point(17, 50)
+                            }
+
+                            var marker = new google.maps.Marker({
+                                position: location,
+                                //map: map,
+                                animation: google.maps.Animation.DROP,
+                                icon: cabin
+                            });
+
+                            marker.setMap(map);
+                        });
                     }
                 });
-
-
-
 
                 /*setInterval(function () {     
 
@@ -164,35 +270,42 @@
                     marker.setMap(map);
 
                 }, 100);*/
-                setInterval(function () {
-                    for (var i = 0; i < Users.length; i++) {
-                        if (Users[i].Username != User) {
-                            latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
-                            var marker = new google.maps.Marker({
-                                position: latLng,
-                                title: Users[i].Username,
-                                //animation: google.maps.Animation.DROP,
-                                label: {
-                                    text: Users[i].Username,
-                                    color: '#000000',
-                                    fontsize: '20px',
-                                    fontweight: 'bold'
-                                },
-                                visible: true,
-                                icon: markericon
-                            });
 
-                            marker.setMap(map);
-                        }
-                        else {
+                for (var i = 0; i < Users.length; i++) {
+                    if (Users[i].Username != User) {
+                        latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            title: Users[i].Username,
+                            //animation: google.maps.Animation.DROP,
+                            label: {
+                                text: Users[i].Username,
+                                color: '#000000',
+                                fontsize: '20px',
+                                fontweight: 'bold'
+                            },
+                            visible: true,
+                            icon: markericon
+                        });
 
-                        }
+                        marker.setMap(map);
                     }
-                    var center = map.getCenter();
-                    var zoom = map.getZoom();
-                    document.cookie = "MapPosition= " + center + "; MapZoom= " + zoom + ";";
-                    $("#mainForm").submit();
+                    else {
+
+                    }
+                }
+                var center = map.getCenter();
+                var zoom = map.getZoom();
+                document.cookie = "MapPosition= " + center + "; MapZoom= " + zoom + ";";
+
+                setInterval(function () {
+                    if ($('.modal').hasClass('in')) {
+                    }
+                    else {
+                        $("#mainForm").submit();
+                    }
                 }, 10000);
+
 
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -287,25 +400,14 @@
                     <div id="markers" class="btn btn-success" data-toggle="modal" data-target="#modalMarker">Markers</div>
                 </div>
             </div>
-            <div class="row">
-                <ul id="legendList" class="col-md-6">
-                    <li><strong>Legend:</strong></li>
-                    <li><a id="Usericon">
-                        <img src="Images/dancer.png" alt="User" width="30" height="30" />
-                        - Other User |</a></li>
-                    <li><a id="Stageicon">
-                        <img src="Images/dj.png" alt="dj" width="30" height="30" />
-                        - Stage Area |</a></li>
-                    <li><a id="TentIcon">
-                        <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
-                        - Tent |</a></li>
-                </ul>
-            </div>
         </div>
     </div>
-
-    <asp:HiddenField ID="hdnLat" runat="server" ClientIDMode="Static"></asp:HiddenField>
-    <asp:HiddenField ID="hdnLng" runat="server" ClientIDMode="Static"></asp:HiddenField>
+    <div id="formdata">
+        <asp:HiddenField ID="hdnLat" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnLng" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlngStage" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlatStage" runat="server" ClientIDMode="Static"></asp:HiddenField>
+    </div>
 
     <div id="modalMarker" class="modal fade" role="dialog">
         <div class="modal-dialog modal-md">
@@ -316,7 +418,26 @@
                 </div>
                 <div class="modal-body">
                     <div style="text-align: center;">
-                        <p></p>
+                        <ul id="legendListl" class="list-group" style="list-style-type: none;">
+                            <li><a id="Stageiconl" class="list-group-item">
+                                <img src="Images/dj.png" alt="dj" width="30" height="30" />
+                                - Stage Area </a></li>
+                            <li><a id="TentIconl" class="list-group-item">
+                                <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
+                                - Tent </a></li>
+                            <li><a id="Starticonl" class="list-group-item">
+                                <img src="Images/start.png" alt="start" width="30" height="30" />
+                                - Start </a></li>
+                            <li><a id="FinishIconl" class="list-group-item">
+                                <img src="Images/start.png" alt="finish" width="30" height="30" />
+                                - Finish </a></li>
+                            <li><a id="cariconl" class="list-group-item">
+                                <img src="Images/car.png" alt="car" width="30" height="30" />
+                                - Car </a></li>
+                            <li><a id="cabinIconl" class="list-group-item">
+                                <img src="Images/cabin.png" alt="cabin" width="30" height="30" />
+                                - Cabin </a></li>
+                        </ul>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -335,14 +456,25 @@
                 </div>
                 <div class="modal-body">
                     <div style="text-align: center;">
-                        <ul id="legendListmodal" class="col-md-6">
-                            <li><strong>Legend:</strong></li>
-                            <li><a id="Stageiconmodal" data-dismiss="modal">
+                        <ul id="legendListmodal" class="list-group" style="list-style-type: none;">
+                            <li><a id="Stageiconmodal" data-dismiss="modal" class="list-group-item">
                                 <img src="Images/dj.png" alt="dj" width="30" height="30" />
-                                - Stage Area |</a></li>
-                            <li><a id="TentIconmodal" data-dismiss="modal">
+                                - Stage Area </a></li>
+                            <li><a id="TentIconmodal" data-dismiss="modal" class="list-group-item">
                                 <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
-                                - Tent |</a></li>
+                                - Tent </a></li>
+                            <li><a id="Starticonmodal" data-dismiss="modal" class="list-group-item">
+                                <img src="Images/start.png" alt="start" width="30" height="30" />
+                                - Start </a></li>
+                            <li><a id="FinishIconmodal" data-dismiss="modal" class="list-group-item">
+                                <img src="Images/start.png" alt="finish" width="30" height="30" />
+                                - Finish </a></li>
+                            <li><a id="cariconmodal" data-dismiss="modal" class="list-group-item">
+                                <img src="Images/car.png" alt="car" width="30" height="30" />
+                                - Car </a></li>
+                            <li><a id="cabinIconmodal" data-dismiss="modal" class="list-group-item">
+                                <img src="Images/cabin.png" alt="cabin" width="30" height="30" />
+                                - Cabin </a></li>
                         </ul>
                     </div>
                 </div>
