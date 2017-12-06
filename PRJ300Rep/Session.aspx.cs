@@ -95,17 +95,21 @@ namespace PRJ300Rep
             stagelng = hdnlngStage.Value;
             if (stagelat != "" && stagelng !="")
             {
-                SqlCommand GetMarkers = new SqlCommand("select type from [Markers] where [type] = 'stage'", conn);
+                SqlCommand GetMarkers = new SqlCommand("select * from [Markers] where [type] = 'stage'", conn);
                 int result = GetMarkers.ExecuteNonQuery();
-                if (result == 0){
+                if (result != -1){
                     SqlCommand InsertStageLocation = new SqlCommand("Insert into Markers(lat,lng,type) Values (@lats,@lngs,'stage')", conn);
                     InsertStageLocation.Parameters.AddWithValue("@lats", stagelat);
                     InsertStageLocation.Parameters.AddWithValue("@lngs", stagelng);
                     int result3 = InsertStageLocation.ExecuteNonQuery();
                 }
+
                 else
                 {
-                    //UPDATE
+                    SqlCommand UpdateStageLocation = new SqlCommand("UPDATE [Markers] SET [lat] = @lats, [lng] = @lngs WHERE [type] = 'stage'", conn);                    
+                    UpdateLocation.Parameters.AddWithValue("@lats", stagelat);
+                    UpdateLocation.Parameters.AddWithValue("@lngs", stagelng);
+                    int result4 = UpdateLocation.ExecuteNonQuery();
                 }
             }
 
@@ -137,6 +141,7 @@ namespace PRJ300Rep
 
             //Read Marker Locations
             SqlCommand GetMarkerLocations = new SqlCommand("select type, lat, lng from [Markers]", conn);
+            markers.Clear();
             using (SqlDataReader reader = GetMarkerLocations.ExecuteReader())
             {
                 while (reader.Read())
@@ -152,9 +157,7 @@ namespace PRJ300Rep
                 }
             }
 
-            JSArray = JsonConvert.SerializeObject(markers);
-
-
+            JSMarkerArray = JsonConvert.SerializeObject(markers);    
 
             conn.Close();
 
