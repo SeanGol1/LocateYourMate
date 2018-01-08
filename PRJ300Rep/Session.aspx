@@ -63,54 +63,70 @@
                 infoWindow.open(map);
                 map.setCenter(pos);
 
-               /* var markericon = {
+               var markericon = {
                     url: 'Images/dancer.png',
                     scaledSize: new google.maps.Size(40, 40),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(15, 40),
                     labelOrigin: new google.maps.Point(17, 50)
                 }
-
-                var centericon = {
-                    url: 'Images/currentposition.png',
-                    scaledSize: new google.maps.Size(20, 20),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(15, 40),
-                    labelOrigin: new google.maps.Point(17, 50)
-                }
-
-
-
+                
                 var currentposition = {
                     url: 'Images/currentposition.png',
                     scaledSize: new google.maps.Size(40, 40),
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(15, 40),
                     labelOrigin: new google.maps.Point(17, 50)
-                }*/
+                }
+
+                var stage = {
+                    url: 'Images/dj.png',
+                    scaledSize: new google.maps.Size(40, 40),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(15, 40),
+                    labelOrigin: new google.maps.Point(17, 50)
+                }
 
                 $(document).ready(function () {
                     //Create Marker Icons
-                    var stage = {
-                        url: 'Images/dj.png',
-                        scaledSize: new google.maps.Size(40, 40),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(15, 40),
-                        labelOrigin: new google.maps.Point(17, 50)
-                    }
+                   
 
-                    //Stop modal from firing if map if dragged
+                    //Stop modal from firing if map is dragged
                     google.maps.event.addListener(map, 'dragend', function () {
                         $('#modalPlaceMarker').on('shown.bs.modal', function (e) {
                             e.stopPropagation();
                         });
                     });
 
-                    //Read all markers and display
-                    for (var i = 0; i < Markers.length; i++) {                        
-                            latLng = new google.maps.LatLng(Markers[i].Lat, Markers[i].Lng);
+                    //Read and display all users
+                    for (var i = 0; i < Users.length; i++) {
+                        if (Users[i].Username != User) {
+                            latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
                             var marker = new google.maps.Marker({
                                 position: latLng,
+                                title: Users[i].Username,
+                                //animation: google.maps.Animation.DROP,
+                                label: {
+                                    text: Users[i].Username,
+                                    color: '#000000',
+                                    fontsize: '20px',
+                                    fontweight: 'bold'
+                                },
+                                visible: true,
+                                icon: markericon
+                            });
+
+                            marker.setMap(map);
+                        }
+                        else {
+                        }
+                    }
+
+                    //Read and display all markers
+                    for (var i = 0; i < Markers.length; i++) {                        
+                            latLngmarker = new google.maps.LatLng(Markers[i].Lat, Markers[i].Lng);
+                            var marker = new google.maps.Marker({
+                                position: latLngmarker,
                                 visible: true,
                                 icon: Markers[i].Type
                             });
@@ -122,12 +138,10 @@
                         THIS EVENT FIRES FOR EVERY CLICK THAT WAS PREVIOSLY CLICKED ON THE MAP. 
                         EVENTS STORING IN ARRAY AND RUNNING THROUGH THEM ALL.
                     */
-
-
-
+                    /*
                     google.maps.event.addListener(map, "click", function (event) {
                         placeMarker(event.latLng);
-                    });
+                    });*/
 
 
                     function placeMarker(location) {
@@ -258,57 +272,11 @@
                     }
                 });
 
-                /*setInterval(function () {     
-
-                    var marker = new google.maps.Marker({
-                        icon: centericon,
-                        position: map.getCenter(),
-                        visible: true                        
-                    });
-                    marker.setMap(null);
-                    marker.setMap(map);
-
-                }, 100);*/
-
-                for (var i = 0; i < Users.length; i++) {
-                    if (Users[i].Username != User) {
-                        latLng = new google.maps.LatLng(Users[i].Lat, Users[i].Lng);
-                        var marker = new google.maps.Marker({
-                            position: latLng,
-                            title: Users[i].Username,
-                            //animation: google.maps.Animation.DROP,
-                            label: {
-                                text: Users[i].Username,
-                                color: '#000000',
-                                fontsize: '20px',
-                                fontweight: 'bold'
-                            },
-                            visible: true,
-                            icon: markericon
-                        });
-
-                        marker.setMap(map);
-                    }
-                    else {
-
-                    }
-                }
 
                 //Save window state when page refreshes
                 var center = map.getCenter();
                 var zoom = map.getZoom();
                 document.cookie = "MapPosition= " + center + "; MapZoom= " + zoom + ";";
-
-                //reload page every 10 seconds
-                setInterval(function () {
-                    //do not load page if modal open (placing a marker)
-                    if ($('.modal').hasClass('in')) {
-                    }
-                    else {
-                        $("#mainForm").submit();
-                    }
-                }, 10000);
-
 
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -326,47 +294,34 @@
         }
 
 
-        /*document.getElementById("TentIcon").addEventListener("click", TentMarker, false);
-        function TentMarker() {
-            var marker = new google.maps.Marker({
-                icon: homeicon,
-                position: map.getCenter(),
-                visible: true
-            });
-            marker.setMap(map);
-        }*/
-
-
         $(document).ready(function () {
-
-            var adminID = '<%=adminID%>';
+            //populate the user list            
             for (var i = 0; i < Users.length; i++) {
-                if (adminID == Users[i]) {
+                if (<%=adminID%> == Users[i].Username) {
+                    //Place star next to the admin user of the group
                     $(UserList).append('<li class="list-group-item"><span class="glyphicon glyphicon-asterisk"></span>' + Users[i].Username + '</li>');
                 }
                 else {
                     $(UserList).append('<li class="list-group-item">' + Users[i].Username + '</li>');
                 }
             }
-            <%--
 
-            //set timer to submit form
+            //reload page every 10 seconds
             setInterval(function () {
                 //save location in a hidden field 
                 if (pos.lat != null && pos.lng != null) {
                     $("#hdnLat").val(pos.lat);
                     $("#hdnLng").val(pos.lng);
                 }
-                /*$("#hdnLat").serialize();
-                $("#hdnLng").serialize();*/
-                document.getElementById("mainForm").submit();
-            }, 5000);
-            --%>
 
-            /* $("#markers").click(function () {
-                 $('#modalMarker').modal('toggle');
-             });*/
-
+                //do not load page if modal open (placing a marker)
+                if ($('.modal').hasClass('in')) {
+                }
+                else {
+                    //submit form
+                    $("#mainForm").submit();
+                }
+            }, 10000);
         });
 
     </script>
@@ -381,11 +336,7 @@
             <div class="row">
 
                 <div id="wrapper" style="position: relative">
-                    <div id="map" class="col-lg-8" style="z-index: 1;" data-toggle="modal" data-target="#modalPlaceMarker">
-                    </div>
-                    <div id="centerimg" style="position: absolute; z-index: 99;">
-                        <img src="Images/currentposition.png" style="max-height: 10%; display: block; margin: auto; position: absolute;" />
-                    </div>
+                    <div id="map" class="col-lg-8"  data-toggle="modal" data-target="#modalPlaceMarker"></div>                    
                 </div>
 
                 <div id="list" class="col-lg-4">
