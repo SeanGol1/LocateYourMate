@@ -20,7 +20,6 @@
     </style>
     <script>
 
-        var ipAddress = "";
         var User = '<%=CurrentUser%>';
         var Users = new Array();
         Users = JSON.parse('<%=JSArray%>');
@@ -113,7 +112,7 @@
                             var marker = new google.maps.Marker({
                                 position: latLng,
                                 visible: true,
-                                icon: Markers[i].type
+                                icon: Markers[i].Type
                             });
                             marker.setMap(map);
                     }
@@ -294,11 +293,15 @@
 
                     }
                 }
+
+                //Save window state when page refreshes
                 var center = map.getCenter();
                 var zoom = map.getZoom();
                 document.cookie = "MapPosition= " + center + "; MapZoom= " + zoom + ";";
 
+                //reload page every 10 seconds
                 setInterval(function () {
+                    //do not load page if modal open (placing a marker)
                     if ($('.modal').hasClass('in')) {
                     }
                     else {
@@ -417,7 +420,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
+
                     <div style="text-align: center;">
+                        <h3>To place a marker simply click on the map in the postition of choice and choose from the list!</h3>
                         <ul id="legendListl" class="list-group" style="list-style-type: none;">
                             <li><a id="Stageiconl" class="list-group-item">
                                 <img src="Images/dj.png" alt="dj" width="30" height="30" />

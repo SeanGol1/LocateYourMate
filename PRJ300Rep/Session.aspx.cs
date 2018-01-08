@@ -61,7 +61,8 @@ namespace PRJ300Rep
                     users.Add(Name);
                 }
             }*/
-                
+
+             
                  
             
 
@@ -73,8 +74,8 @@ namespace PRJ300Rep
             else
                 Close.Visible = false;
 
-            
 
+         
 
             //Save Locations in the database
             string lat;
@@ -95,22 +96,27 @@ namespace PRJ300Rep
             stagelng = hdnlngStage.Value;
             if (stagelat != "" && stagelng !="")
             {
-                SqlCommand GetMarkers = new SqlCommand("select * from [Markers] where [type] = 'stage'", conn);
+                SqlCommand GetMarkers = new SqlCommand("select * from [Markers] where [type] = 'stage' AND [SessionCode] = @code", conn);
+                GetMarkers.Parameters.AddWithValue("@code", SessionCode);
                 int result = GetMarkers.ExecuteNonQuery();
-                if (result != -1){
-                    SqlCommand InsertStageLocation = new SqlCommand("Insert into Markers(lat,lng,type) Values (@lats,@lngs,'stage')", conn);
+                if (result == -1){
+                    SqlCommand InsertStageLocation = new SqlCommand("Insert into Markers(lat,lng,type,SessionCode) Values (@lats,@lngs,'stage',@code)", conn);
                     InsertStageLocation.Parameters.AddWithValue("@lats", stagelat);
                     InsertStageLocation.Parameters.AddWithValue("@lngs", stagelng);
+                    InsertStageLocation.Parameters.AddWithValue("@code", SessionCode);
                     int result3 = InsertStageLocation.ExecuteNonQuery();
                 }
 
                 else
                 {
-                    SqlCommand UpdateStageLocation = new SqlCommand("UPDATE [Markers] SET [lat] = @lats, [lng] = @lngs WHERE [type] = 'stage'", conn);                    
-                    UpdateLocation.Parameters.AddWithValue("@lats", stagelat);
-                    UpdateLocation.Parameters.AddWithValue("@lngs", stagelng);
-                    int result4 = UpdateLocation.ExecuteNonQuery();
+                    SqlCommand UpdateStageLocation = new SqlCommand("UPDATE [Markers] SET [lat] = @lats, [lng] = @lngs WHERE [type] = 'stage' AND [SessionCode] = @code", conn);                    
+                    UpdateStageLocation.Parameters.AddWithValue("@lats", stagelat);
+                    UpdateStageLocation.Parameters.AddWithValue("@lngs", stagelng);
+                    UpdateStageLocation.Parameters.AddWithValue("@code", SessionCode);
+                    int result4 = UpdateStageLocation.ExecuteNonQuery();
                 }
+                hdnlatStage.Value = "";
+                hdnlngStage.Value = "";
             }
 
 
@@ -140,20 +146,18 @@ namespace PRJ300Rep
             JSArray = JsonConvert.SerializeObject(users);
 
             //Read Marker Locations
-            SqlCommand GetMarkerLocations = new SqlCommand("select type, lat, lng from [Markers]", conn);
+            SqlCommand GetMarkerLocations = new SqlCommand("select type, lat, lng from [Markers] Where [SessionCode] = @code", conn);
+            GetMarkerLocations.Parameters.AddWithValue("@code", SessionCode);
             markers.Clear();
             using (SqlDataReader reader = GetMarkerLocations.ExecuteReader())
             {
                 while (reader.Read())
                 {
                     string type = string.Format("{0}", reader["type"]);
-                    if (lat != "" && lng != "")
-                    {
-                        slat = string.Format("{0}", reader["lat"]);
-                        slng = string.Format("{0}", reader["lng"]);
-                    }
+                    string stlat = string.Format("{0}", reader["lat"]);
+                    string stlng = string.Format("{0}", reader["lng"]);                    
 
-                    markers.Add(new MarkerLocation(type, slat, slng));
+                    markers.Add(new MarkerLocation(type, stlat, stlng));
                 }
             }
 
