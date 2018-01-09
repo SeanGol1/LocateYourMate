@@ -92,11 +92,11 @@
                     }
 
                     ////Stop modal from firing if map is dragged [NOT WORKING]
-                    //google.maps.event.addListener(map, 'dragend', function () {
-                    //    $('#modalPlaceMarker').on('shown.bs.modal', function (e) {
-                    //        e.stopPropagation();
-                    //    });
-                    //});
+                    google.maps.event.addListener(map, 'dragend', function () {
+                        $('#modalPlaceMarker').on('shown.bs.modal', function (e) {
+                            e.stopPropagation();
+                        });
+                    });
 
                     //populate the user list            
                     for (var i = 0; i < Users.length; i++) {
