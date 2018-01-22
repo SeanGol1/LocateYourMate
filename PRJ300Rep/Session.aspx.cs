@@ -119,6 +119,101 @@ namespace PRJ300Rep
                 hdnlngStage.Value = "";
             }
 
+            //InsertTentLocation
+            string tentlat;
+            string tentlng;
+            tentlat = hdnlatTent.Value;
+            tentlng = hdnlngTent.Value;
+            if (tentlat != "" && tentlng != "")
+            {
+                SqlCommand GetMarkers = new SqlCommand("select * from [Markers] where [type] = 'tent' AND [SessionCode] = @code", conn);
+                GetMarkers.Parameters.AddWithValue("@code", SessionCode);
+                int result = GetMarkers.ExecuteNonQuery();
+
+                if (result == -1)
+                {
+                    SqlCommand InsertTentLocation = new SqlCommand("Insert into Markers(lat,lng,type,SessionCode) Values (@lats,@lngs,'tent',@code)", conn);
+                    InsertTentLocation.Parameters.AddWithValue("@lats", tentlat);
+                    InsertTentLocation.Parameters.AddWithValue("@lngs", tentlng);
+                    InsertTentLocation.Parameters.AddWithValue("@code", SessionCode);
+                    int result3 = InsertTentLocation.ExecuteNonQuery();
+                }
+
+                else
+                {
+                    SqlCommand UpdateTentLocation = new SqlCommand("UPDATE [Markers] SET [lat] = @lats, [lng] = @lngs WHERE [type] = 'tent' AND [SessionCode] = @code", conn);
+                    UpdateTentLocation.Parameters.AddWithValue("@lats", tentlat);
+                    UpdateTentLocation.Parameters.AddWithValue("@lngs", tentlng);
+                    UpdateTentLocation.Parameters.AddWithValue("@code", SessionCode);
+                    int result4 = UpdateTentLocation.ExecuteNonQuery();
+                }
+                hdnlatTent.Value = "";
+                hdnlngTent.Value = "";
+            }
+
+            //InsertStartLocation
+            string startlat;
+            string startlng;
+            startlat = hdnlatStart.Value;
+            startlng = hdnlngStart.Value;
+            if (startlat != "" && startlng != "")
+            {
+                SqlCommand GetMarkers = new SqlCommand("select * from [Markers] where [type] = 'start' AND [SessionCode] = @code", conn);
+                GetMarkers.Parameters.AddWithValue("@code", SessionCode);
+                int result = GetMarkers.ExecuteNonQuery();
+
+                if (result == -1)
+                {
+                    SqlCommand InsertStartLocation = new SqlCommand("Insert into Markers(lat,lng,type,SessionCode) Values (@lats,@lngs,'start',@code)", conn);
+                    InsertStartLocation.Parameters.AddWithValue("@lats", startlat);
+                    InsertStartLocation.Parameters.AddWithValue("@lngs", startlng);
+                    InsertStartLocation.Parameters.AddWithValue("@code", SessionCode);
+                    int result3 = InsertStartLocation.ExecuteNonQuery();
+                }
+
+                else
+                {
+                    SqlCommand UpdateStartLocation = new SqlCommand("UPDATE [Markers] SET [lat] = @lats, [lng] = @lngs WHERE [type] = 'start' AND [SessionCode] = @code", conn);
+                    UpdateStartLocation.Parameters.AddWithValue("@lats", startlat);
+                    UpdateStartLocation.Parameters.AddWithValue("@lngs", startlng);
+                    UpdateStartLocation.Parameters.AddWithValue("@code", SessionCode);
+                    int result4 = UpdateStartLocation.ExecuteNonQuery();
+                }
+                hdnlatStart.Value = "";
+                hdnlngStart.Value = "";
+            }
+
+            //InsertFinishLocation
+            string finishlat;
+            string finishlng;
+            finishlat = hdnlatFinish.Value;
+            finishlng = hdnlngFinish.Value;
+            if (finishlat != "" && finishlng != "")
+            {
+                SqlCommand GetMarkers = new SqlCommand("select * from [Markers] where [type] = 'finish' AND [SessionCode] = @code", conn);
+                GetMarkers.Parameters.AddWithValue("@code", SessionCode);
+                int result = GetMarkers.ExecuteNonQuery();
+
+                if (result == -1)
+                {
+                    SqlCommand InsertFinishLocation = new SqlCommand("Insert into Markers(lat,lng,type,SessionCode) Values (@lats,@lngs,'finish',@code)", conn);
+                    InsertFinishLocation.Parameters.AddWithValue("@lats", finishlat);
+                    InsertFinishLocation.Parameters.AddWithValue("@lngs", finishlng);
+                    InsertFinishLocation.Parameters.AddWithValue("@code", SessionCode);
+                    int result3 = InsertFinishLocation.ExecuteNonQuery();
+                }
+
+                else
+                {
+                    SqlCommand UpdateFinishLocation = new SqlCommand("UPDATE [Markers] SET [lat] = @lats, [lng] = @lngs WHERE [type] = 'finish' AND [SessionCode] = @code", conn);
+                    UpdateFinishLocation.Parameters.AddWithValue("@lats", finishlat);
+                    UpdateFinishLocation.Parameters.AddWithValue("@lngs", finishlng);
+                    UpdateFinishLocation.Parameters.AddWithValue("@code", SessionCode);
+                    int result4 = UpdateFinishLocation.ExecuteNonQuery();
+                }
+                hdnlatFinish.Value = "";
+                hdnlngFinish.Value = "";
+            }
 
 
             //get users (name and Local) from the database

@@ -74,15 +74,6 @@
                         anchor: new google.maps.Point(15, 40),
                         labelOrigin: new google.maps.Point(17, 50)
                     }
-
-                    var currentposition = {
-                        url: 'Images/currentposition.png',
-                        scaledSize: new google.maps.Size(40, 40),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(15, 40),
-                        labelOrigin: new google.maps.Point(17, 50)
-                    }
-
                     var stage = {
                         url: 'Images/dj.png',
                         scaledSize: new google.maps.Size(40, 40),
@@ -90,6 +81,29 @@
                         anchor: new google.maps.Point(15, 40),
                         labelOrigin: new google.maps.Point(17, 50)
                     }
+                    var Tenticon = {
+                        url: 'Images/event-tent.png',
+                        scaledSize: new google.maps.Size(40, 40),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(15, 40),
+                        labelOrigin: new google.maps.Point(17, 50)
+                    }
+                    var Start = {
+                        url: 'Images/flag.png',
+                        scaledSize: new google.maps.Size(40, 40),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(15, 40),
+                        labelOrigin: new google.maps.Point(17, 50)                       
+                    }
+                    var Finish = {
+                        url: 'Images/flag2.png',
+                        scaledSize: new google.maps.Size(40, 40),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(15, 40),
+                        labelOrigin: new google.maps.Point(17, 50)
+                    }
+
+
 
                     ////Stop modal from firing if map is dragged [NOT WORKING]
                     google.maps.event.addListener(map, 'dragend', function () {
@@ -102,10 +116,10 @@
                     for (var i = 0; i < Users.length; i++) {
                         //Place star next to the admin user of the group [Stopped Working]
                         //if (<%=adminID%> == Users[i].Username) {                            
-                        //    $(UserList).append('<li class="list-group-item"><span class="glyphicon glyphicon-asterisk"></span>' + Users[i].Username + '</li>');
+                        //  $(UserList).append('<li class="list-group-item"><span class="glyphicon glyphicon-asterisk"></span>' + Users[i].Username + '</li>');
                         //}
                         //else {
-                            $(UserList).append('<li class="list-group-item">' + Users[i].Username + '</li>');
+                        $(UserList).append('<li class="list-group-item">' + Users[i].Username + '</li>');
                         //}
                     }
 
@@ -134,152 +148,226 @@
                     }
 
                     //Read and display all markers
+
                     for (var i = 0; i < Markers.length; i++) {
-                        latLngmarker = new google.maps.LatLng(Markers[i].Lat, Markers[i].Lng);
-                        var marker = new google.maps.Marker({
+                        var latLngmarker = new google.maps.LatLng(Markers[i].Lat, Markers[i].Lng);
+                        var icon = Markers[i].Type;
+                        if (icon == "stage") {
+                            icon = stage;
+                        }
+                        else if (icon == "tent") {
+                            icon = Tenticon;
+                        }
+                        else if (icon == "start") {
+                            icon = Start;
+                        }
+                        else if (icon == "finish") {
+                            icon = Finish;
+                        }
+
+                        var newmarker = new google.maps.Marker({
                             position: latLngmarker,
                             visible: true,
-                            icon: Markers[i].Type
+                            icon: icon
+
                         });
-                        marker.setMap(map);
+                        newmarker.setMap(map);
                     }
 
-                    /*
-                        [BUG REPORT]
-                        THIS EVENT FIRES FOR EVERY CLICK THAT WAS PREVIOSLY CLICKED ON THE MAP. 
-                        EVENTS STORING IN ARRAY AND RUNNING THROUGH THEM ALL.
-                    */
-                    /*
+                    //Send the Position the map was clicked for marker
+
+                    var MarkerLocation = "";
+
                     google.maps.event.addListener(map, "click", function (event) {
-                        placeMarker(event.latLng);
-                    });*/
+                        MarkerLocation = event.latLng;
 
+                    });
+                    /////WORKING!!!!//////
+                    document.getElementById('Stageiconmodal').addEventListener("click", function () {
+                        var stage = {
+                            url: 'Images/dj.png',
+                            scaledSize: new google.maps.Size(40, 40),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(15, 40),
+                            labelOrigin: new google.maps.Point(17, 50)
+                        }
 
-                    function placeMarker(location) {
-
-                        $('#Stageiconmodal').one("click", function () {
-
-                            var marker = new google.maps.Marker({
-                                position: location,
-                                animation: google.maps.Animation.DROP,
-                                icon: stage
-                            });
-
-                            marker.setMap(map);
-                            $("#hdnlatStage").val(location.lat);
-                            $("#hdnlngStage").val(location.lng);
-
+                        var marker = new google.maps.Marker({
+                            position: MarkerLocation,
+                            animation: google.maps.Animation.DROP,
+                            icon: stage
                         });
 
-                        $('#TentIconmodal').one("click", function () {
+                        marker.setMap(map);
+                        $("#hdnlatStage").val(MarkerLocation.lat);
+                        $("#hdnlngStage").val(MarkerLocation.lng);
+                    })
+                    //////////////////////
+                    document.getElementById('TentIconmodal').addEventListener("click", function () {
 
-                            var Tenticon = {
-                                url: 'Images/event-tent.png',
-                                scaledSize: new google.maps.Size(40, 40),
-                                origin: new google.maps.Point(0, 0),
-                                anchor: new google.maps.Point(15, 40),
-                                labelOrigin: new google.maps.Point(17, 50)
-                            }
+                        var Tenticon = {
+                            url: 'Images/event-tent.png',
+                            scaledSize: new google.maps.Size(40, 40),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(15, 40),
+                            labelOrigin: new google.maps.Point(17, 50)
+                        }
 
-                            var marker = new google.maps.Marker({
-                                position: location,
-                                animation: google.maps.Animation.DROP,
-                                icon: Tenticon
-                            });
-
-                            marker.setMap(map);
+                        var marker = new google.maps.Marker({
+                            position: MarkerLocation,
+                            animation: google.maps.Animation.DROP,
+                            icon: Tenticon
                         });
-                        $('#Starticonmodal').one("click", function () {
 
-                            var Start = {
-                                url: 'Images/start.png',
-                                scaledSize: new google.maps.Size(40, 40),
-                                origin: new google.maps.Point(0, 0),
-                                anchor: new google.maps.Point(15, 40),
-                                labelOrigin: new google.maps.Point(17, 50),
-                                label: {
-                                    text: 'Start',
-                                    color: '#000000',
-                                    fontsize: '20px',
-                                    fontweight: 'bold'
-                                },
-                            }
+                        marker.setMap(map);
+                        $("#hdnlatTent").val(MarkerLocation.lat);
+                        $("#hdnlngTent").val(MarkerLocation.lng);
 
-                            var marker = new google.maps.Marker({
-                                position: location,
-                                animation: google.maps.Animation.DROP,
-                                icon: Start
-                            });
+                    })
 
-                            marker.setMap(map);
+                    document.getElementById('Starticonmodal').addEventListener("click", function () {
+
+                        var Start = {
+                            url: 'Images/flag.png',
+                            scaledSize: new google.maps.Size(40, 40),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(15, 40),
+                            labelOrigin: new google.maps.Point(17, 50)                            
+                        }
+
+                        var marker = new google.maps.Marker({
+                            position: MarkerLocation,
+                            animation: google.maps.Animation.DROP,
+                            icon: Start
                         });
-                        $('#FinishIconmodal').one("click", function () {
 
-                            var Finish = {
-                                url: 'Images/start.png',
-                                scaledSize: new google.maps.Size(40, 40),
-                                origin: new google.maps.Point(0, 0),
-                                anchor: new google.maps.Point(15, 40),
-                                labelOrigin: new google.maps.Point(17, 50),
-                                label: {
-                                    text: 'Finish',
-                                    color: '#000000',
-                                    fontsize: '20px',
-                                    fontweight: 'bold'
-                                },
-                            }
+                        marker.setMap(map);
+                        $("#hdnlatStart").val(MarkerLocation.lat);
+                        $("#hdnlngStart").val(MarkerLocation.lng);
 
-                            var marker = new google.maps.Marker({
-                                position: location,
-                                //map: map,
-                                animation: google.maps.Animation.DROP,
-                                icon: Finish
-                            });
+                    })
 
-                            marker.setMap(map);
+                    document.getElementById('FinishIconmodal').addEventListener("click", function () {
+
+                        var Finish = {
+                            url: 'Images/flag2.png',
+                            scaledSize: new google.maps.Size(40, 40),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(15, 40),
+                            labelOrigin: new google.maps.Point(17, 50)                            
+                        }
+
+                        var marker = new google.maps.Marker({
+                            position: MarkerLocation,
+                            animation: google.maps.Animation.DROP,
+                            icon: Finish
                         });
-                        $('#cariconmodal').one("click", function () {
 
+                        marker.setMap(map);
+                        $("#hdnlatFinish").val(MarkerLocation.lat);
+                        $("#hdnlngFinish").val(MarkerLocation.lng);
 
-                            var Car = {
-                                url: 'Images/car.png',
-                                scaledSize: new google.maps.Size(40, 40),
-                                origin: new google.maps.Point(0, 0),
-                                anchor: new google.maps.Point(15, 40),
-                                labelOrigin: new google.maps.Point(17, 50)
-                            }
+                    })
 
-                            var marker = new google.maps.Marker({
-                                position: location,
-                                //map: map,
-                                animation: google.maps.Animation.DROP,
-                                icon: Car
+                    
+
+                    function placeMarker() {
+
+                        /*
+                           
+                            $('#Starticonmodal').one("click", function () {
+    
+                                var Start = {
+                                    url: 'Images/start.png',
+                                    scaledSize: new google.maps.Size(40, 40),
+                                    origin: new google.maps.Point(0, 0),
+                                    anchor: new google.maps.Point(15, 40),
+                                    labelOrigin: new google.maps.Point(17, 50),
+                                    label: {
+                                        text: 'Start',
+                                        color: '#000000',
+                                        fontsize: '20px',
+                                        fontweight: 'bold'
+                                    }
+                                }
+    
+                                var marker = new google.maps.Marker({
+                                    position: location,
+                                    animation: google.maps.Animation.DROP,
+                                    icon: Start
+                                });
+    
+                                marker.setMap(map);
                             });
-
-                            marker.setMap(map);
-                        });
-                        $('#cabinIconmodal').one("click", function () {
-
-                            var Cabin = {
-                                url: 'Images/cabin.png',
-                                scaledSize: new google.maps.Size(40, 40),
-                                origin: new google.maps.Point(0, 0),
-                                anchor: new google.maps.Point(15, 40),
-                                labelOrigin: new google.maps.Point(17, 50)
-                            }
-
-                            var marker = new google.maps.Marker({
-                                position: location,
-                                //map: map,
-                                animation: google.maps.Animation.DROP,
-                                icon: cabin
+                            $('#FinishIconmodal').one("click", function () {
+    
+                                var Finish = {
+                                    url: 'Images/start.png',
+                                    scaledSize: new google.maps.Size(40, 40),
+                                    origin: new google.maps.Point(0, 0),
+                                    anchor: new google.maps.Point(15, 40),
+                                    labelOrigin: new google.maps.Point(17, 50),
+                                    label: {
+                                        text: 'Finish',
+                                        color: '#000000',
+                                        fontsize: '20px',
+                                        fontweight: 'bold'
+                                    },
+                                }
+    
+                                var marker = new google.maps.Marker({
+                                    position: location,
+                                    //map: map,
+                                    animation: google.maps.Animation.DROP,
+                                    icon: Finish
+                                });
+    
+                                marker.setMap(map);
                             });
-
-                            marker.setMap(map);
-                        });
+                            $('#cariconmodal').one("click", function () {
+    
+    
+                                var Car = {
+                                    url: 'Images/car.png',
+                                    scaledSize: new google.maps.Size(40, 40),
+                                    origin: new google.maps.Point(0, 0),
+                                    anchor: new google.maps.Point(15, 40),
+                                    labelOrigin: new google.maps.Point(17, 50)
+                                }
+    
+                                var marker = new google.maps.Marker({
+                                    position: location,
+                                    //map: map,
+                                    animation: google.maps.Animation.DROP,
+                                    icon: Car
+                                });
+    
+                                marker.setMap(map);
+                            });
+                            $('#cabinIconmodal').one("click", function () {
+    
+                                var Cabin = {
+                                    url: 'Images/cabin.png',
+                                    scaledSize: new google.maps.Size(40, 40),
+                                    origin: new google.maps.Point(0, 0),
+                                    anchor: new google.maps.Point(15, 40),
+                                    labelOrigin: new google.maps.Point(17, 50)
+                                }
+    
+                                var marker = new google.maps.Marker({
+                                    position: location,
+                                    //map: map,
+                                    animation: google.maps.Animation.DROP,
+                                    icon: cabin
+                                });
+    
+                                marker.setMap(map);
+                            });
+                            */
                     }
 
-                   
+
+
 
                     //reload page every 10 seconds
                     setInterval(function () {
@@ -358,6 +446,12 @@
         <asp:HiddenField ID="hdnLng" runat="server" ClientIDMode="Static"></asp:HiddenField>
         <asp:HiddenField ID="hdnlngStage" runat="server" ClientIDMode="Static"></asp:HiddenField>
         <asp:HiddenField ID="hdnlatStage" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlngTent" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlatTent" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlngStart" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlatStart" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlngFinish" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlatFinish" runat="server" ClientIDMode="Static"></asp:HiddenField>
     </div>
 
     <div id="modalMarker" class="modal fade" role="dialog">
@@ -379,10 +473,10 @@
                                 <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
                                 - Tent </a></li>
                             <li><a id="Starticonl" class="list-group-item">
-                                <img src="Images/start.png" alt="start" width="30" height="30" />
+                                <img src="Images/flag.png" alt="start" width="30" height="30" />
                                 - Start </a></li>
                             <li><a id="FinishIconl" class="list-group-item">
-                                <img src="Images/start.png" alt="finish" width="30" height="30" />
+                                <img src="Images/flag2.png" alt="finish" width="30" height="30" />
                                 - Finish </a></li>
                             <li><a id="cariconl" class="list-group-item">
                                 <img src="Images/car.png" alt="car" width="30" height="30" />
@@ -411,16 +505,16 @@
                     <div style="text-align: center;">
                         <ul id="legendListmodal" class="list-group" style="list-style-type: none;">
                             <li><a id="Stageiconmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/dj.png" alt="dj" width="30" height="30" />
+                                <img src="Images/dj.png" alt="tent" width="30" height="30" />
                                 - Stage Area </a></li>
                             <li><a id="TentIconmodal" data-dismiss="modal" class="list-group-item">
                                 <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
                                 - Tent </a></li>
                             <li><a id="Starticonmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/start.png" alt="start" width="30" height="30" />
-                                - Start </a></li>
+                                <img src="Images/flag.png" alt="start" width="30" height="30" />
+                                - Start</a></li>
                             <li><a id="FinishIconmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/start.png" alt="finish" width="30" height="30" />
+                                <img src="Images/flag2.png" alt="finish" width="30" height="30" />
                                 - Finish </a></li>
                             <li><a id="cariconmodal" data-dismiss="modal" class="list-group-item">
                                 <img src="Images/car.png" alt="car" width="30" height="30" />
