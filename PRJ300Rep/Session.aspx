@@ -93,10 +93,24 @@
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
-                        labelOrigin: new google.maps.Point(17, 50)                       
+                        labelOrigin: new google.maps.Point(17, 50)
                     }
                     var Finish = {
                         url: 'Images/flag2.png',
+                        scaledSize: new google.maps.Size(40, 40),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(15, 40),
+                        labelOrigin: new google.maps.Point(17, 50)
+                    }
+                    var Car = {
+                        url: 'Images/car.png',
+                        scaledSize: new google.maps.Size(40, 40),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(15, 40),
+                        labelOrigin: new google.maps.Point(17, 50)
+                    }
+                    var Cabin = {
+                        url: 'Images/cabin.png',
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
@@ -130,7 +144,6 @@
                             var marker = new google.maps.Marker({
                                 position: latLng,
                                 title: Users[i].Username,
-                                //animation: google.maps.Animation.DROP,
                                 label: {
                                     text: Users[i].Username,
                                     color: '#000000',
@@ -148,7 +161,6 @@
                     }
 
                     //Read and display all markers
-
                     for (var i = 0; i < Markers.length; i++) {
                         var latLngmarker = new google.maps.LatLng(Markers[i].Lat, Markers[i].Lng);
                         var icon = Markers[i].Type;
@@ -164,6 +176,14 @@
                         else if (icon == "finish") {
                             icon = Finish;
                         }
+                        else if (icon == "car") {
+                            icon = Car;
+                        }
+                        else if (icon == "cabin") {
+                            icon = Cabin;
+                        }
+
+
 
                         var newmarker = new google.maps.Marker({
                             position: latLngmarker,
@@ -175,14 +195,12 @@
                     }
 
                     //Send the Position the map was clicked for marker
-
                     var MarkerLocation = "";
-
                     google.maps.event.addListener(map, "click", function (event) {
                         MarkerLocation = event.latLng;
 
                     });
-                    /////WORKING!!!!//////
+
                     document.getElementById('Stageiconmodal').addEventListener("click", function () {
                         var stage = {
                             url: 'Images/dj.png',
@@ -202,7 +220,7 @@
                         $("#hdnlatStage").val(MarkerLocation.lat);
                         $("#hdnlngStage").val(MarkerLocation.lng);
                     })
-                    //////////////////////
+
                     document.getElementById('TentIconmodal').addEventListener("click", function () {
 
                         var Tenticon = {
@@ -232,7 +250,7 @@
                             scaledSize: new google.maps.Size(40, 40),
                             origin: new google.maps.Point(0, 0),
                             anchor: new google.maps.Point(15, 40),
-                            labelOrigin: new google.maps.Point(17, 50)                            
+                            labelOrigin: new google.maps.Point(17, 50)
                         }
 
                         var marker = new google.maps.Marker({
@@ -254,7 +272,7 @@
                             scaledSize: new google.maps.Size(40, 40),
                             origin: new google.maps.Point(0, 0),
                             anchor: new google.maps.Point(15, 40),
-                            labelOrigin: new google.maps.Point(17, 50)                            
+                            labelOrigin: new google.maps.Point(17, 50)
                         }
 
                         var marker = new google.maps.Marker({
@@ -269,105 +287,49 @@
 
                     })
 
-                    
+                    document.getElementById('cariconmodal').addEventListener("click", function () {
 
-                    function placeMarker() {
+                        var Car = {
+                            url: 'Images/car.png',
+                            scaledSize: new google.maps.Size(40, 40),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(15, 40),
+                            labelOrigin: new google.maps.Point(17, 50)
+                        }
 
-                        /*
-                           
-                            $('#Starticonmodal').one("click", function () {
-    
-                                var Start = {
-                                    url: 'Images/start.png',
-                                    scaledSize: new google.maps.Size(40, 40),
-                                    origin: new google.maps.Point(0, 0),
-                                    anchor: new google.maps.Point(15, 40),
-                                    labelOrigin: new google.maps.Point(17, 50),
-                                    label: {
-                                        text: 'Start',
-                                        color: '#000000',
-                                        fontsize: '20px',
-                                        fontweight: 'bold'
-                                    }
-                                }
-    
-                                var marker = new google.maps.Marker({
-                                    position: location,
-                                    animation: google.maps.Animation.DROP,
-                                    icon: Start
-                                });
-    
-                                marker.setMap(map);
-                            });
-                            $('#FinishIconmodal').one("click", function () {
-    
-                                var Finish = {
-                                    url: 'Images/start.png',
-                                    scaledSize: new google.maps.Size(40, 40),
-                                    origin: new google.maps.Point(0, 0),
-                                    anchor: new google.maps.Point(15, 40),
-                                    labelOrigin: new google.maps.Point(17, 50),
-                                    label: {
-                                        text: 'Finish',
-                                        color: '#000000',
-                                        fontsize: '20px',
-                                        fontweight: 'bold'
-                                    },
-                                }
-    
-                                var marker = new google.maps.Marker({
-                                    position: location,
-                                    //map: map,
-                                    animation: google.maps.Animation.DROP,
-                                    icon: Finish
-                                });
-    
-                                marker.setMap(map);
-                            });
-                            $('#cariconmodal').one("click", function () {
-    
-    
-                                var Car = {
-                                    url: 'Images/car.png',
-                                    scaledSize: new google.maps.Size(40, 40),
-                                    origin: new google.maps.Point(0, 0),
-                                    anchor: new google.maps.Point(15, 40),
-                                    labelOrigin: new google.maps.Point(17, 50)
-                                }
-    
-                                var marker = new google.maps.Marker({
-                                    position: location,
-                                    //map: map,
-                                    animation: google.maps.Animation.DROP,
-                                    icon: Car
-                                });
-    
-                                marker.setMap(map);
-                            });
-                            $('#cabinIconmodal').one("click", function () {
-    
-                                var Cabin = {
-                                    url: 'Images/cabin.png',
-                                    scaledSize: new google.maps.Size(40, 40),
-                                    origin: new google.maps.Point(0, 0),
-                                    anchor: new google.maps.Point(15, 40),
-                                    labelOrigin: new google.maps.Point(17, 50)
-                                }
-    
-                                var marker = new google.maps.Marker({
-                                    position: location,
-                                    //map: map,
-                                    animation: google.maps.Animation.DROP,
-                                    icon: cabin
-                                });
-    
-                                marker.setMap(map);
-                            });
-                            */
-                    }
+                        var marker = new google.maps.Marker({
+                            position: MarkerLocation,
+                            animation: google.maps.Animation.DROP,
+                            icon: Car
+                        });
 
+                        marker.setMap(map);
+                        $("#hdnlatCar").val(MarkerLocation.lat);
+                        $("#hdnlngCar").val(MarkerLocation.lng);
 
+                    })
 
+                    document.getElementById('cabinIconmodal').addEventListener("click", function () {
+
+                        var Cabin = {
+                            url: 'Images/cabin.png',
+                            scaledSize: new google.maps.Size(40, 40),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(15, 40),
+                            labelOrigin: new google.maps.Point(17, 50)
+                        }
+
+                        var marker = new google.maps.Marker({
+                            position: MarkerLocation,
+                            animation: google.maps.Animation.DROP,
+                            icon: Cabin
+                        });
+
+                        marker.setMap(map);
+                        $("#hdnlatCabin").val(MarkerLocation.lat);
+                        $("#hdnlngCabin").val(MarkerLocation.lng);
+
+                    })
 
                     //reload page every 10 seconds
                     setInterval(function () {
@@ -387,7 +349,7 @@
                     }, 10000);
                 });
 
-
+                //NOT WORKING
                 //Save window state when page refreshes
                 var center = map.getCenter();
                 var zoom = map.getZoom();
@@ -452,6 +414,10 @@
         <asp:HiddenField ID="hdnlatStart" runat="server" ClientIDMode="Static"></asp:HiddenField>
         <asp:HiddenField ID="hdnlngFinish" runat="server" ClientIDMode="Static"></asp:HiddenField>
         <asp:HiddenField ID="hdnlatFinish" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlngCar" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlatCar" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlngCabin" runat="server" ClientIDMode="Static"></asp:HiddenField>
+        <asp:HiddenField ID="hdnlatCabin" runat="server" ClientIDMode="Static"></asp:HiddenField>
     </div>
 
     <div id="modalMarker" class="modal fade" role="dialog">
