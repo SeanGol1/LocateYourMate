@@ -331,7 +331,11 @@
 
                     })
 
-                    $("#Submit").click($("#mainForm").submit());
+                    document.getElementById('btnSubmit').addEventListener("click", function () {
+                        $("#mainForm").submit();
+                    });
+                   
+
                     //reload page every 10 seconds
                     setInterval(function () {
                         //save location in a hidden field 
@@ -400,7 +404,7 @@
                     <asp:Button ID="Close" runat="server" Text="Close Session" class="btn btn-danger" OnClick="Close_Click" />
                     <br />
                     <div id="markers" class="btn btn-success" data-toggle="modal" data-target="#modalMarker">Markers</div>
-                    <asp:Button ID="Submit" class="btn btn-primary" runat="server" Text="Refesh" />
+                    <asp:Button ID="btnSubmit" class="btn btn-primary" runat="server" Text="Refesh" />
                 </div>
             </div>
         </div>
