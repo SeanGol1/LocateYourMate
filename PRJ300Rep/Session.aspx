@@ -68,49 +68,49 @@
                 $(document).ready(function () {
                     //Create Marker Icons
                     var markericon = {
-                        url: 'Images/dancer.png',
+                        url: 'Images/dancer.jpg',
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
                         labelOrigin: new google.maps.Point(17, 50)
                     }
                     var stage = {
-                        url: 'Images/dj.png',
+                        url: 'Images/dj.jpg',
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
                         labelOrigin: new google.maps.Point(17, 50)
                     }
                     var Tenticon = {
-                        url: 'Images/event-tent.png',
+                        url: 'Images/event-tent.jpg',
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
                         labelOrigin: new google.maps.Point(17, 50)
                     }
                     var Start = {
-                        url: 'Images/flag.png',
+                        url: 'Images/flag.jpg',
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
                         labelOrigin: new google.maps.Point(17, 50)
                     }
                     var Finish = {
-                        url: 'Images/flag2.png',
+                        url: 'Images/flag2.jpg',
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
                         labelOrigin: new google.maps.Point(17, 50)
                     }
                     var Car = {
-                        url: 'Images/car.png',
+                        url: 'Images/car.jpg',
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
                         labelOrigin: new google.maps.Point(17, 50)
                     }
                     var Cabin = {
-                        url: 'Images/cabin.png',
+                        url: 'Images/cabin.jpg',
                         scaledSize: new google.maps.Size(40, 40),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(15, 40),
@@ -203,7 +203,7 @@
 
                     document.getElementById('Stageiconmodal').addEventListener("click", function () {
                         var stage = {
-                            url: 'Images/dj.png',
+                            url: 'Images/dj.jpg',
                             scaledSize: new google.maps.Size(40, 40),
                             origin: new google.maps.Point(0, 0),
                             anchor: new google.maps.Point(15, 40),
@@ -224,7 +224,7 @@
                     document.getElementById('TentIconmodal').addEventListener("click", function () {
 
                         var Tenticon = {
-                            url: 'Images/event-tent.png',
+                            url: 'Images/event-tent.jpg',
                             scaledSize: new google.maps.Size(40, 40),
                             origin: new google.maps.Point(0, 0),
                             anchor: new google.maps.Point(15, 40),
@@ -246,7 +246,7 @@
                     document.getElementById('Starticonmodal').addEventListener("click", function () {
 
                         var Start = {
-                            url: 'Images/flag.png',
+                            url: 'Images/flag.jpg',
                             scaledSize: new google.maps.Size(40, 40),
                             origin: new google.maps.Point(0, 0),
                             anchor: new google.maps.Point(15, 40),
@@ -268,7 +268,7 @@
                     document.getElementById('FinishIconmodal').addEventListener("click", function () {
 
                         var Finish = {
-                            url: 'Images/flag2.png',
+                            url: 'Images/flag2.jpg',
                             scaledSize: new google.maps.Size(40, 40),
                             origin: new google.maps.Point(0, 0),
                             anchor: new google.maps.Point(15, 40),
@@ -290,7 +290,7 @@
                     document.getElementById('cariconmodal').addEventListener("click", function () {
 
                         var Car = {
-                            url: 'Images/car.png',
+                            url: 'Images/car.jpg',
                             scaledSize: new google.maps.Size(40, 40),
                             origin: new google.maps.Point(0, 0),
                             anchor: new google.maps.Point(15, 40),
@@ -312,7 +312,7 @@
                     document.getElementById('cabinIconmodal').addEventListener("click", function () {
 
                         var Cabin = {
-                            url: 'Images/cabin.png',
+                            url: 'Images/cabin.jpg',
                             scaledSize: new google.maps.Size(40, 40),
                             origin: new google.maps.Point(0, 0),
                             anchor: new google.maps.Point(15, 40),
@@ -439,22 +439,22 @@
                         <h3>To place a marker simply click on the map in the postition of choice and choose from the list!</h3>
                         <ul id="legendListl" class="list-group" style="list-style-type: none;">
                             <li><a id="Stageiconl" class="list-group-item">
-                                <img src="Images/dj.png" alt="dj" width="30" height="30" />
+                                <img src="Images/dj.jpg" alt="dj" width="30" height="30" />
                                 - Stage Area </a></li>
                             <li><a id="TentIconl" class="list-group-item">
-                                <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
+                                <img src="Images/event-tent.jpg" alt="tent" width="30" height="30" />
                                 - Tent </a></li>
                             <li><a id="Starticonl" class="list-group-item">
-                                <img src="Images/flag.png" alt="start" width="30" height="30" />
+                                <img src="Images/flag.jpg" alt="start" width="30" height="30" />
                                 - Start </a></li>
                             <li><a id="FinishIconl" class="list-group-item">
-                                <img src="Images/flag2.png" alt="finish" width="30" height="30" />
+                                <img src="Images/flag2.jpg" alt="finish" width="30" height="30" />
                                 - Finish </a></li>
                             <li><a id="cariconl" class="list-group-item">
-                                <img src="Images/car.png" alt="car" width="30" height="30" />
+                                <img src="Images/car.jpg" alt="car" width="30" height="30" />
                                 - Car </a></li>
                             <li><a id="cabinIconl" class="list-group-item">
-                                <img src="Images/cabin.png" alt="cabin" width="30" height="30" />
+                                <img src="Images/cabin.jpg" alt="cabin" width="30" height="30" />
                                 - Cabin </a></li>
                         </ul>
                     </div>
@@ -477,22 +477,22 @@
                     <div style="text-align: center;">
                         <ul id="legendListmodal" class="list-group" style="list-style-type: none;">
                             <li><a id="Stageiconmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/dj.png" alt="tent" width="30" height="30" />
+                                <img src="Images/dj.jpg" alt="tent" width="30" height="30" />
                                 - Stage Area </a></li>
                             <li><a id="TentIconmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/event-tent.png" alt="tent" width="30" height="30" />
+                                <img src="Images/event-tent.jpg" alt="tent" width="30" height="30" />
                                 - Tent </a></li>
                             <li><a id="Starticonmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/flag.png" alt="start" width="30" height="30" />
+                                <img src="Images/flag.jpg" alt="start" width="30" height="30" />
                                 - Start</a></li>
                             <li><a id="FinishIconmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/flag2.png" alt="finish" width="30" height="30" />
+                                <img src="Images/flag2.jpg" alt="finish" width="30" height="30" />
                                 - Finish </a></li>
                             <li><a id="cariconmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/car.png" alt="car" width="30" height="30" />
+                                <img src="Images/car.jpg" alt="car" width="30" height="30" />
                                 - Car </a></li>
                             <li><a id="cabinIconmodal" data-dismiss="modal" class="list-group-item">
-                                <img src="Images/cabin.png" alt="cabin" width="30" height="30" />
+                                <img src="Images/cabin.jpg" alt="cabin" width="30" height="30" />
                                 - Cabin </a></li>
                         </ul>
                     </div>
